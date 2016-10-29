@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trafficker</title>
-    <link href = "http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href = "./css/postCarrier.css" rel="stylesheet">
-    <script src = "http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script src = "http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src = "./js/postCarrier.js"></script>
+    <!--include jQuery-->
+    <script src="./js/lib/jquery-2.2.4.min.js"></script>
+    <!--include angularjs-->
+    <script src="./js/lib/angular-1.5.8.min.js"></script>
+    <!--include bootsrap 3.3.7-->
+    <link href="./css/lib/bootstrap.min.css" rel="stylesheet">
+    <script src="./js/lib/bootstrap.min.js"></script>
+    <!--include angular-ui-->
+    <script src="./js/lib/angular-ui-router.js"></script>
+    <!--include custom css-->
+    <link href="./css/postCarrier.css" rel="stylesheet">
+    <!--include custom angular setting-->
+    <script src="js/angular/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/angular/config.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/angular/router.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/angular/service.js" type="text/javascript" charset="utf-8"></script>
+    <!--cotrollers-->
+    <script src="./js/postCarrier.js"></script>
 </head>
 
 <body>
-
-
-
-<div style="padding: 10px 30px 10px;">
-   
-    <div id="input">
-        <h1 style="text-align:center;">Post Carrier</h1>
-
-        <form role="form">
-
-            <div id="method">
-                <label>Method</label> <br /> <label style="width:80px;">&emsp;</label> 
-                <label class="checkbox-inline">
-                     <input type="radio" name="method" value="GET" checked> GET
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="method" value="POST"> POST
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="method" value="PUT"> PUT
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="method" value="DELETE"> DELETE
-                </label>
-            </div>
-
+    <div style="padding: 10px 30px 10px;">
+        <div id="input">
+            <h1 style="text-align:center;">Post Carrier</h1>
+            <form role="form">
+                <div id="method">
+                    <label>Method</label>
+                    <br />
+                    <label style="width:80px;">&emsp;</label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="method" value="GET" checked> GET
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="method" value="POST"> POST
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="method" value="PUT"> PUT
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="method" value="DELETE"> DELETE
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Url</label>
+                    <br />
+                    <input type="text" class="form-control" id="url" placeholder="http://">
+                    <label>Params</label>
+                    <textarea class="form-control" rows="3" id="params"></textarea>
+                </div>
+                <button type="button" class="btn btn-info" style="float:right;" onclick="sendRequest()">Send</button>
+                <button type="button" class="btn btn-info" style="float:right;margin-right:8px;" onclick="ClearResponse()">Clear</button>
+            </form>
+        </div>
+        <br />
+        <br />
+        <hr>
+        <div>
+            <h3>Result</h3>
             <div class="form-group">
-                <label>Url</label> <br />
-                <input type="text" class="form-control" id="url" placeholder="http://">
-                
-                <label>Params</label>
-                <textarea class="form-control" rows="3" id="params"></textarea>
+                <textarea id="text_result" class="form-control" rows="5"></textarea>
             </div>
-
-            <button type="button" class="btn btn-info" style="float:right;" onclick="sendRequest()">Send</button>
-            
-
-            <button type="button" class="btn btn-info" style="float:right;margin-right:8px;" onclick="ClearResponse()">Clear</button>
-        </form>
-    </div>
-
-    <br /><br />
-    
-    <hr>
-
-    <div>
-        <h3>Result</h3>
-        <div class="form-group">
-            <textarea id="text_result" class="form-control" rows="5"></textarea>
-        </div>
-        <div id="html_result">
-            
-        </div>
-        <div id="json_result">
-            
+            <div id="html_result">
+            </div>
+            <div id="json_result">
+            </div>
         </div>
     </div>
-
-</div>
-
 </body>
+
 </html>
