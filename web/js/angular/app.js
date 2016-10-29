@@ -1,3 +1,3 @@
 "use strict";
 
-var app = angular.module("appNeoBayWeb", ["ui.router"]);
+var app = angular.module("trafficker", ["ui.router"]);

@@ -1,37 +1,27 @@
 app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise("/begin");
+	$urlRouterProvider.otherwise("/http");
 
 	$stateProvider
-		.state("step1", {
-			url: "/step1",
-			templateUrl: "templates/join-step1.html",
-			controller: "Step1Controller"
-
+		.state("http", {
+			url: "/http",
+			templateUrl: "templates/http.html",
+			controller: "httpController"
 		})
-		.state("step2", {
-			url: "/step2",
-			templateUrl: "templates/join-step2.html",
-			controller: "Step2Controller"
+		.state("ip", {
+			url: "/ip",
+			templateUrl: "templates/ip.html",
+			controller: "ipController"
 		})
-		.state("step3", {
-			url: "/step3",
-			templateUrl: "templates/join-step3.html",
-			controller: "Step3Controller"
+		.state("tcp", {
+			url: "/tcp",
+			templateUrl: "templates/tcp.html",
+			controller: "tcpController"
 		})
-		.state("succeed", {
-			url: "/succeed",
-			templateUrl: "templates/join-succeed.html"
-		})
-		.state("begin", {
-			url: "/begin",
-			templateUrl: "templates/join-begin.html",
-			controller: "BeginController"
-		})
-		.state("test", {
-			url: "/test",
-			templateUrl: "templates/test.html",
-			controller: "TestController"
+		.state("udp", {
+			url: "/udp",
+			templateUrl: "templates/udp.html",
+			controller: "udpController"
 		});
 
 }]);
