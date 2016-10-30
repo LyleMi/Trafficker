@@ -1,4 +1,4 @@
-var host = "http://localhost/";
+var host = "http://localhost:8888/";
 
 app.factory("HttpService", function($http) {
 
@@ -20,9 +20,7 @@ app.factory("HttpService", function($http) {
 			});
 		},
 		post: function(path, params, successCallBack, failureCallBack) {
-			if (!params) {
-				params = {};
-			};
+			params = params || {};
 
 			$http({
 				method: 'POST',

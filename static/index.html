@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trafficker</title>
+    <!--include jQuery-->
+    <script src="{{ static_url('js/lib/jquery-2.2.4.min.js') }}"></script>
+    <!--include angularjs-->
+    <script src="{{ static_url('js/lib/angular.js') }}"></script>
+    <!-- <script src="./js/lib/angular-1.5.8.min.js"></script> -->
+    <!--include bootsrap 3.3.7-->
+    <link href="{{ static_url('css/lib/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="{{ static_url('js/lib/bootstrap.min.js') }}"></script>
+    <!--include angular-ui-->
+    <script src="{{ static_url('js/lib/angular-ui-router.js') }}"></script>
+    <!--include custom css-->
+    <link href="{{ static_url('css/index.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/postCarrier.css') }}" rel="stylesheet">
+    <!--include custom angular setting-->
+    <script src="{{ static_url('js/angular/app.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/config.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/router.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/service.js') }}" type="text/javascript" charset="utf-8"></script>
+    <!--cotrollers-->
+    <script src="{{ static_url('js/angular/controllers/mainController.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/controllers/httpController.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/controllers/ipController.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/controllers/udpController.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ static_url('js/angular/controllers/tcpController.js') }}" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body ng-app="trafficker" ng-controller="mainController">
+</body>
+
+<div class="" align="center" style="padding-top: 2%;">
+    <ul class="ad-nav">
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="ip">IP</button>
+        </li>            
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="tcp">TCP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="udp">UDP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="arp">ARP</button>
+        </li>            
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="icmp">ICMP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="http">HTTP</button>
+        </li>                  
+    </ul>
+</div>
+
+<div align="center">
+    <div class="" ui-view>
+        
+    </div>
+</div>
+
+</html>
