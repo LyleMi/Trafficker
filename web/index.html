@@ -17,6 +17,7 @@
     <!--include angular-ui-->
     <script src="./js/lib/angular-ui-router.js"></script>
     <!--include custom css-->
+    <link href="./css/index.css" rel="stylesheet">
     <link href="./css/postCarrier.css" rel="stylesheet">
     <!--include custom angular setting-->
     <script src="js/angular/app.js" type="text/javascript" charset="utf-8"></script>
@@ -33,6 +34,29 @@
 
 <body ng-app="trafficker" ng-controller="mainController">
 </body>
+
+<div class="" align="center" style="padding-top: 2%;">
+    <ul class="ad-nav">
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="ip">IP</button>
+        </li>            
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="tcp">TCP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="udp">UDP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="arp">ARP</button>
+        </li>            
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="icmp">ICMP</button>
+        </li>
+        <li ui-sref-active="active">
+            <button class="btn btn-info" ui-sref="http">HTTP</button>
+        </li>                  
+    </ul>
+</div>
 
 <div align="center">
     <div class="" ui-view>

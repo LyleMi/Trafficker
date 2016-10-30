@@ -1,0 +1,22 @@
+.ad-nav {
+    height: 40px;
+}
+
+.ad-nav ul {
+    list-style: none;
+    margin-left: 50px;
+    align: center;
+}
+
+.ad-nav li {
+    display: inline;
+    line-height: 40px;
+}
+
+.ad-nav a {
+    text-decoration: none;
+    padding: 20px 20px;
+}
+
+.ad-nav a:hover {
+}
