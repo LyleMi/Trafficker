@@ -1,9 +1,9 @@
 app.controller("ipController", ["$scope", "$rootScope", "$state", "HttpService",
     function($scope, $rootScope, $state, HttpService) {
         $scope.data = {
-            Ether: {
-                mac_dst: 'ff:ff:ff:ff:ff:ff',
-                mac_src: '00:00:00:00:00:00',
+            mac: {
+                dst: 'ff:ff:ff:ff:ff:ff',
+                src: '00:00:00:00:00:00',
                 type: 36864
             },
             IP: {
@@ -19,12 +19,20 @@ app.controller("ipController", ["$scope", "$rootScope", "$state", "HttpService",
                 src: '',
                 dst: '',
                 options: '',
-            }
+            },
+            result: ''
         };
 
         $scope.send_ip = function() {
-            HttpService.post('ip', $scope.data, function() {}, function() {});
-            console.log('this is send ip');
+            HttpService.post('ip',
+                {
+                    'mac' : JSON.stringify($scope.data.mac),
+                    'ip' : JSON.stringify($scope.data.ip)
+                },
+                function(response) {
+                    $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
         }
 
     }

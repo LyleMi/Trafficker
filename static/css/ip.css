@@ -1,0 +1,31 @@
+.ip-form {
+    width: 30%;
+    border: 1px solid #bbbbbb;
+    border-radius: 2px;
+    padding: 10px;
+}
+
+.ip-form h4 {
+    text-align: center;
+}
+
+.ip-form input {
+    font-size: 18px;
+    display: inline-block;
+    padding: 6px;
+    margin: 4px;
+    width: 60%;
+    text-align: center;
+    position: relative;
+    left: 5px;
+}
+
+.ip-form p {
+    display: inline-block;
+    width: 30%;
+}
+
+.response {
+    float: center;
+    width: 50%;
+}

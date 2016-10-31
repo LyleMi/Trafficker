@@ -18,6 +18,7 @@
     <script src="{{ static_url('js/lib/angular-ui-router.js') }}"></script>
     <!--include custom css-->
     <link href="{{ static_url('css/index.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/ip.css') }}" rel="stylesheet">
     <link href="{{ static_url('css/postCarrier.css') }}" rel="stylesheet">
     <!--include custom angular setting-->
     <script src="{{ static_url('js/angular/app.js') }}" type="text/javascript" charset="utf-8"></script>
@@ -33,35 +34,35 @@
 </head>
 
 <body ng-app="trafficker" ng-controller="mainController">
-</body>
 
-<div class="" align="center" style="padding-top: 2%;">
-    <ul class="ad-nav">
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="ip">IP</button>
-        </li>            
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="tcp">TCP</button>
-        </li>
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="udp">UDP</button>
-        </li>
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="arp">ARP</button>
-        </li>            
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="icmp">ICMP</button>
-        </li>
-        <li ui-sref-active="active">
-            <button class="btn btn-info" ui-sref="http">HTTP</button>
-        </li>                  
-    </ul>
-</div>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Trafficker</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li ui-sref="ip"><a href="#">IP</a></li>
+            <li ui-sref="tcp"><a href="#">TCP</a></li>
+            <li ui-sref="udp"><a href="#">UDP</a></li>
+            <li ui-sref="arp"><a href="#">ARP</a></li>
+            <li ui-sref="icmp"><a href="#">ICMP</a></li>
+            <li ui-sref="http"><a href="#">HTTP</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
 
-<div align="center">
+<div>
     <div class="" ui-view>
         
     </div>
 </div>
+
+<div class="footer">
+    <p>@Trafficker | by sph7</p>
+</div>
+
+</body>
 
 </html>

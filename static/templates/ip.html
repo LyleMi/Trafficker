@@ -1,6 +1,23 @@
 <form action="">
-    MAC DA<input type="text" name="" placeholder="" ng-model="data.Ether.mac_dst"/><br />
-    MAC SA<input type="text" name="" placeholder=""  ng-model="data.Ether.mac_src"/><br />
-    <input type="text" name="" placeholder="" /><br />
-    <input type="button" value="send" ng-click="send_ip()">
+    <div class="form-group ip-form">
+        <h4>MAC</h4>
+        <div ng-repeat="(key, value) in data.mac">
+            <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.mac[key]'>
+        </div>
+    </div>
+
+    <div class="form-group ip-form">
+        <h4>IPv4</h4>
+        <div ng-repeat="(key, value) in data.IP">
+            <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.IP[key]'>
+        </div>
+    </div>
+
+
+       response
+    <textarea class="form-control response" cols="10" rows="5" ng-model="data.result" />
+    <input type="button" value="send" class="btn btn-info" ng-click="send_ip()">
+
+
 </form>
+ 

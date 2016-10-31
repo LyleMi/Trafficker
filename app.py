@@ -23,7 +23,7 @@ settings = {
     "cookie_secret": "bxzasdgjhas",
     "compress_response": True,
     "default_handler_class": controller.base.NotFoundHandler,
-    "xsrf_cookies": True,
+    # "xsrf_cookies": True,
     "static_path": "static",
 }
 
