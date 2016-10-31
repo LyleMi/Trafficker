@@ -33,6 +33,7 @@ handlers = [
     (r"/", "controller.main.MainHandler"),
     (r"/ip", "controller.ip.IPHandler"),
     (r"/exit", "controller.exit.exitHandler"),
+    (r'/pcap', "controller.pcap.PCAPHandler"),
 ]
 
 
