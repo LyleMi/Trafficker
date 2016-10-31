@@ -17,9 +17,5 @@ run ```pip install -r requirements.txt```
 ```
 git clone https://github.com/LyleMi/Trafficker.git
 
-open web\Trafficker\web\index.html
-
+python app.py
 ```
-
-
----
