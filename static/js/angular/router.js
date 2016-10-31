@@ -22,6 +22,21 @@ app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $ur
 			url: "/udp",
 			templateUrl: "static/templates/udp.html",
 			controller: "udpController"
+		})
+		.state("arp", {
+			url: "/arp",
+			templateUrl: "static/templates/arp.html",
+			controller: "udpController"
+		})
+		.state("icmp", {
+			url: "/icmp",
+			templateUrl: "static/templates/icmp.html",
+			controller: "udpController"
+		})
+		.state("pcap", {
+			url: "/pcap",
+			templateUrl: "static/templates/pcap.html",
+			controller: "udpController"
 		});
 
 }]);
