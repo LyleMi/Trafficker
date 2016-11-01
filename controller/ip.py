@@ -1,9 +1,11 @@
 import tornado.web
 
+from scapy.all import IP
+
 class IPHandler(tornado.web.RequestHandler):
 
     def post(self):
         mac = self.get_argument('mac')
-        self.write(mac)
         ip = self.get_argument('ip')
-        self.write(ip)
+        print mac, ip
+        ip = IP()
