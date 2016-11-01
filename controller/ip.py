@@ -1,7 +1,5 @@
 import tornado.web
 
-from scapy.all import IP
-
 class IPHandler(tornado.web.RequestHandler):
 
     def post(self):
