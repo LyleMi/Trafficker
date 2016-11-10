@@ -23,8 +23,10 @@ class TCP(layer):
         self.checksum = 0
         self.urgp = 0
         self.payload = ""
+        self.src = ""
+        self.destination = ""
 
-    def pack(self, source, destination):
+    def pack(self):
         data_offset = (self.offset << 4) + 0
         flags = self.fin + (self.syn << 1) + (self.rst << 2) + \
             (self.psh << 3) + (self.ack << 4) + (self.urg << 5)
@@ -39,8 +41,8 @@ class TCP(layer):
                                  self.checksum,
                                  self.urgp)
         # pseudo header fields
-        source_ip = source
-        destination_ip = destination
+        source_ip = self.source
+        destination_ip = self.destination
         reserved = 0
         protocol = socket.IPPROTO_TCP
         total_length = len(tcp_header) + len(self.payload)
@@ -101,4 +103,4 @@ class TCP(layer):
             _tcp.urg,
             _tcp.options,
             _tcp.payload]
-    return _tcp.list
+        return _tcp.list

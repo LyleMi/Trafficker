@@ -2,10 +2,10 @@ import tornado.web
 
 from layer.mac import ETHER
 from layer.ip import IP
-from layer.icmp import ICMP
+from layer.udp import UDP
 from utils.utils import send
 
-class ICMPHandler(tornado.web.RequestHandler):
+class UDPHandler(tornado.web.RequestHandler):
 
     def post(self):
         mac = self.get_argument('mac')
@@ -14,5 +14,6 @@ class ICMPHandler(tornado.web.RequestHandler):
         print mac, ip
         dst = '192.168.217.128'
         mac = ETHER(src="asdfgh", dst="lkjhgh")
-        arp = ARP(srcp = 233, dstp=422)
-        s = send(arp/mac/ip, dst)
+        ip = IP(source='127.0.0.1', destination='192.168.217.128')
+        udp = UDP(srcp = 233, dstp=422)
+        s = send(udp/mac/ip, dst)
