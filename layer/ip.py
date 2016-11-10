@@ -1,5 +1,6 @@
 import socket
 import struct
+import socket
 
 from utils.utils import checksum
 from layer import layer

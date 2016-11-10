@@ -1,3 +1,5 @@
+import socket
+
 def md5(s):
     return __import__('hashlib').md5(str(s)).hexdigest()
 
@@ -17,11 +19,10 @@ def checksum(data):
     return s
 
 
-def send():
+def send(packet, dst):
     s = socket.socket(socket.AF_INET,
-                      socket.SOCK_RAW,
-                      socket.IPPROTO_RAW)
-    s.sendto(packet, (dst_host, 0))
+                      socket.SOCK_RAW)
+    s.sendto(packet, (dst, 0))
     return s
 
 
