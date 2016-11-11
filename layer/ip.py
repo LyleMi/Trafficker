@@ -7,19 +7,19 @@ from layer import layer
 
 class IP(layer):
 
-    def __init__(self, source, destination, payload='', proto=socket.IPPROTO_TCP):
-        self.version = 4
-        self.ihl = 5  # Internet Header Length
-        self.tos = 0  # Type of Service
-        self.tl = 20 + len(payload)
-        self.id = 0  # random.randint(0, 65535)
-        self.flags = 0  # Don't fragment
-        self.offset = 0
-        self.ttl = 255
-        self.protocol = proto
-        self.checksum = 2  # will be filled by kernel
-        self.source = socket.inet_aton(source)
-        self.destination = socket.inet_aton(destination)
+    def __init__(self, ip):
+        self.version = ip['version']
+        self.ihl = ip['ihl']  # Internet Header Length
+        self.tos = ip['tos']  # Type of Service
+        self.tl = ip['tl'] + len(ip['payload'])
+        self.id = ip['id']  # random.randint(0, 65535)
+        self.flags = ip['flags']  # Don't fragment
+        self.offset = ip['offset']
+        self.ttl = ip['ttl']
+        self.protocol = ip['proto']
+        self.checksum = ip['checksum']  # will be filled by kernel
+        self.source = socket.inet_aton(ip['source'])
+        self.destination = socket.inet_aton(ip['dst'])
 
     def pack(self):
         ver_ihl = (self.version << 4) + self.ihl

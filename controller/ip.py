@@ -7,10 +7,10 @@ from utils.utils import send
 class IPHandler(tornado.web.RequestHandler):
 
     def post(self):
-        mac = self.get_argument('mac')
-        ip = self.get_argument('ip')
-        print mac, ip
+        mac_config = self.get_argument('mac')
+        ip_config = self.get_argument('ip')
+        print mac_config, ip_config
         dst = '192.168.217.128'
-        ip = IP(source='127.0.0.1', destination='192.168.217.128')
-        mac = ETHER(src="asdfgh", dst="lkjhgh")
+        mac = ETHER(mac_config)
+        ip = IP(ip_config)
         s = send(mac/ip, dst)

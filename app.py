@@ -36,15 +36,19 @@ path = os.path.join(os.getcwd(), "web")
 handlers = [
     (r"/", "controller.main.MainHandler"),
     (r"/ip", "controller.ip.IPHandler"),
-    (r"/exit", "controller.exit.exitHandler"),
+    (r"/udp", "controller.udp.UDPHandler"),
+    (r"/tcp", "controller.tcp.TCPHandler"),
+    (r"/arp", "controller.arp.ARPHandler"),
+    (r"/icmp", "controller.icmp.ICMPHandler"),
     (r'/pcap', "controller.pcap.PCAPHandler"),
+    (r"/exit", "controller.exit.exitHandler"),
 ]
 
 
 if __name__ == "__main__":
     try:
         app = tornado.web.Application(handlers, debug=True, **settings)
-        print "run at %s" % tornado.options.options.url
+        print "[*] Server run at %s" % tornado.options.options.url
         app.listen(tornado.options.options.port)
         webbrowser.open(tornado.options.options.url)
         tornado.ioloop.IOLoop.instance().start()

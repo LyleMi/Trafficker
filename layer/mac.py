@@ -9,10 +9,10 @@ ETH_P_IP = 0x0800  # Internet Protocol Packet
 
 class ETHER(layer):
 
-    def __init__(self, src, dst, type=ETH_P_IP):
-        self.src = src
-        self.dst = dst
-        self.type = type
+    def __init__(self, mac):
+        self.src = mac['src']
+        self.dst = mac['dst']
+        self.type = mac['type']
 
     def pack(self):
         ethernet = struct.pack('!6s6sH',
