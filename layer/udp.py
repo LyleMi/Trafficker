@@ -6,10 +6,10 @@ from layer import layer
 
 class UDP(layer):
 
-    def __init__(self, src, dst, payload=''):
-        self.src = src
-        self.dst = dst
-        self.payload = payload
+    def __init__(self, udp):
+        self.src = udp['src']
+        self.dst = udp['dst']
+        self.payload = udp['payload']
         self.checksum = 0
         self.length = 8  # UDP Header length
 

@@ -6,23 +6,23 @@ from layer import layer
 
 class TCP(layer):
 
-    def __init__(self, srcp, dstp):
-        self.srcp = srcp
-        self.dstp = dstp
-        self.seqn = 10
-        self.ackn = 0
-        self.offset = 5  # Data offset: 5x4 = 20 bytes
-        self.reserved = 0
-        self.urg = 0
-        self.ack = 0
-        self.psh = 0
-        self.rst = 0
-        self.syn = 1
-        self.fin = 0
-        self.window = socket.htons(5840)
-        self.checksum = 0
-        self.urgp = 0
-        self.payload = ""
+    def __init__(self, tcp):
+        self.srcp = tcp['srcp']
+        self.dstp = tcp['dstp']
+        self.seq = tcp['seq']
+        self.ack = tcp['ack']
+        self.offset = tcp['offset']  # Data offset: 5x4 = 20 bytes
+        self.reserved = tcp['reserved']
+        self.urg = tcp['urg']
+        self.ack = tcp['ack']
+        self.psh = tcp['psh']
+        self.rst = tcp['rst']
+        self.syn = tcp['syn']
+        self.fin = tcp['fin']
+        self.window = tcp['window']#socket.htons(5840)
+        self.checksum = tcp['checksum']
+        self.urgp = tcp['urgp']
+        self.payload = tcp['payload']
         self.src = ""
         self.destination = ""
 
