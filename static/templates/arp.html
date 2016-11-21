@@ -1,1 +1,14 @@
-arp
+<form action="">
+    <div class="form-group ip-form">
+        <h4>arp</h4>
+        <div ng-repeat="(key, value) in data.ARP">
+            <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.ARP[key]'>
+        </div>
+    </div>
+
+    response
+    <textarea class="form-control response" cols="10" rows="5" ng-model="data.result" />
+    <input type="button" value="send" class="btn btn-info" ng-click="send_arp()">
+
+</form>
+ 

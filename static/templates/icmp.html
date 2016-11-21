@@ -1,1 +1,14 @@
-icmp
+<form action="">
+    <div class="form-group ip-form">
+        <h4>ICMP</h4>
+        <div ng-repeat="(key, value) in data.ICMP">
+            <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.ICMP[key]'>
+        </div>
+    </div>
+
+    response
+    <textarea class="form-control response" cols="10" rows="5" ng-model="data.result" />
+    <input type="button" value="send" class="btn btn-info" ng-click="send_icmp()">
+
+</form>
+ 

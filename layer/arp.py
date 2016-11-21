@@ -18,10 +18,10 @@ class ARP(layer):
 
     def __init__(self, arp):
         self.arpop = arp["arpop"]
-        self.sendermac = arp("sender_mac")
-        self.senderip = arp("sender_ip")
-        self.targetmac = arp("target_mac")
-        self.targetip = arp("target_ip")
+        self.sendermac = arp["sender_mac"]
+        self.senderip = arp["sender_ip"]
+        self.targetmac = arp["target_mac"]
+        self.targetip = arp["target_ip"]
 
     def pack(self):
         arp = struct.pack('!HHBBH6s4s6s4s',
