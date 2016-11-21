@@ -5,7 +5,7 @@ from utils.utils import checksum
 from layer import layer
 
 ETH_P_IP = 0x0800  # Internet Protocol Packet
-
+ETH_P_ARP = 0x0806
 
 class ETHER(layer):
 
@@ -19,4 +19,8 @@ class ETHER(layer):
                                self.dst,
                                self.src,
                                self.type)
+        return ethernet
+
+    def unpack(self, packet):
+        ethernet = struct.pack('!6s6sH', packet)
         return ethernet
