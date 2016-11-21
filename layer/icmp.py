@@ -15,7 +15,20 @@ class ICMP(layer):
         self.next_hop_mtu = icmp["next_hop_mtu"]
 
     def pack(self):
-        return ''
+        icmp_header = struct.pack("!BBHHHBBH4s4s",
+                                self.type,
+                                self.code,
+                                self.checksum,
+                                self.unused,
+                                self.next_hop_mtu)
+        self.checksum = checksum(icmp_header)
+        icmp_header = struct.pack("!BBHHHBBH4s4s",
+                                self.type,
+                                self.code,
+                                self.checksum,
+                                self.unused,
+                                self.next_hop_mtu)
+        return icmp_header
 
     def unpack(self, packet):
         return []
