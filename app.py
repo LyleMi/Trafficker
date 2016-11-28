@@ -50,7 +50,7 @@ if __name__ == "__main__":
         app = tornado.web.Application(handlers, debug=True, **settings)
         print "[*] Server run at %s" % tornado.options.options.url
         app.listen(tornado.options.options.port)
-        webbrowser.open(tornado.options.options.url)
+        # webbrowser.open(tornado.options.options.url)
         tornado.ioloop.IOLoop.instance().start()
     except:
         import traceback

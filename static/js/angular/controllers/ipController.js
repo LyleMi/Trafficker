@@ -4,7 +4,7 @@ app.controller("ipController", ["$scope", "$rootScope", "$state", "HttpService",
             mac: {
                 dst: 'ff:ff:ff:ff:ff:ff',
                 src: '00:00:00:00:00:00',
-                type: 36864
+                type: 0x0800
             },
             IP: {
                 version: 4, // 4 bits
