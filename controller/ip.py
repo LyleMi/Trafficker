@@ -9,7 +9,7 @@ from utils.utils import send
 class IPHandler(tornado.web.RequestHandler):
 
     def post(self):
-        mac_config = loads(str(self.get_argument('mac')))
+        mac_config = loads(self.get_argument('mac'))
         ip_config  = loads(self.get_argument('ip'))
         # print mac_config, ip_config
         dst = '192.168.217.128'
