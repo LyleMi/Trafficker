@@ -20,7 +20,7 @@ class IP(layer):
         self.ttl = ip['ttl']
         self.protocol = ip['proto']
         self.checksum = ip['checksum']  # will be filled by kernel
-        self.source = socket.inet_aton(ip['source'])
+        self.source = socket.inet_aton(ip['src'])
         self.destination = socket.inet_aton(ip['dst'])
 
     def pack(self):
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     ip_config['ttl'] = 64 # 8 < ttl < 255
     ip_config['proto'] = 6
     ip_config['checksum']  = 0 # will be filled by kernel
-    ip_config['source'] = '127.0.0.1'
+    ip_config['src'] = '127.0.0.1'
     ip_config['dst'] = '127.0.0.1'
     ip = IP(ip_config)
     packet = ip.pack()

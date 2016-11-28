@@ -8,17 +8,18 @@ app.controller("ipController", ["$scope", "$rootScope", "$state", "HttpService",
             },
             IP: {
                 version: 4, // 4 bits
-                ihl: 5, // head length 4 bits
+                ihl: 20, // head length 4 bits
                 tos: 0, // tyoe of service 8 bits
-                len: 512, // total len 16 bits
-                flags: 0, // 16 bits
-                flag: 0, // 3 bits
+                id: 512, // total len 16 bits
+                flags: 0, // 3 bits
+                offset: 0, // 3 bits
                 ttl: 64, // 8 bits
-                proto: 0, // 8 bits
-                chksum: 0, // 16 bits
-                src: 0, // 32 bits
-                dst: 0, // 32 bits
+                proto: 6, // 8 bits
+                checksum: 0, // 16 bits
+                src: '127.0.0.1', // 32 bits
+                dst: '127.0.0.1', // 32 bits
                 options: 0,
+                payload: '',
             },
             result: ''
         };
