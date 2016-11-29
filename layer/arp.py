@@ -4,8 +4,6 @@ import struct
 from utils.utils import checksum
 from layer import layer
 
-bcast_mac = 0xFFFFFFFFFFFF
-zero_mac  = 0x000000000000
 ARPOP_REQUEST = 0x0001
 ARPOP_REPLY = 0x0002
 HARDWARE_TYPE = 0x0001
@@ -40,3 +38,13 @@ class ARP(layer):
     def unpack(self, packet):
         arp = struct.pack('!HHBBH6s4s6s4s', packet)
         return arp
+
+if __name__ == '__main__':
+  arp_config = {}
+  arp_config["arpop"] = 2
+  arp_config["sender_mac"] = 'ff:ff:ff:ff:ff:ff'
+  arp_config["sender_ip"] = '127.0.0.1'
+  arp_config["target_mac"] = 'ff:ff:ff:ff:ff:ff'
+  arp_config["target_ip"] = '127.0.0.1'
+  arp = ARP(arp_config)
+  print arp.pack()
