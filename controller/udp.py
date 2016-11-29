@@ -1,3 +1,5 @@
+from json import loads
+
 import tornado.web
 
 from layer.mac import ETHER
@@ -8,12 +10,10 @@ from utils.utils import send
 class UDPHandler(tornado.web.RequestHandler):
 
     def post(self):
-        mac = self.get_argument('mac')
-        ip = self.get_argument('ip')
-        tcp = self.get_argument('tcp')
-        print mac, ip
-        dst = '192.168.217.128'
-        mac = ETHER(src="asdfgh", dst="lkjhgh")
-        ip = IP(source='127.0.0.1', destination='192.168.217.128')
-        udp = UDP(srcp = 233, dstp=422)
+        mac_config = loads(self.get_argument('mac'))
+        ip_config  = loads(self.get_argument('ip'))
+        udp_config = loads(self.get_argument('udp'))
+        mac = ETHER(mac_config)
+        ip  = IP(ip_config)
+        udp = udp(udp_config)
         s = send(udp/mac/ip, dst)
