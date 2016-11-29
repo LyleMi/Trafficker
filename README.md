@@ -8,7 +8,7 @@ this is a tool used to send raw traffic or http request
 
 ### Python Requirements
 
-* scapy
+* tornado
 
 run ```pip install -r requirements.txt```
 
@@ -30,3 +30,7 @@ python app.py
 * tcp
 * udp
 * http
+
+## other function
+
+* pcap packet parse (todo)
