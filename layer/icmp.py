@@ -32,3 +32,14 @@ class ICMP(layer):
 
     def unpack(self, packet):
         return []
+
+
+if __name__ == '__main__':
+    icmp_config = {}
+    icmp_config["type"] = 2
+    icmp_config["code"] = 'ff:ff:ff:ff:ff:ff'
+    icmp_config["checksum"] = '127.0.0.1'
+    icmp_config["unused"] = 'ff:ff:ff:ff:ff:ff'
+    icmp_config["next_hop_mtu"] = '127.0.0.1'
+    icmp = icmp(icmp_config)
+    print icmp.pack()
