@@ -1,7 +1,7 @@
 import socket
 import struct
 
-from utils.utils import checksum
+from utils.utils import checksum, parseMac
 from layer import layer
 
 ETH_P_IP = 0x0800  # Internet Protocol Packet
@@ -13,8 +13,8 @@ class ETHER(layer):
     def __init__(self, mac):
         # print type(mac)
         # print mac
-        self.src = mac["src"].replace(':', '').decode('hex')
-        self.dst = mac["dst"].replace(':', '').decode('hex')
+        self.src = parseMac(mac["src"])
+        self.dst = parseMac(mac["dst"])
         self.type = mac["type"]
         # print self.src
         # print self.dst

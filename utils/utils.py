@@ -36,3 +36,6 @@ def hexdump(src, length=16):
         text = b''.join([x if 0x20 <= ord(x) < 0x7F else b'.' for x in s])
         result.append(b"%04X   %-*s   %s" %
                       (i, length*(digits + 1), hexa, text))
+
+def parseMac(s):
+    return s.replace(':', '').decode('hex')

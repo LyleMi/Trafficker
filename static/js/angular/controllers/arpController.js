@@ -10,7 +10,7 @@ app.controller("arpController", ["$scope", "$rootScope", "$state", "HttpService"
             },
         };
 
-        console.log('arp');
+        // console.log('arp');
 
         $scope.send_arp = function() {
             HttpService.post('arp', {

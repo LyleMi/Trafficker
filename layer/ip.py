@@ -11,15 +11,15 @@ class IP(layer):
 
     def __init__(self, ip):
         self.version = ip['version']
-        self.ihl = ip['ihl']  # Internet Header Length
-        self.tos = ip['tos']  # Type of Service
+        self.ihl = ip['ihl']
+        self.tos = ip['tos']
         self.tl = 20 + len(ip['payload'])
-        self.id = ip['id']  # random.randint(0, 65535)
-        self.flags = ip['flags']  # Don't fragment
+        self.id = ip['id']
+        self.flags = ip['flags']
         self.offset = ip['offset']
         self.ttl = ip['ttl']
         self.protocol = ip['proto']
-        self.checksum = ip['checksum']  # will be filled by kernel
+        self.checksum = ip['checksum']
         self.source = socket.inet_aton(ip['src'])
         self.destination = socket.inet_aton(ip['dst'])
 
