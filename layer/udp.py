@@ -1,3 +1,15 @@
+'''
+UDP Header Format
+0      7 8     15 16    23 24    31 
++--------+--------+--------+--------+
+|          source address           |
++--------+--------+--------+--------+
+|        destination address        |
++--------+--------+--------+--------+
+|  zero  |protocol|   UDP length    |
++--------+--------+--------+--------+
+'''
+
 import socket
 import struct
 
