@@ -17,8 +17,9 @@ pip install -r requirements.txt
 
 git clone https://github.com/LyleMi/Trafficker.git
 
-python app.py
+sudo python app.py
 ```
+
 
 ## 特性
 
@@ -33,4 +34,4 @@ python app.py
 
 ## 其他功能
 
-* pcap 包解析 (待实现)
+* pcap 包解析

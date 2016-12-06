@@ -15,9 +15,11 @@ run ```pip install -r requirements.txt```
 ### Installation on Ubuntu
 
 ```
+pip install -r requirements.txt
+
 git clone https://github.com/LyleMi/Trafficker.git
 
-python app.py
+sudo python app.py
 ```
 
 ## Feature
@@ -33,4 +35,4 @@ python app.py
 
 ## other function
 
-* pcap packet parse (todo)
+* pcap packet parse
