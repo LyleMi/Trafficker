@@ -1,4 +1,7 @@
 <form action="">
+
+    <div>
+
     <div class="form-group ip-form">
         <h4>MAC</h4>
         <div ng-repeat="(key, value) in data.MAC">
@@ -19,9 +22,7 @@
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.TCP[key]'>
         </div>
     </div>
-
-    <input type="button" value="send" class="btn btn-info" ng-click="send_tcp()">
-
+    </div>
 
 </form>
  

@@ -7,13 +7,10 @@
     </div>
 
     <div class="form-group ip-form">
-        <h4>arp</h4>
+        <h4>ARP</h4>
         <div ng-repeat="(key, value) in data.ARP">
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.ARP[key]'>
         </div>
     </div>
-
-    <input type="button" value="send" class="btn btn-info" ng-click="send_arp()">
-
 </form>
  

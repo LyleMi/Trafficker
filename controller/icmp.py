@@ -15,5 +15,5 @@ class ICMPHandler(tornado.web.RequestHandler):
         icmp_config = loads(self.get_argument('icmp'))
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
-        icmp = icmp(icmp_config)
+        icmp = ICMP(icmp_config)
         s = send(icmp/mac/ip, dst)

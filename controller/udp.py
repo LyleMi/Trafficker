@@ -15,5 +15,5 @@ class UDPHandler(tornado.web.RequestHandler):
         udp_config = loads(self.get_argument('udp'))
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
-        udp = udp(udp_config)
+        udp = UDP(udp_config)
         s = send(udp/mac/ip, dst)
