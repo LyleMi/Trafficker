@@ -1,13 +1,7 @@
 app.controller("icmpController", ["$scope", "$rootScope", "$state", "HttpService",
     function($scope, $rootScope, $state, HttpService) {
         $scope.data = {
-            ICMP: {
-                type: 0,
-                code: 0,
-                checksum: 0,
-                unused: 0,
-                next_hop_mtu: 0,
-            },
+
         }
 
 

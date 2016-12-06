@@ -11,27 +11,27 @@ app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $ur
 		.state("ip", {
 			url: "/ip",
 			templateUrl: "static/templates/ip.html",
-			controller: "ipController"
+			controller: "mainController"
 		})
 		.state("tcp", {
 			url: "/tcp",
 			templateUrl: "static/templates/tcp.html",
-			controller: "tcpController"
+			controller: "mainController"
 		})
 		.state("udp", {
 			url: "/udp",
 			templateUrl: "static/templates/udp.html",
-			controller: "udpController"
+			controller: "mainController"
 		})
 		.state("arp", {
 			url: "/arp",
 			templateUrl: "static/templates/arp.html",
-			controller: "arpController"
+			controller: "mainController"
 		})
 		.state("icmp", {
 			url: "/icmp",
 			templateUrl: "static/templates/icmp.html",
-			controller: "icmpController"
+			controller: "mainController"
 		})
 		.state("pcap", {
 			url: "/pcap",
