@@ -15,7 +15,7 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 unused: 0,
                 next_hop_mtu: 0,
             },
-            mac: {
+            MAC: {
                 dst: 'ff:ff:ff:ff:ff:ff',
                 src: '00:00:00:00:00:00',
                 type: 0x0800
@@ -66,6 +66,18 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
         $scope.send_arp = function() {
             HttpService.post('arp', {
                     'arp': JSON.stringify($scope.data.ARP),
+                    'mac': JSON.stringify($scope.data.MAC)
+                },
+                function(response) {
+                    console.log(response);
+                    // $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
+        }
+
+        $scope.send_ip = function() {
+            HttpService.post('ip', {
+                    'mac': JSON.stringify($scope.data.mac),
                     'ip': JSON.stringify($scope.data.IP)
                 },
                 function(response) {
@@ -75,9 +87,32 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 function() {});
         }
 
+        $scope.send_udp = function() {
+            HttpService.post('udp', {
+                    'mac': JSON.stringify($scope.data.mac),
+                    'ip': JSON.stringify($scope.data.IP)
+                },
+                function(response) {
+                    console.log(response);
+                    // $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
+        }
 
-        $scope.send_ip = function() {
-            HttpService.post('ip', {
+        $scope.send_tcp = function() {
+            HttpService.post('tcp', {
+                    'mac': JSON.stringify($scope.data.mac),
+                    'ip': JSON.stringify($scope.data.IP)
+                },
+                function(response) {
+                    console.log(response);
+                    // $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
+        }
+
+        $scope.send_icmp = function() {
+            HttpService.post('icmp', {
                     'mac': JSON.stringify($scope.data.mac),
                     'ip': JSON.stringify($scope.data.IP)
                 },
