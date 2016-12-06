@@ -16,10 +16,10 @@ class ARP(layer):
 
     def __init__(self, arp):
         self.arpop = arp["arpop"]
-        self.sendermac = parseMac(arp["sender_mac"])
-        self.senderip =  socket.inet_aton(arp["sender_ip"])
-        self.targetmac = parseMac(arp["target_mac"])
-        self.targetip = socket.inet_aton(arp["target_ip"])
+        self.sendermac = parseMac(arp["sendermac"])
+        self.senderip =  socket.inet_aton(arp["senderip"])
+        self.targetmac = parseMac(arp["targetmac"])
+        self.targetip = socket.inet_aton(arp["targetip"])
 
     def pack(self):
         arp = struct.pack('!HHBBH6s4s6s4s',

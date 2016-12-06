@@ -5,7 +5,6 @@ import tornado.web
 from layer.mac import ETHER
 from layer.ip import IP
 from layer.tcp import TCP
-from utils.utils import send
 
 class TCPHandler(tornado.web.RequestHandler):
 
@@ -16,4 +15,4 @@ class TCPHandler(tornado.web.RequestHandler):
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
         tcp = TCP(tcp_config)
-        s = send(tcp/mac/ip, dst)
+        s = send(tcp/ip/mac, ip_config['dst'])

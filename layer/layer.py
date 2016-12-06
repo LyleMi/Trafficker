@@ -1,10 +1,20 @@
+import socket
+
 class layer(object):
     """docstring for layer"""
     def __init__(self):
-        pass
+        self.packet = ""
 
     def pack(self):
         return ''
 
-    def __div__(self, other):
-        return self.pack() + other.pack()
+    def __str__(self):
+        return self.pack()
+
+    @staticmethod
+    def send(layers, dst):
+        packet = ''.join([l.pack() for l in layers])
+        s = socket.socket(socket.AF_INET,
+                          socket.SOCK_RAW)
+        s.sendto(packet, (dst, 0))
+        return s

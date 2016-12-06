@@ -68,6 +68,7 @@ class TCP(layer):
                                  self.checksum,
                                  self.urgp)
         # pseudo header fields
+        '''
         source_ip = self.source
         destination_ip = self.destination
         reserved = 0
@@ -81,7 +82,8 @@ class TCP(layer):
                           protocol,
                           total_length)
         psh = psh + tcp_header + self.payload
-        tcp_checksum = checksum(psh)
+        '''
+        tcp_checksum = checksum(tcp_header)
         tcp_header = struct.pack("!HHLLBBH",
                                  self.srcp,
                                  self.dstp,

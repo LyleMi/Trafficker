@@ -4,7 +4,7 @@ import tornado.web
 
 from layer.mac import ETHER
 from layer.arp import ARP
-from utils.utils import send
+from layer.layer import layer
 
 class ARPHandler(tornado.web.RequestHandler):
 
@@ -14,4 +14,5 @@ class ARPHandler(tornado.web.RequestHandler):
         # print mac, ip
         mac = ETHER(mac_config)
         arp = ARP(arp_config)
-        s = send(arp/mac, dst)
+        s = layer.send([arp,mac], arp_config['senderip'])
+        print s

@@ -4,7 +4,6 @@ import tornado.web
 
 from layer.mac import ETHER
 from layer.ip import IP
-from utils.utils import send
 
 class IPHandler(tornado.web.RequestHandler):
 
@@ -14,4 +13,5 @@ class IPHandler(tornado.web.RequestHandler):
         # print mac_config, ip_config
         mac = ETHER(mac_config)
         ip = IP(ip_config)
-        s = send(mac/ip, dst)
+        s = send(mac/ip, ip_config['dst'])
+        print s

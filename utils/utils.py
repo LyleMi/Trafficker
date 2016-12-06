@@ -1,5 +1,6 @@
 import socket
 
+
 def md5(s):
     return __import__('hashlib').md5(str(s)).hexdigest()
 
@@ -19,13 +20,6 @@ def checksum(data):
     return s
 
 
-def send(packet, dst):
-    s = socket.socket(socket.AF_INET,
-                      socket.SOCK_RAW)
-    s.sendto(packet, (dst, 0))
-    return s
-
-
 def hexdump(src, length=16):
     result = []
     digits = 4 if isinstance(src, unicode) else 2
@@ -36,6 +30,7 @@ def hexdump(src, length=16):
         text = b''.join([x if 0x20 <= ord(x) < 0x7F else b'.' for x in s])
         result.append(b"%04X   %-*s   %s" %
                       (i, length*(digits + 1), hexa, text))
+
 
 def parseMac(s):
     return s.replace(':', '').decode('hex')

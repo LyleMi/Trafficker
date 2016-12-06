@@ -5,7 +5,7 @@ import tornado.web
 from layer.mac import ETHER
 from layer.ip import IP
 from layer.icmp import ICMP
-from utils.utils import send
+from layer.layer import layer
 
 class ICMPHandler(tornado.web.RequestHandler):
 
@@ -16,4 +16,6 @@ class ICMPHandler(tornado.web.RequestHandler):
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
         icmp = ICMP(icmp_config)
-        s = send(icmp/mac/ip, dst)
+        s = layer.send([icmp, ip,mac], ip_config['dst'])
+        print s
+        print dir(s)

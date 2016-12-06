@@ -5,7 +5,7 @@ import tornado.web
 from layer.mac import ETHER
 from layer.ip import IP
 from layer.udp import UDP
-from utils.utils import send
+from layer.layer import layer
 
 class UDPHandler(tornado.web.RequestHandler):
 
@@ -16,4 +16,5 @@ class UDPHandler(tornado.web.RequestHandler):
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
         udp = UDP(udp_config)
-        s = send(udp/mac/ip, dst)
+        s = layer.send([udp,ip,mac], ip_config['dst'])
+        print s
