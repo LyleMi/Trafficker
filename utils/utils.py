@@ -31,6 +31,8 @@ def hexdump(src, length=16):
         result.append(b"%04X   %-*s   %s" %
                       (i, length*(digits + 1), hexa, text))
 
+    print b'\n'.join(result)
+
 
 def parseMac(s):
     return s.replace(':', '').decode('hex')

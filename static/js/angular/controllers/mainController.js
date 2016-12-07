@@ -3,9 +3,9 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
         $scope.data = {
             ARP: {
                 arpop: 0,
-                sendermac: 'ff:ff:ff:ff:ff:ff',
+                sendermac: '28:D2:44:91:3F:80',
                 senderip: '127.0.0.1',
-                targetmac: 'ff:ff:ff:ff:ff:ff',
+                targetmac: '28:D2:44:91:3F:80',
                 targetip: '127.0.0.1',
             },
             ICMP: {
@@ -16,8 +16,8 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 seq: 0,
             },
             MAC: {
-                dst: 'ff:ff:ff:ff:ff:ff',
-                src: '00:00:00:00:00:00',
+                dst: '28:D2:44:91:3F:80',
+                src: '28:D2:44:91:3F:80',
                 type: 0x0800
             },
             IP: {
@@ -37,8 +37,8 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
             },
             UDP: {
                 srcp: 2333,
-                dstp: 2333,
-                payload: '',
+                dstp: 19992,
+                payload: 'AABBCCDD',
             },
             TCP: {
                 srcp: 2333,
