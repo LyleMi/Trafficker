@@ -14,10 +14,10 @@ class layer(object):
         return self.pack()
 
     @staticmethod
-    def send(layers, dst):
-        packet = ''.join([l.pack() for l in layers])
+    def send(layers, port = 0):
+        packet = ''.join([p.pack() for p in layers])
         hexdump(packet)
-        s = socket.socket(socket.AF_INET,
-                          socket.SOCK_RAW)
-        s.sendto(packet, (dst, 0))
-        return s
+        rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(port))
+        rawSocket.bind(("eth1",socket.htons(port)))
+        rawSocket.send(packet) 
+        return rawSocket
