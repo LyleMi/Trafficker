@@ -3,36 +3,36 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
         $scope.data = {
             ARP: {
                 arpop: 1,
-                sendermac: 'FF:FF:FF:FF:FF:FF',
-                senderip: '127.0.0.1',
+                sendermac: '00:0c:29:86:1c:1b',
+                senderip: '192.168.33.254',
                 targetmac: '00:00:00:00:00:00',
-                targetip: '192.168.1.1',
+                targetip: '202.120.2.101',
             },
             ICMP: {
-                type: 0,
-                code: 8,
+                type: 8,
+                code: 0,
                 checksum: 0,
-                ident: 0,
-                seq: 0,
+                ident: 3864,
+                seq: 1,
                 payload: 'abcdefghijklm',
             },
             MAC: {
                 dst: 'FF:FF:FF:FF:FF:FF',
-                src: 'FF:FF:FF:FF:FF:FF',
+                src: '00:0c:29:86:1c:1b',
                 type: 0x0800
             },
             IP: {
                 version: 4, // 4 bits
-                ihl: 20, // head length 4 bits
+                ihl: 5, // head length 4 bits
                 tos: 0, // tyoe of service 8 bits
-                id: 512, // total len 16 bits
-                flags: 0, // 3 bits
+                id: 29849, // total len 16 bits
+                flags: 2, // 3 bits
                 offset: 0, // 3 bits
                 ttl: 64, // 8 bits
                 proto: 6, // 8 bits
                 checksum: 0, // 16 bits
-                src: '127.0.0.1', // 32 bits
-                dst: '127.0.0.1', // 32 bits
+                src: '192.168.33.254', // 32 bits
+                dst: '192.168.33.11', // 32 bits
                 options: 0,
                 payload: '',
             },
@@ -57,7 +57,7 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 window: 53270,
                 checksum: 0,
                 urgp: 0,
-                payload: 0,
+                payload: '',
                 options: '',
             },
         };
