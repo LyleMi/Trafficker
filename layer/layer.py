@@ -18,6 +18,6 @@ class layer(object):
         packet = ''.join([p.pack() for p in layers])
         hexdump(packet)
         rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(port))
-        rawSocket.bind(("eth1",socket.htons(port)))
+        rawSocket.bind(("eth0",socket.htons(port)))
         rawSocket.send(packet) 
         return rawSocket
