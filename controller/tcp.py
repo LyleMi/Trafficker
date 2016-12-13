@@ -15,4 +15,6 @@ class TCPHandler(tornado.web.RequestHandler):
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
         tcp = TCP(tcp_config)
-        s = send(tcp/ip/mac, ip_config['dst'])
+        s = send([mac,tcp,ip])        
+        print s
+        print s.recv()

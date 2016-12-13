@@ -9,10 +9,11 @@ from layer.layer import layer
 class ARPHandler(tornado.web.RequestHandler):
 
     def post(self):
-        # mac_config = loads(self.get_argument('mac'))
+        mac_config = loads(self.get_argument('mac'))
         arp_config = loads(self.get_argument('arp'))
         # print mac, ip
-        # mac = ETHER(mac_config)
+        mac = ETHER(mac_config)
         arp = ARP(arp_config)
-        s = arp.send()
+        s = arp.send([mac, arp])
         print s
+        print s.recv()

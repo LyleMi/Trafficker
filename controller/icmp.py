@@ -16,6 +16,6 @@ class ICMPHandler(tornado.web.RequestHandler):
         mac = ETHER(mac_config)
         ip  = IP(ip_config)
         icmp = ICMP(icmp_config)
-        s = layer.send([icmp, ip,mac], ip_config['dst'])
+        s = layer.send([icmp, ip,mac])
         print s
-        print dir(s)
+        print s.recv()
