@@ -18,4 +18,4 @@ class ICMPHandler(tornado.web.RequestHandler):
         icmp = ICMP(icmp_config)
         s = layer.send([icmp, ip,mac])
         print s
-        print s.recv(4096)
+        # print s.recv(4096)
