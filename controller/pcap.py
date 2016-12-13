@@ -3,7 +3,7 @@ import json
 import dpkt
 import tornado.web
 
-from utils.hash import md5
+from utils.utils import md5
 
 upload_path = os.path.split(os.path.dirname(__file__))[0]
 upload_path = os.path.join(upload_path, 'uploads')

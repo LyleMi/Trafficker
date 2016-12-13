@@ -1,8 +1,8 @@
 import socket
-
+import hashlib
 
 def md5(s):
-    return __import__('hashlib').md5(str(s)).hexdigest()
+    return hashlib.md5(str(s)).hexdigest()
 
 
 def checksum(data):

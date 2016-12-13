@@ -14,5 +14,5 @@ class ARPHandler(tornado.web.RequestHandler):
         # print mac, ip
         # mac = ETHER(mac_config)
         arp = ARP(arp_config)
-        s = arp.send([arp], arp_config['senderip'])
+        s = arp.send()
         print s
