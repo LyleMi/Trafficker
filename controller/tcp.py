@@ -18,4 +18,4 @@ class TCPHandler(tornado.web.RequestHandler):
         tcp = TCP(tcp_config)
         s = layer.send([mac,tcp,ip])        
         print s
-        print s.recv()
+        print s.recv(4096)

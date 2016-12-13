@@ -16,4 +16,4 @@ class ARPHandler(tornado.web.RequestHandler):
         arp = ARP(arp_config)
         s = arp.send([mac, arp])
         print s
-        print s.recv()
+        print s.recv(4096)

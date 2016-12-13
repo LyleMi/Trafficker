@@ -16,4 +16,4 @@ class IPHandler(tornado.web.RequestHandler):
         ip = IP(ip_config)
         s = layer.send([mac, ip])
         print s
-        print s.recv()
+        print s.recv(4096)

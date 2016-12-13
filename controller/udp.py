@@ -18,4 +18,4 @@ class UDPHandler(tornado.web.RequestHandler):
         udp = UDP(udp_config)
         s = layer.send([mac, ip, udp])
         print s
-        print s.recv()
+        print s.recv(4096)
