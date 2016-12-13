@@ -36,8 +36,8 @@ class TCP(layer):
     def __init__(self, tcp):
         self.srcp = tcp['srcp']
         self.dstp = tcp['dstp']
-        self.seqn = tcp['seq']
-        self.ackn = tcp['ack']
+        self.seqn = tcp['seqnumber']
+        self.ackn = tcp['acknumber']
         self.offset = tcp['offset']  # Data offset: 5x4 = 20 bytes
         self.reserved = tcp['reserved']
         self.urg = tcp['urg']
@@ -94,7 +94,7 @@ class TCP(layer):
                                  self.window)
         tcp_header += struct.pack('H', tcp_checksum) + \
             struct.pack('!H', self.urgp)
-        return tcp_header
+        return tcp_header + self.payload.encode("hex")
 
     def unpack(self, packet):
         cflags = {  # Control flags

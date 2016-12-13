@@ -1,3 +1,7 @@
+<div class="container">
+
+<div class="form">
+
 <form action="">
 
     <div>
@@ -25,4 +29,71 @@
     </div>
 
 </form>
+
+</div>
+
+<pre class="notice">
+CWR Congestion Window Reduced
+ECE ECN Echo
+URG Urgent
+ACK Acknowledgment
+PSH Push
+RST Reset the connection
+SYN Synchronize sequence numbers to initiate a connection
+FIN The sender of the segment is finished sending data to its peer
+
+==============================================
+
+TCP Connection Established
+
+           SYN = 1, seq = x
+Client -------------------------> Server
+
+           SYN = 1, ACK = 1
+Client <------------------------- Server
+          seq = y, ack = x + 1
+
+                SYN = 1
+Client --------------------------> Server        
+        seq = x + 1, ack = y + 1
+
+==============================================
+
+TCP Connection Closed
+
+           FIN = 1, seq = u
+Client -------------------------> Server
+
+                ACK = 1
+Client <------------------------- Server
+          seq = v, ack = u + 1
+
+          FIN = 1,  ACK = 1
+Client --------------------------> Server        
+        seq = w, ack = u + 1
+
+                ACK = 1
+Client -------------------------> Server
+        seq = u + 1, ack = w + 1
+
+==============================================
+
+The TCP option values
+
+Kind    Length      Name
+0       1           EOL
+1       1           NOP
+2       4           MSS
+3       3           WSOPT 
+4       2           SACK-Permitted
+5       Var.        SACK
+8       10          TSOPT
+28      4           UTO
+29      Var.        TCP-AO
+253     Var.        Experimental
+254     Var.        Experimental
+
+</pre>
+
+</div>
  

@@ -3,7 +3,7 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
         $scope.data = {
             ARP: {
                 arpop: 1,
-                sendermac: '28:D2:44:91:3F:80',
+                sendermac: 'FF:FF:FF:FF:FF:FF',
                 senderip: '127.0.0.1',
                 targetmac: '00:00:00:00:00:00',
                 targetip: '192.168.1.1',
@@ -14,10 +14,11 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 checksum: 0,
                 ident: 0,
                 seq: 0,
+                payload: 'abcdefghijklm',
             },
             MAC: {
-                dst: '28:D2:44:91:3F:80',
-                src: '28:D2:44:91:3F:80',
+                dst: 'FF:FF:FF:FF:FF:FF',
+                src: 'FF:FF:FF:FF:FF:FF',
                 type: 0x0800
             },
             IP: {
@@ -36,16 +37,16 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 payload: '',
             },
             UDP: {
-                srcp: 2333,
+                srcp: 23333,
                 dstp: 19992,
                 payload: 'AABBCCDD',
             },
             TCP: {
                 srcp: 2333,
-                dstp: 30,
-                seq: 10,
-                ack: 0,
-                offset: 5,
+                dstp: 30333,
+                seqnumber: 10,
+                acknumber: 0,
+                offset: 8,
                 reserved: 0,
                 urg: 0,
                 ack: 0,

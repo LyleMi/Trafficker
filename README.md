@@ -2,17 +2,11 @@
 
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-yellow.svg)](http://www.python.org/download/)
 
-this is a tool used to send raw traffic or http request
+A tool used to send any packet or http request
 
-# Installation
+## Installation
 
-### Python Requirements
-
-* tornado
-
-run ```pip install -r requirements.txt```
-
-### Installation on Ubuntu
+> only support Linux
 
 ```
 pip install -r requirements.txt
@@ -32,7 +26,8 @@ sudo python app.py
 * tcp
 * udp
 * http
+* any arbitrarily binary packet
 
-## other function
+## other feature
 
 * pcap packet parse

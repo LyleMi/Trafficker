@@ -1,18 +1,18 @@
-.ip-form {
-    width: 30%;
+.form {
+    width: 40%;
     border: 1px solid #bbbbbb;
-    border-radius: 2px;
-    padding: 0px 15px 15px 10px;
-    margin: 0px 15px 15px 10px;
+    border-radius: 5px;
+    padding: 0px 15px 15px 15px;
+    margin: 0px 15px 15px 3%;
     display: inline-block;
     vertical-align: top
 }
 
-.ip-form h4 {
+.form h4 {
     text-align: center;
 }
 
-.ip-form input {
+.form input {
     font-size: 18px;
     display: inline-block;
     padding: 6px;
@@ -23,7 +23,7 @@
     left: 5px;
 }
 
-.ip-form p {
+.form p {
     display: inline-block;
     width: 30%;
 }
@@ -34,9 +34,9 @@
 }
 
 .notice {
-    width: 90%;
-    padding: 0px 15px 15px 10px;
-    margin: 0px 15px 15px 10px;
+    width: 50%;
+    padding: 25px;
+    margin: 0px 25px 25px 25px;
     display: inline-block;
     vertical-align: top
 }
@@ -47,4 +47,8 @@
     width: 50%;
     padding: 20px;
     bottom: 20px;
+}
+
+.container {
+    display: inline;
 }

@@ -1,15 +1,3 @@
-'''
-UDP Header Format
-0      7 8     15 16    23 24    31 
-+--------+--------+--------+--------+
-|          source address           |
-+--------+--------+--------+--------+
-|        destination address        |
-+--------+--------+--------+--------+
-|  zero  |protocol|   UDP length    |
-+--------+--------+--------+--------+
-'''
-
 import socket
 import struct
 
@@ -32,8 +20,8 @@ class UDP(layer):
                                     self.dst, 0,
                                     socket.IPPROTO_UDP, self.length)
         self.checksum = checksum(pseudo_header)
-        packet = struct.pack('!HHHH', self.src, self.dst, length, 0)
-        return packet
+        packet = struct.pack('!HHHH', self.src, self.dst, length, self.checksum)
+        return packet + self.payload.encode('hex')
 
 if __name__ == '__main__':
     udp_config = {}
