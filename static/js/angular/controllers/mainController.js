@@ -2,11 +2,11 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
     function($scope, $rootScope, $state, HttpService) {
         $scope.data = {
             ARP: {
-                arpop: 0,
+                arpop: 1,
                 sendermac: '28:D2:44:91:3F:80',
                 senderip: '127.0.0.1',
-                targetmac: '28:D2:44:91:3F:80',
-                targetip: '127.0.0.1',
+                targetmac: '00:00:00:00:00:00',
+                targetip: '192.168.1.1',
             },
             ICMP: {
                 type: 0,

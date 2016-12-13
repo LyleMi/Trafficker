@@ -39,6 +39,14 @@ class ARP(layer):
         arp = struct.unpack('!HHBBH6s4s6s4s', packet)
         return arp
 
+    def send(self):
+        packet = self.pack()
+        hexdump(packet)
+        s = socket.socket(socket.AF_INET, socket.SOCK_RAW)
+        s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+        s.sendto(packet, (dst, 0))
+        return s
+
 if __name__ == '__main__':
     arp_config = {}
     arp_config["arpop"] = ARPOP_REQUEST
