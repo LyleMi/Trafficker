@@ -17,6 +17,7 @@ class layer(object):
     def send(layers, port = 0):
         packet = ''.join([p.pack() for p in layers])
         hexdump(packet)
+        return "=== TEST ==="
         rawSocket = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.htons(port))
         rawSocket.bind(("eth0",socket.htons(port)))
         rawSocket.send(packet) 
