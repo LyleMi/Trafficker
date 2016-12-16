@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import struct
+from cgi import escape
 from json import dumps
 
 from utils import hexdump
@@ -14,14 +15,16 @@ htmlheader = '''
 <head>
     <meta charset="UTF-8">
     <title>Parse Result</title>
-    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/lib/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
 <h1>PCAP Parse Result</h1>
 
 '''
 
 htmlfooter = '''
+</div>
 </body>
 </html>
 '''
@@ -71,7 +74,7 @@ def parsePcap(pcapfile, distFile):
         html.write("dst mac: " + mac[1].encode("hex").upper() + ", ")
 
         if mac[2] == 2048:
-            html.write("Type: IP")
+            html.write("Type: IPv4")
             ip = IP.unpack(tmp[14:34])
 
             html.write("<br />")
@@ -88,8 +91,12 @@ def parsePcap(pcapfile, distFile):
 
         elif mac[2] == 2054:
             html.write("Type: ARP")
+        elif mac[2] == 34525:
+            html.write("Type: IPv6")
 
-        html.write("<pre>" + hexdump(tmp, 16, False) + "</pre>")
+        html.write("<br /><pre>")
+        html.write(escape(hexdump(tmp, 16, False)))
+        html.write("</pre>")
         i = i + packet_len+16
         packet_num += 1
 

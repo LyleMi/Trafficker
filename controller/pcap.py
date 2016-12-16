@@ -7,14 +7,15 @@ from utils.utils import md5
 from utils.pcap import parsePcap
 
 upload_path = os.path.split(os.path.dirname(__file__))[0]
-upload_path = os.path.join(upload_path, 'uploads')
+upload_path = os.path.join(upload_path, 'static', 'pcaps')
 
 
 class PCAPHandler(tornado.web.RequestHandler):
 
     def get(self):
         x = list(os.listdir(upload_path))
-        x.remove('.gitignore')
+        # print x
+        x = filter(lambda i: i.endswith(".html"), x)
         self.write(json.dumps(x))
 
     def post(self):

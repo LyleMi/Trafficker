@@ -1,8 +1,11 @@
+<div class="container">
+<h2>File List</h2>
 <ul>
-    <li ng-repeat="p in data.pcaps">{{ p }}</li>
+    <li ng-repeat="p in data.pcaps"><a href="/static/pcaps/{{ p }}">{{ p }}</a></li>
 </ul>
 
 <form action='pcap' enctype="multipart/form-data" method='post'>
-<input type='file' name='file'/><br/>
+<input type='file' name='file' class="file" /><br/>
 <input type='submit' value='submit' class="btn btn-info" />
 </form>
+</div>
