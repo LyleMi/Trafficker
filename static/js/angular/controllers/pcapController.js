@@ -15,5 +15,9 @@ app.controller("pcapController", ["$scope", "$rootScope", "$state", "HttpService
         }
 
         $scope.getpcaps();
+
+        $scope.choosepcap = function () {
+            $("#pcap").click();
+        }
     }
 ]);
