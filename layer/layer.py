@@ -4,11 +4,11 @@ from utils.utils import hexdump
 
 class layer(object):
     """docstring for layer"""
-    def __init__(self):
-        self.packet = ""
+    def __init__(self, packet = ""):
+        self.packet = packet
 
     def pack(self):
-        return ''
+        return self.packet
 
     def __str__(self):
         return self.pack()

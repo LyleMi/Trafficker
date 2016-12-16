@@ -60,6 +60,7 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 payload: '',
                 options: '',
             },
+            data:''
         };
 
         // console.log('arp');
@@ -82,6 +83,9 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                     break;
                 case "udp":
                     $scope.send_udp();
+                    break;
+                case "hex":
+                    $scope.send_hex();
                     break;
                 default:
                     break;
@@ -145,6 +149,17 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                     'mac': JSON.stringify($scope.data.MAC),
                     'ip': JSON.stringify($scope.data.IP),
                     'icmp': JSON.stringify($scope.data.ICMP)
+                },
+                function(response) {
+                    console.log(response);
+                    // $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
+        }
+
+        $scope.send_hex = function() {
+            HttpService.post('hex', {
+                    'hex': $scope.data.data,
                 },
                 function(response) {
                     console.log(response);

@@ -28,6 +28,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $ur
 			url: "/icmp",
 			templateUrl: "static/templates/icmp.html",
 		})
+		.state("hex", {
+			url: "/hex",
+			templateUrl: "static/templates/hex.html",
+		})
 		.state("pcap", {
 			url: "/pcap",
 			templateUrl: "static/templates/pcap.html",

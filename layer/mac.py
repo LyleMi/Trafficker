@@ -25,8 +25,9 @@ class ETHER(layer):
                                self.src,
                                self.type)
         return ethernet
-
-    def unpack(self, packet):
+    
+    @staticmethod
+    def unpack(packet):
         ethernet = struct.unpack('!6s6sH', packet)
         return ethernet
 

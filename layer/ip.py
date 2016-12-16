@@ -86,7 +86,8 @@ class IP(layer):
             ip_header += '\x00' * (4-(len(ip_header)%4))
         return ip_header
 
-    def unpack(self, packet):
+    @staticmethod
+    def unpack(packet):
         _ip = layer()
         _ip.ihl = 20
         iph = struct.unpack("!BBHHHBBH4s4s", packet[:_ip.ihl])
