@@ -43,15 +43,16 @@ class IP(layer):
         self.version = ip['version']
         self.ihl = ip['ihl']
         self.tos = ip['tos']
-        self.tl = 20 + len(ip['payload'])
+        self.tl = int(ip['tolen']) # total ength
         self.id = ip['id']
         self.flags = int(ip['flags'])
         self.offset = ip['offset']
         self.ttl = ip['ttl']
         self.protocol = int(ip['proto'])
-        self.checksum = ip['checksum']
+        self.checksum = 0
         self.source = socket.inet_aton(ip['src'])
         self.destination = socket.inet_aton(ip['dst'])
+        self.options = ip['options'].decode("hex")
 
     def pack(self):
         ver_ihl = (self.version << 4) + self.ihl
@@ -67,7 +68,7 @@ class IP(layer):
                                 self.checksum,
                                 self.source,
                                 self.destination)
-        self.checksum = checksum(ip_header)
+        self.checksum = checksum(ip_header + self.options)
         ip_header = struct.pack("!BBHHHBBH4s4s",
                                 ver_ihl,
                                 self.tos,
@@ -79,6 +80,10 @@ class IP(layer):
                                 socket.htons(self.checksum),
                                 self.source,
                                 self.destination)
+        ip_header += self.options
+        print len(ip_header)
+        if len(ip_header) % 4 != 0:
+            ip_header += '\x00' * (4-(len(ip_header)%4))
         return ip_header
 
     def unpack(self, packet):

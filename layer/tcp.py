@@ -24,8 +24,8 @@ class TCP(layer):
         self.window = tcp['window']#socket.htons(5840)
         self.checksum = tcp['checksum']
         self.urgp = tcp['urgp']
-        self.payload = tcp['payload']
-        self.option = tcp['option']
+        self.payload = tcp['payload'].decode("hex")
+        self.option = tcp['option'].decode("hex")
         self.src = ""
         self.destination = ""
 
@@ -70,7 +70,7 @@ class TCP(layer):
                                  self.window)
         tcp_header += struct.pack('H', tcp_checksum) + \
             struct.pack('!H', self.urgp)
-        return tcp_header + self.payload.encode("hex")
+        return tcp_header + self.option + self.payload
 
     def unpack(self, packet):
         cflags = {  # Control flags

@@ -14,7 +14,7 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 checksum: 0,
                 ident: 3864,
                 seq: 1,
-                payload: 'abcdefghijklm',
+                payload: '!"#$%&\'()*+,-./01234567',
             },
             MAC: {
                 dst: 'FF:FF:FF:FF:FF:FF',
@@ -24,17 +24,17 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
             IP: {
                 version: 4, // 4 bits
                 ihl: 5, // head length 4 bits
-                tos: 0, // tyoe of service 8 bits
-                id: 29849, // total len 16 bits
+                tos: 0, // type of service 8 bits
+                tolen: 84, // total ength
+                id: 26753, // total len 16 bits
                 flags: 2, // 3 bits
                 offset: 0, // 3 bits
                 ttl: 64, // 8 bits
-                proto: 6, // 8 bits
-                checksum: 0, // 16 bits
+                proto: 1, // 8 bits
+                // checksum: 0, // 16 bits
                 src: '192.168.33.254', // 32 bits
                 dst: '192.168.33.11', // 32 bits
-                options: 0,
-                payload: '',
+                options: '',
             },
             UDP: {
                 srcp: 23333,

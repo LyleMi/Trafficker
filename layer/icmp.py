@@ -31,8 +31,7 @@ class ICMP(layer):
                                   self.checksum,
                                   self.ident,
                                   self.seq)
-        # print self.payload.encode("hex")
-        return icmp_header + self.payload.encode("hex")
+        return icmp_header + str(self.payload)
 
     def unpack(self, packet):
         return struct.unpack("!BBHHH", packet)
