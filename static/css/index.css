@@ -1,32 +1,63 @@
-body {
-    background: #faf9f7;
-}
-
-.ad-nav {
-    height: 40px;
-}
-
-.ad-nav ul {
-    list-style: none;
-    margin-left: 50px;
-    align: center;
-}
-
-.ad-nav li {
-    display: inline;
-    line-height: 40px;
-}
-
-.ad-nav a {
-    text-decoration: none;
-    padding: 20px 20px;
-}
-
-.ad-nav a:hover {}
-
 .footer {
     float: clear;
     text-align: center;
     color: gray;
     font-size: 15px;
+}
+
+.form {
+    width: 40%;
+    border: 1px solid #bbbbbb;
+    border-radius: 5px;
+    padding: 0px 15px 15px 15px;
+    margin: 0px 15px 15px 3%;
+    display: inline-block;
+    vertical-align: top
+}
+
+.form h4 {
+    text-align: center;
+}
+
+.form input {
+    font-size: 18px;
+    display: inline-block;
+    padding: 6px;
+    margin: 4px;
+    width: 60%;
+    text-align: center;
+    position: relative;
+    left: 5px;
+}
+
+.form p {
+    display: inline-block;
+    width: 30%;
+}
+
+.response {
+    float: center;
+    width: 50%;
+}
+
+.notice {
+    width: 45%;
+    padding: 20px;
+    margin: 0px 25px 25px 25px;
+    display: inline-block;
+    vertical-align: top
+}
+
+.notice pre {
+    display: inline-block;
+    vertical-align: top
+    width: 50%;
+    padding: 20px;
+    bottom: 20px;
+}
+
+.navbar {
+    border-radius: 0px;
+    font-size: 15px;
+    color: #ffffff;
 }
