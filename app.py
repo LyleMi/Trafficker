@@ -40,6 +40,7 @@ handlers = [
     (r"/tcp", "controller.tcp.TCPHandler"),
     (r"/arp", "controller.arp.ARPHandler"),
     (r"/icmp", "controller.icmp.ICMPHandler"),
+    (r"/hex", "controller.hex.HEXHandler"),
     (r'/pcap', "controller.pcap.PCAPHandler"),
     (r"/exit", "controller.exit.exitHandler"),
 ]

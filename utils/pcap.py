@@ -1,12 +1,40 @@
 # coding=utf-8
 
 import struct
+from cgi import escape
+from json import dumps
+
+from utils import hexdump
+from layer.mac import ETHER
+from layer.ip import IP
 
 
-def parsePcap(pcapfile):
+htmlheader = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parse Result</title>
+    <link href="/static/css/lib/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<h1>PCAP Parse Result</h1>
+
+'''
+
+htmlfooter = '''
+</div>
+</body>
+</html>
+'''
+
+
+def parsePcap(pcapfile, distFile):
 
     fpcap = open(pcapfile, 'rb')
-    result = {}
+    html = open(distFile, 'w')
+    html.write(htmlheader)
 
     string_data = fpcap.read()
 
@@ -19,8 +47,6 @@ def parsePcap(pcapfile):
     pcap_header['sigfigs'] = string_data[12:16]
     pcap_header['snaplen'] = string_data[16:20]
     pcap_header['linktype'] = string_data[20:24]
-
-    result['pcap_header'] = pcap_header
 
     # pcap文件的数据包解析
     step = 0
@@ -40,11 +66,42 @@ def parsePcap(pcapfile):
         # 求出此包的包长len
         packet_len = struct.unpack('I', pcap_packet_header['len'])[0]
         # 写入此包数据
-        packet_data.append(string_data[i+16:i+16+packet_len])
+        tmp = string_data[i+16:i+16+packet_len]
+        mac = ETHER.unpack(tmp[:14])
+
+        html.write("<hr />")
+        html.write("src mac: " + mac[0].encode("hex").upper() + ", ")
+        html.write("dst mac: " + mac[1].encode("hex").upper() + ", ")
+
+        if mac[2] == 2048:
+            html.write("Type: IPv4")
+            ip = IP.unpack(tmp[14:34])
+
+            html.write("<br />")
+            html.write(ip[-2] + " -> " + ip[-1])
+            
+            if ip[-3] == 1:
+                html.write(" Type: ICMP")
+            elif ip[-3] == 2:
+                html.write(" Type: IGMP")
+            elif ip[-3] == 6:
+                html.write(" Type: TCP")
+            elif ip[-3] == 17:
+                html.write(" Type: UDP")
+
+        elif mac[2] == 2054:
+            html.write("Type: ARP")
+        elif mac[2] == 34525:
+            html.write("Type: IPv6")
+
+        html.write("<br /><pre>")
+        html.write(escape(hexdump(tmp, 16, False)))
+        html.write("</pre>")
         i = i + packet_len+16
         packet_num += 1
 
-    result['packet_data'] = packet_data
-    result['packet_len'] = packet_len
+    html.write(htmlfooter)
+
 
     fpcap.close()
+    html.close()

@@ -1,6 +1,7 @@
 import socket
 import hashlib
 
+
 def md5(s):
     return hashlib.md5(str(s)).hexdigest()
 
@@ -20,7 +21,7 @@ def checksum(data):
     return s
 
 
-def hexdump(src, length=16):
+def hexdump(src, length=16, show=True):
     result = []
     digits = 4 if isinstance(src, unicode) else 2
 
@@ -31,7 +32,10 @@ def hexdump(src, length=16):
         result.append(b"%04X   %-*s   %s" %
                       (i, length*(digits + 1), hexa, text))
 
-    print b'\n'.join(result)
+    if show:
+        print b'\n'.join(result)
+    else:
+        return b'\n'.join(result)
 
 
 def parseMac(s):

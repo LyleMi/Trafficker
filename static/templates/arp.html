@@ -1,16 +1,49 @@
+<div class="container">
+
+<div class="form">
+
 <form>
-    <div class="form-group ip-form">
+    <div class="form-group">
         <h4>MAC</h4>
         <div ng-repeat="(key, value) in data.MAC">
-            <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.MAC[key]'>
+            <p>{{ key }}</p><input type="text" class="form-control" ng-model="data.MAC[key]">
         </div>
     </div>
 
-    <div class="form-group ip-form">
+    <div class="form-group">
         <h4>ARP</h4>
         <div ng-repeat="(key, value) in data.ARP">
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.ARP[key]'>
         </div>
     </div>
 </form>
- 
+
+</div>
+
+
+<pre class="notice">
+MAC TYPE should be 0x0806 ( 2054 ) when send ARP
+
+arpop should be 1/2 when ARP request/reply
+arpop should be 3/4 when RARP request/reply
+
+ARP Broadcast:
+
+MAC DST MAC should be ff:ff:ff:ff:ff:ff
+ARP Target MAC should be 00:00:00:00:00:00
+
+ARP Request:
+
+ARP Target MAC should be 00:00:00:00:00:00
+
+ARP has follow default settings:
+
+ARP Hardware Type = 1
+ARP Protocol Type = 0x0800 (IPv4)
+ARP Hardware Size = 0x0800 (IPv4)
+ARP Protocol Size = 0x0800 (IPv4)
+
+</pre>
+
+</div>
+

@@ -3,49 +3,50 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
         $scope.data = {
             ARP: {
                 arpop: 1,
-                sendermac: '28:D2:44:91:3F:80',
-                senderip: '127.0.0.1',
+                sendermac: '00:0c:29:86:1c:1b',
+                senderip: '192.168.33.254',
                 targetmac: '00:00:00:00:00:00',
-                targetip: '192.168.1.1',
+                targetip: '202.120.2.101',
             },
             ICMP: {
-                type: 0,
-                code: 8,
+                type: 8,
+                code: 0,
                 checksum: 0,
-                ident: 0,
-                seq: 0,
+                ident: 3864,
+                seq: 1,
+                payload: '!"#$%&\'()*+,-./01234567',
             },
             MAC: {
-                dst: '28:D2:44:91:3F:80',
-                src: '28:D2:44:91:3F:80',
+                dst: 'FF:FF:FF:FF:FF:FF',
+                src: '00:0c:29:86:1c:1b',
                 type: 0x0800
             },
             IP: {
                 version: 4, // 4 bits
-                ihl: 20, // head length 4 bits
-                tos: 0, // tyoe of service 8 bits
-                id: 512, // total len 16 bits
-                flags: 0, // 3 bits
+                ihl: 5, // head length 4 bits
+                tos: 0, // type of service 8 bits
+                tolen: 84, // total ength
+                id: 26753, // total len 16 bits
+                flags: 2, // 3 bits
                 offset: 0, // 3 bits
                 ttl: 64, // 8 bits
-                proto: 6, // 8 bits
-                checksum: 0, // 16 bits
-                src: '127.0.0.1', // 32 bits
-                dst: '127.0.0.1', // 32 bits
-                options: 0,
-                payload: '',
+                proto: 1, // 8 bits
+                // checksum: 0, // 16 bits
+                src: '192.168.33.254', // 32 bits
+                dst: '192.168.33.11', // 32 bits
+                options: '',
             },
             UDP: {
-                srcp: 2333,
+                srcp: 23333,
                 dstp: 19992,
                 payload: 'AABBCCDD',
             },
             TCP: {
                 srcp: 2333,
-                dstp: 30,
-                seq: 10,
-                ack: 0,
-                offset: 5,
+                dstp: 30333,
+                seqnumber: 10,
+                acknumber: 0,
+                offset: 8,
                 reserved: 0,
                 urg: 0,
                 ack: 0,
@@ -56,9 +57,10 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 window: 53270,
                 checksum: 0,
                 urgp: 0,
-                payload: 0,
+                payload: '',
                 options: '',
             },
+            data:''
         };
 
         // console.log('arp');
@@ -81,6 +83,9 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                     break;
                 case "udp":
                     $scope.send_udp();
+                    break;
+                case "hex":
+                    $scope.send_hex();
                     break;
                 default:
                     break;
@@ -144,6 +149,17 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                     'mac': JSON.stringify($scope.data.MAC),
                     'ip': JSON.stringify($scope.data.IP),
                     'icmp': JSON.stringify($scope.data.ICMP)
+                },
+                function(response) {
+                    console.log(response);
+                    // $scope.data.result = JSON.stringify(response.data);
+                },
+                function() {});
+        }
+
+        $scope.send_hex = function() {
+            HttpService.post('hex', {
+                    'hex': $scope.data.data,
                 },
                 function(response) {
                     console.log(response);

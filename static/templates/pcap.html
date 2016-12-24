@@ -1,8 +1,30 @@
+<div class="container">
+
+<div class="form">
+
+<h4>File List</h4>
 <ul>
-    <li ng-repeat="p in data.pcaps">{{ p }}</li>
+    <li ng-repeat="p in data.pcaps"><a href="/static/pcaps/{{ p }}">{{ p }}</a></li>
 </ul>
 
 <form action='pcap' enctype="multipart/form-data" method='post'>
-<input type='file' name='file'/><br/>
-<input type='submit' value='submit'/>
+<div style="display: none;">
+    <input type='file' name='file' id="pcap" />
+</div>
+<p class="btn btn-info" ng-click="choosepcap()">选择PCAP文件</p>
+<input type='submit' value='解析文件' class="btn btn-info" />
 </form>
+
+</div>
+
+<pre class="notice">
+    This tools will parse pcap and convert it into html.
+    Follow those steps to parse your file
+        * choose your pcap file and upload it
+        * refresh this web page
+        * click the link
+    ps: only support pcap, other form could result into unknown error
+</pre>
+
+
+</div>

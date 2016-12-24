@@ -1,29 +1,4 @@
 #coding=utf-8
-'''
-TCP Header Format
-
-0                   1                   2                   3
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          Source Port          |       Destination Port        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                        Sequence Number                        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                    Acknowledgment Number                      |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Data |           |U|A|P|R|S|F|                               |
-| Offset| Reserved  |R|C|S|S|Y|I|            Window             |
-|       |           |G|K|H|T|N|N|                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|           Checksum            |         Urgent Pointer        |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                    Options                    |    Padding    |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                             data                              |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-                        TCP Header Format
-'''
 
 import socket
 import struct
@@ -36,8 +11,8 @@ class TCP(layer):
     def __init__(self, tcp):
         self.srcp = tcp['srcp']
         self.dstp = tcp['dstp']
-        self.seqn = tcp['seq']
-        self.ackn = tcp['ack']
+        self.seqn = tcp['seqnumber']
+        self.ackn = tcp['acknumber']
         self.offset = tcp['offset']  # Data offset: 5x4 = 20 bytes
         self.reserved = tcp['reserved']
         self.urg = tcp['urg']
@@ -49,7 +24,8 @@ class TCP(layer):
         self.window = tcp['window']#socket.htons(5840)
         self.checksum = tcp['checksum']
         self.urgp = tcp['urgp']
-        self.payload = tcp['payload']
+        self.payload = tcp['payload'].decode("hex")
+        self.option = tcp['option'].decode("hex")
         self.src = ""
         self.destination = ""
 
@@ -94,7 +70,7 @@ class TCP(layer):
                                  self.window)
         tcp_header += struct.pack('H', tcp_checksum) + \
             struct.pack('!H', self.urgp)
-        return tcp_header
+        return tcp_header + self.option + self.payload
 
     def unpack(self, packet):
         cflags = {  # Control flags

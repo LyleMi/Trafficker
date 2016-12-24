@@ -1,19 +1,24 @@
+
+<div class="container">
+
+<div class="form">
+
 <form action="">
-    <div class="form-group ip-form">
+    <div class="form-group">
         <h4>MAC</h4>
         <div ng-repeat="(key, value) in data.MAC">
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.MAC[key]'>
         </div>
     </div>
 
-    <div class="form-group ip-form">
+    <div class="form-group">
         <h4>IPv4</h4>
         <div ng-repeat="(key, value) in data.IP">
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.IP[key]'>
         </div>
     </div>
     
-    <div class="form-group ip-form">
+    <div class="form-group">
         <h4>UDP</h4>
         <div ng-repeat="(key, value) in data.UDP">
             <p>{{ key }}</p><input type="text" class="form-control" ng-model='data.UDP[key]'>
@@ -21,4 +26,26 @@
     </div>
 
 </form>
- 
+
+</div>
+
+<pre class="notice">
+ UDP Header Format
+                                    
+  0      7 8     15 16    23 24    31  
+ +--------+--------+--------+--------+ 
+ |     Source      |   Destination   | 
+ |      Port       |      Port       | 
+ +--------+--------+--------+--------+ 
+ |                 |                 | 
+ |     Length      |    Checksum     | 
+ |                 |                 | 
+ +--------+--------+--------+--------+ 
+ |                                     
+ |          data octets ...            
+ |                                     
+ +---------------- ...                 
+
+</pre>
+
+</div>  
