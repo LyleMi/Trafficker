@@ -1,4 +1,5 @@
 var host = "http://localhost:8888/";
+var host = "http://192.168.229.134:8888/";
 
 app.factory("HttpService", function($http) {
 
