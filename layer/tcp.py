@@ -7,6 +7,7 @@ import struct
 from utils.utils import checksum
 from layer import layer
 
+
 class TCP(layer):
 
     def __init__(self, tcp):
@@ -22,7 +23,7 @@ class TCP(layer):
         self.rst = tcp['rst']
         self.syn = tcp['syn']
         self.fin = tcp['fin']
-        self.window = tcp['window']#socket.htons(5840)
+        self.window = tcp['window']  # socket.htons(5840)
         self.checksum = tcp['checksum']
         self.urgp = tcp['urgp']
         self.payload = tcp['payload'].decode("hex")
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     tcp_config['srcp'] = 13987
     tcp_config['dstp'] = 12341
     # port 65536
-    tcp_config['seq']  = 65536
+    tcp_config['seq'] = 65536
     # seq number < 2**32 - 1
     tcp_config['ack'] = 65537
     # 序号：占4个字节，是本报文段所发送的数据项目组第一个字节的序号

@@ -17,9 +17,7 @@ def checksum(data):
     if n:
         s += ord(data[i+1])
     while (s >> 16):
-        # print("s >> 16: ", s >> 16)
         s = (s & 0xFFFF) + (s >> 16)
-    # print("sum:", s)
     s = ~s & 0xffff
     return s
 

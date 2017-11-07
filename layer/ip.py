@@ -48,7 +48,7 @@ class IP(layer):
         self.version = ip['version']
         self.ihl = ip['ihl']
         self.tos = ip['tos']
-        self.tl = int(ip['tolen']) # total ength
+        self.tl = int(ip['tolen'])  # total ength
         self.id = ip['id']
         self.flags = int(ip['flags'])
         self.offset = ip['offset']
@@ -88,7 +88,7 @@ class IP(layer):
         ip_header += self.options
         print len(ip_header)
         if len(ip_header) % 4 != 0:
-            ip_header += '\x00' * (4-(len(ip_header)%4))
+            ip_header += '\x00' * (4-(len(ip_header) % 4))
         return ip_header
 
     @staticmethod
@@ -124,20 +124,20 @@ class IP(layer):
 if __name__ == '__main__':
 
     ip_config = {}
-    ip_config["version"] = 4 # version 4 or 6
-    ip_config["ihl"] = 20 # header length
-    ip_config["tos"] = 0 # type of service
+    ip_config["version"] = 4  # version 4 or 6
+    ip_config["ihl"] = 20  # header length
+    ip_config["tos"] = 0  # type of service
     ip_config['payload'] = ''
-    ip_config['id']  = randint(0, 65535)
-    ip_config['flags'] = 2 # Don't fragment
+    ip_config['id'] = randint(0, 65535)
+    ip_config['flags'] = 2  # Don't fragment
     # three bit
     # bit 0 => reserved, must be zero
     # bit 1 => may fragment, 1 = don't fragment
     # bit 2 => last fragment, 1 = more fragment
     ip_config['offset'] = 0
-    ip_config['ttl'] = 64 # 8 < ttl < 255
+    ip_config['ttl'] = 64  # 8 < ttl < 255
     ip_config['proto'] = 6
-    ip_config['checksum']  = 0 # will be filled by kernel
+    ip_config['checksum'] = 0  # will be filled by kernel
     ip_config['src'] = '127.0.0.1'
     ip_config['dst'] = '127.0.0.1'
     ip = IP(ip_config)
