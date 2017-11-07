@@ -1,18 +1,16 @@
 # Trafficker
 
-[![Python 2.7](https://img.shields.io/badge/Python-2.7-yellow.svg)](http://www.python.org/download/)
+[![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 
-A tool used to send any packet or http request
+A tool used to send arbitrary packet or http request.
 
 ## Installation
 
-> only support Linux
+> only support Linux momentarily
 
-```
+```shell
 pip install -r requirements.txt
-
 git clone https://github.com/LyleMi/Trafficker.git
-
 sudo python app.py
 ```
 
@@ -30,4 +28,4 @@ sudo python app.py
 
 ## other feature
 
-* pcap packet parse
+* parse pcap packet

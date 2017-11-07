@@ -4,9 +4,9 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
             ARP: {
                 arpop: 1,
                 sendermac: '00:0c:29:86:1c:1b',
-                senderip: '192.168.33.254',
+                senderip: '192.168.1.1',
                 targetmac: '00:00:00:00:00:00',
-                targetip: '202.120.2.101',
+                targetip: '192.168.1.101',
             },
             ICMP: {
                 type: 8,
@@ -60,15 +60,12 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                 payload: '',
                 options: '',
             },
-            data:''
+            data: ''
         };
-
-        // console.log('arp');
 
         $scope.cu = function() {
             console.log($state.current.name);
-            switch($state.current.name)
-            {
+            switch ($state.current.name) {
                 case "ip":
                     $scope.send_ip();
                     break;
@@ -103,7 +100,9 @@ app.controller("mainController", ["$scope", "$rootScope", "$state", "HttpService
                     console.log(response);
                     // $scope.data.result = JSON.stringify(response.data);
                 },
-                function(err) { console.log(err)});
+                function(err) {
+                    console.log(err)
+                });
         }
 
         $scope.send_ip = function() {

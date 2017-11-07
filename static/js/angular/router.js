@@ -37,10 +37,4 @@ app.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $ur
 			templateUrl: "static/templates/pcap.html",
 			controller: "pcapController"
 		});
-		// .state("hex", {
-		// 	url: "/hex",
-		// 	templateUrl: "static/templates/hex.html",
-		// 	controller: "mainController"
-		// });
-
 }]);
