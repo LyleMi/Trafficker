@@ -7,12 +7,12 @@ import struct
 from utils.utils import checksum, parseMac
 from layer import layer
 
-# Internet Protocol Packet
-ETH_P_IP = 0x0800
-ETH_P_ARP = 0x0806
-
 
 class ETHER(layer):
+
+    IPv4 = 0x0800
+    IPv6 = 0x86dd
+    ARP = 0x0806
 
     def __init__(self, mac):
         self.src = parseMac(mac["src"])
@@ -25,13 +25,32 @@ class ETHER(layer):
                                self.src,
                                self.type)
         return ethernet
+    
+    @property
+    def stype(self):
+
+        if self.type == ETHER.IPv4:
+            return "IPv4"
+        elif self.type == ETHER.ARP:
+            return "ARP"
+        elif self.type == ETHER.IPv6:
+            return "IPv6"
+        return "unknown"
 
     @staticmethod
     def unpack(packet):
         ethernet = struct.unpack('!6s6sH', packet)
-        return ethernet
+        ethernet = {
+            "dst": ethernet[0].encode("hex"),
+            "src": ethernet[1].encode("hex"),
+            "type": ethernet[2],
+        }
+        return ETHER(ethernet)
 
 if __name__ == '__main__':
+    import os
+    import sys
+    sys.path.append(os.path.abspath(".."))
     mac = ETHER({
         "dst": "ff:ff:ff:ff:ff:ff",
         "src": "00:00:00:00:00:00",
@@ -39,4 +58,4 @@ if __name__ == '__main__':
     })
     packet = mac.pack()
     print packet.encode('hex')
-    print mac.unpack(packet)
+    print mac.unpack(packet).pack().encode('hex')

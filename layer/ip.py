@@ -44,7 +44,6 @@ from layer import layer
 class IP(layer):
 
     def __init__(self, ip):
-        print ip
         self.version = ip['version']
         self.ihl = ip['ihl']
         self.tos = ip['tos']
