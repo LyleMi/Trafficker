@@ -19,34 +19,34 @@ class ICMP(layer):
         self.payload = icmp["payload"]
 
     def pack(self):
-        icmp_header = struct.pack("!BBHHH",
+        icmpHeader = struct.pack("!BBHHH",
                                   self.type,
                                   self.code,
                                   self.checksum,
                                   self.ident,
                                   self.seq)
-        self.checksum = checksum(icmp_header)
-        icmp_header = struct.pack("!BBHHH",
+        self.checksum = checksum(icmpHeader)
+        icmpHeader = struct.pack("!BBHHH",
                                   self.type,
                                   self.code,
                                   self.checksum,
                                   self.ident,
                                   self.seq)
-        return icmp_header + str(self.payload)
+        return icmpHeader + str(self.payload)
 
     def unpack(self, packet):
         return struct.unpack("!BBHHH", packet)
 
 
 if __name__ == '__main__':
-    icmp_config = {}
-    icmp_config["type"] = 0
-    icmp_config["code"] = 8
-    icmp_config["checksum"] = 0
-    icmp_config["ident"] = 0
-    icmp_config["seq"] = 0
-    icmp_config["payload"] = ""
-    icmp = ICMP(icmp_config)
+    icmpConfig = {}
+    icmpConfig["type"] = 0
+    icmpConfig["code"] = 8
+    icmpConfig["checksum"] = 0
+    icmpConfig["ident"] = 0
+    icmpConfig["seq"] = 0
+    icmpConfig["payload"] = ""
+    icmp = ICMP(icmpConfig)
     packet = icmp.pack()
     print packet
     print icmp.unpack(packet)

@@ -30,9 +30,9 @@ class UDP(layer):
         return packet + self.payload.encode('hex')
 
 if __name__ == '__main__':
-    udp_config = {}
-    udp_config['srcp'] = 13987
-    udp_config['dstp'] = 1234
-    udp_config['payload'] = ''
-    udp = UDP(udp_config)
+    udpConfig = {}
+    udpConfig['srcp'] = 13987
+    udpConfig['dstp'] = 1234
+    udpConfig['payload'] = ''
+    udp = UDP(udpConfig)
     print udp.pack()

@@ -24,14 +24,15 @@ class Packet(object):
         data = data[14:]
         if mac.type == ETHER.IPv4:
             ip = IP.unpack(data)
-            data = data[20:]
-            tcp = TCP.unpack(data)
-            print tcp.seq
-            if 80 not in [tcp.srcp, tcp.dstp]:
-                print tcp.srcp, tcp.dstp
-            if len(tcp.payload) > 0:
-                with open(
-                        os.path.join("re", str(packetNum)),
-                        "wb"
-                ) as f:
-                    f.write(tcp.payload)
+            if ip.protocol == IP.Protocol.TCP:
+                data = data[20:]
+                tcp = TCP.unpack(data)
+                print tcp.seq
+                if 80 not in [tcp.srcp, tcp.dstp]:
+                    print tcp.srcp, tcp.dstp
+                if len(tcp.payload) > 0:
+                    with open(
+                            os.path.join("re", str(packetNum)),
+                            "wb"
+                    ) as f:
+                        f.write(tcp.payload)

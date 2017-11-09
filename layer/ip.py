@@ -57,6 +57,19 @@ class IP(layer):
         89: "OSPF",
     }
 
+    class Protocol:
+        ICMP = 1
+        IGMP = 2
+        encapsulation = 4
+        TCP = 6
+        UDP = 17
+        IDRP = 45
+        RSVP = 46
+        GRE = 47
+        NHRP = 54
+        IGRP = 88
+        OSPF = 89
+
     def __init__(self, ip=None):
 
         if ip is None:
@@ -132,26 +145,26 @@ class IP(layer):
 
 if __name__ == '__main__':
 
-    ip_config = {}
-    ip_config["version"] = 4  # version 4 or 6
-    ip_config["ihl"] = 20  # header length
-    ip_config["tos"] = 0  # type of service
-    ip_config["tolen"] = 572
-    ip_config['payload'] = ''
-    ip_config['id'] = randint(0, 65535)
-    ip_config['flags'] = 2  # Don't fragment
+    ipConfig = {}
+    ipConfig["version"] = 4  # version 4 or 6
+    ipConfig["ihl"] = 20  # header length
+    ipConfig["tos"] = 0  # type of service
+    ipConfig["tolen"] = 572
+    ipConfig['payload'] = ''
+    ipConfig['id'] = randint(0, 65535)
+    ipConfig['flags'] = 2  # Don't fragment
     # three bit
     # bit 0 => reserved, must be zero
     # bit 1 => may fragment, 1 = don't fragment
     # bit 2 => last fragment, 1 = more fragment
-    ip_config['offset'] = 0
-    ip_config['ttl'] = 64  # 8 < ttl < 255
-    ip_config['proto'] = 6
-    ip_config['checksum'] = 0  # will be filled by kernel
-    ip_config['src'] = '127.0.0.1'
-    ip_config['dst'] = '127.0.0.1'
-    ip_config['options'] = 'aa'
-    ip = IP(ip_config)
+    ipConfig['offset'] = 0
+    ipConfig['ttl'] = 64  # 8 < ttl < 255
+    ipConfig['proto'] = 6
+    ipConfig['checksum'] = 0  # will be filled by kernel
+    ipConfig['src'] = '127.0.0.1'
+    ipConfig['dst'] = '127.0.0.1'
+    ipConfig['options'] = 'aa'
+    ip = IP(ipConfig)
     packet = ip.pack()
     print packet.encode('hex')
     print ip.unpack(packet).pack().encode('hex')

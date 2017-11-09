@@ -37,7 +37,7 @@ class TCP(layer):
         data_offset = (self.offset << 4) + 0
         flags = self.fin + (self.syn << 1) + (self.rst << 2) + \
             (self.psh << 3) + (self.ack << 4) + (self.urg << 5)
-        tcp_header = struct.pack('!HHLLBBHHH',
+        tcpHeader = struct.pack('!HHLLBBHHH',
                                  self.srcp,
                                  self.dstp,
                                  self.seqn,
@@ -47,8 +47,8 @@ class TCP(layer):
                                  self.window,
                                  self.checksum,
                                  self.urgp)
-        tcp_checksum = checksum(tcp_header)
-        tcp_header = struct.pack("!HHLLBBH",
+        tcpChecksum = checksum(tcpHeader)
+        tcpHeader = struct.pack("!HHLLBBH",
                                  self.srcp,
                                  self.dstp,
                                  self.seqn,
@@ -56,9 +56,9 @@ class TCP(layer):
                                  data_offset,
                                  flags,
                                  self.window)
-        tcp_header += struct.pack('H', tcp_checksum) + \
+        tcpHeader += struct.pack('H', tcpChecksum) + \
             struct.pack('!H', self.urgp)
-        return tcp_header + self.option + self.payload
+        return tcpHeader + self.option + self.payload
 
     @staticmethod
     def unpack(packet):
@@ -94,9 +94,6 @@ if __name__ == '__main__':
     # port 65536
     tcpConfig['seq'] = 65536
     # seq number < 2**32 - 1
-    tcpConfig['ack'] = 65537
-    # 序号：占4个字节，是本报文段所发送的数据项目组第一个字节的序号
-    # 在TCP传送的数据流中，每一个字节都有一个序号。
     # 例如，一报文段的序号为300，而起数据供100字节，
     # 则下一个报文段的序号就是400；
     # 确认序号：占4字节，是期望收到对方下次发送的数据的第一个字节的序号，
