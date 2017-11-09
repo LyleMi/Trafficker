@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-
 from layer.mac import ETHER
 from layer.ip import IP
+from layer.udp import UDP
 from layer.tcp import TCP
 
 
@@ -24,15 +23,11 @@ class Packet(object):
         data = data[14:]
         if mac.type == ETHER.IPv4:
             ip = IP.unpack(data)
+            data = data[20:]
             if ip.protocol == IP.Protocol.TCP:
-                data = data[20:]
                 tcp = TCP.unpack(data)
-                print tcp.seq
-                if 80 not in [tcp.srcp, tcp.dstp]:
-                    print tcp.srcp, tcp.dstp
-                if len(tcp.payload) > 0:
-                    with open(
-                            os.path.join("re", str(packetNum)),
-                            "wb"
-                    ) as f:
-                        f.write(tcp.payload)
+                if 80 in [tcp.srcp, tcp.dstp]:
+                    return
+            elif ip.protocol == IP.Protocol.UDP:
+                UDP.unpack(data[:8])
+                data = data[8:]

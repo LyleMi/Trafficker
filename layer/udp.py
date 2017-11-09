@@ -10,7 +10,9 @@ from layer import layer
 
 class UDP(layer):
 
-    def __init__(self, udp):
+    def __init__(self, udp=None):
+        if udp is None:
+            return
         self.src = udp['srcp']
         self.dst = udp['dstp']
         self.payload = udp['payload']
@@ -19,15 +21,25 @@ class UDP(layer):
 
     def pack(self):
         length = self.length + len(self.payload)
-        pseudo_header = struct.pack('!HHBBH',
-                                    self.src,
-                                    self.dst, 0,
-                                    socket.IPPROTO_UDP,
-                                    self.length)
-        self.checksum = checksum(pseudo_header)
+        pseudoHeader = struct.pack('!HHBBH',
+                                   self.src,
+                                   self.dst, 0,
+                                   socket.IPPROTO_UDP,
+                                   self.length)
+        self.checksum = checksum(pseudoHeader)
         packet = struct.pack('!HHHH', self.src, self.dst,
                              length, self.checksum)
         return packet + self.payload.encode('hex')
+
+    @staticmethod
+    def unpack(data):
+        data = struct.unpack("!HHHH", data)
+        print data
+        udp = UDP()
+        udp.src = data[0]
+        udp.dst = data[1]
+        udp.length = data[2]
+        udp.checksum = data[3]
 
 if __name__ == '__main__':
     udpConfig = {}
