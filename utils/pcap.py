@@ -4,6 +4,7 @@
 import struct
 from cgi import escape
 from json import dumps
+from socket import inet_ntoa
 
 from utils import hexdump
 from layer.mac import ETHER
@@ -56,28 +57,16 @@ def parsePcap(pcapfile, distFile):
         html.write("Type: %s" % mac.stype)
 
         if mac.type == mac.IPv4:
-
             ip = IP.unpack(tmp[14:34])
-
             html.write("<br />")
-            html.write("%s => %s" % (ip[-2], ip[-1]))
+            html.write("%s => %s Type: %s" % (inet_ntoa(ip.source),
+                                              inet_ntoa(ip.destination),
+                                              ip.sprotocol))
 
-            if ip[-3] == 1:
-                html.write(" Type: ICMP")
-            elif ip[-3] == 2:
-                html.write(" Type: IGMP")
-            elif ip[-3] == 6:
-                html.write(" Type: TCP")
-            elif ip[-3] == 17:
-                html.write(" Type: UDP")
-
-        html.write("<br /><pre>")
-        html.write(escape(hexdump(tmp, 16, False)))
-        html.write("</pre>")
+        html.write("<br /><pre>%s</pre>" % escape(hexdump(tmp, 16, False)))
         packetNum += 1
 
     html.write(htmlfooter)
-
     fpcap.close()
     html.close()
 

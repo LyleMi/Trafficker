@@ -16,8 +16,5 @@ class Packet(object):
         self.header['MicroTime'] = header[4:8]
         self.header['caplen'] = header[8:12]
         self.header['len'] = header[12:16]
-
         mac = ETHER.unpack(data[:14])
-        print mac.stype
-
         

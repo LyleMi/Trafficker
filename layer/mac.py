@@ -14,7 +14,9 @@ class ETHER(layer):
     IPv6 = 0x86dd
     ARP = 0x0806
 
-    def __init__(self, mac):
+    def __init__(self, mac=None):
+        if mac is None:
+            return
         self.src = parseMac(mac["src"])
         self.dst = parseMac(mac["dst"])
         self.type = mac["type"]
@@ -28,7 +30,6 @@ class ETHER(layer):
     
     @property
     def stype(self):
-
         if self.type == ETHER.IPv4:
             return "IPv4"
         elif self.type == ETHER.ARP:
@@ -39,13 +40,12 @@ class ETHER(layer):
 
     @staticmethod
     def unpack(packet):
+        m = ETHER()
         ethernet = struct.unpack('!6s6sH', packet)
-        ethernet = {
-            "dst": ethernet[0].encode("hex"),
-            "src": ethernet[1].encode("hex"),
-            "type": ethernet[2],
-        }
-        return ETHER(ethernet)
+        m.dst = ethernet[0]
+        m.src = ethernet[1]
+        m.type = ethernet[2]
+        return m
 
 if __name__ == '__main__':
     import os

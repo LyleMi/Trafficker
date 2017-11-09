@@ -7,7 +7,7 @@ IP Packet format
     0                   1                   2                   3   
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |Ver= 4 |IHL= 8 |Type of Service|       Total Length = 576      |
+   |Ver = 4|IHL = 8|Type of Service|       Total Length = 576      |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |       Identification = 111    |Flg=0|     Fragment Offset = 0 |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -43,7 +43,24 @@ from layer import layer
 
 class IP(layer):
 
-    def __init__(self, ip):
+    protocolDict = {
+        1: "ICMP",
+        2: "IGMP",
+        4: "encapsulation",
+        6: "TCP",
+        17: "UDP",
+        45: "IDRP",
+        46: "RSVP",
+        47: "GRE",
+        54: "NHRP",
+        88: "IGRP",
+        89: "OSPF",
+    }
+
+    def __init__(self, ip=None):
+
+        if ip is None:
+            return
         self.version = ip['version']
         self.ihl = ip['ihl']
         self.tos = ip['tos']
@@ -56,69 +73,62 @@ class IP(layer):
         self.checksum = 0
         self.source = socket.inet_aton(ip['src'])
         self.destination = socket.inet_aton(ip['dst'])
-        self.options = ip['options'].decode("hex")
+        if 'options' in ip:
+            self.options = ip['options'].decode("hex")
 
     def pack(self):
         ver_ihl = (self.version << 4) + self.ihl
         flags_offset = (self.flags << 13) + self.offset
-        ip_header = struct.pack("!BBHHHBBH4s4s",
-                                ver_ihl,
-                                self.tos,
-                                self.tl,
-                                self.id,
-                                flags_offset,
-                                self.ttl,
-                                self.protocol,
-                                self.checksum,
-                                self.source,
-                                self.destination)
-        self.checksum = checksum(ip_header + self.options)
-        ip_header = struct.pack("!BBHHHBBH4s4s",
-                                ver_ihl,
-                                self.tos,
-                                self.tl,
-                                self.id,
-                                flags_offset,
-                                self.ttl,
-                                self.protocol,
-                                socket.htons(self.checksum),
-                                self.source,
-                                self.destination)
-        ip_header += self.options
-        print len(ip_header)
-        if len(ip_header) % 4 != 0:
-            ip_header += '\x00' * (4-(len(ip_header) % 4))
-        return ip_header
+        ipHeader = struct.pack("!BBHHHBBH4s4s",
+                               ver_ihl,
+                               self.tos,
+                               self.tl,
+                               self.id,
+                               flags_offset,
+                               self.ttl,
+                               self.protocol,
+                               self.checksum,
+                               self.source,
+                               self.destination)
+        self.checksum = checksum(ipHeader + self.options)
+        ipHeader = struct.pack("!BBHHHBBH4s4s",
+                               ver_ihl,
+                               self.tos,
+                               self.tl,
+                               self.id,
+                               flags_offset,
+                               self.ttl,
+                               self.protocol,
+                               socket.htons(self.checksum),
+                               self.source,
+                               self.destination)
+        ipHeader += self.options
+        if len(ipHeader) % 4 != 0:
+            ipHeader += '\x00' * (4-(len(ipHeader) % 4))
+        return ipHeader
 
     @staticmethod
     def unpack(packet):
-        _ip = layer()
-        _ip.ihl = 20
-        iph = struct.unpack("!BBHHHBBH4s4s", packet[:_ip.ihl])
-        _ip.ver = iph[0] >> 4
-        _ip.tos = iph[1]
-        _ip.length = iph[2]
-        _ip.ids = iph[3]
-        _ip.flags = iph[4] >> 13
-        _ip.offset = iph[4] & 0x1FFF
-        _ip.ttl = iph[5]
-        _ip.protocol = iph[6]
-        _ip.checksum = hex(iph[7])
-        _ip.src = socket.inet_ntoa(iph[8])
-        _ip.dst = socket.inet_ntoa(iph[9])
-        _ip.list = [
-            _ip.ihl,
-            _ip.ver,
-            _ip.tos,
-            _ip.length,
-            _ip.ids,
-            _ip.flags,
-            _ip.offset,
-            _ip.ttl,
-            _ip.protocol,
-            _ip.src,
-            _ip.dst]
-        return _ip.list
+        ip = IP()
+        ip.ihl = 20
+        iph = struct.unpack("!BBHHHBBH4s4s", packet[:ip.ihl])
+        ip.version = (iph[0] - ip.ihl) >> 4
+        ip.tos = iph[1]
+        ip.tl = iph[2]
+        ip.id = iph[3]
+        ip.flags = iph[4] >> 13
+        ip.offset = iph[4] & 0x1FFF
+        ip.ttl = iph[5]
+        ip.protocol = iph[6]
+        ip.checksum = iph[7]
+        ip.source = iph[8]
+        ip.destination = iph[9]
+        ip.options = ""
+        return ip
+
+    @property
+    def sprotocol(self):
+        return self.protocolDict.get(self.protocol, "unknown")
 
 if __name__ == '__main__':
 
@@ -126,6 +136,7 @@ if __name__ == '__main__':
     ip_config["version"] = 4  # version 4 or 6
     ip_config["ihl"] = 20  # header length
     ip_config["tos"] = 0  # type of service
+    ip_config["tolen"] = 572
     ip_config['payload'] = ''
     ip_config['id'] = randint(0, 65535)
     ip_config['flags'] = 2  # Don't fragment
@@ -139,7 +150,8 @@ if __name__ == '__main__':
     ip_config['checksum'] = 0  # will be filled by kernel
     ip_config['src'] = '127.0.0.1'
     ip_config['dst'] = '127.0.0.1'
+    ip_config['options'] = 'aa'
     ip = IP(ip_config)
     packet = ip.pack()
     print packet.encode('hex')
-    print ip.unpack(packet)
+    print ip.unpack(packet).pack().encode('hex')
