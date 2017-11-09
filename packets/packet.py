@@ -5,6 +5,7 @@ from layer.mac import ETHER
 from layer.ip import IP
 from layer.udp import UDP
 from layer.tcp import TCP
+from layer.dns import DNS
 
 
 class Packet(object):
@@ -29,5 +30,8 @@ class Packet(object):
                 if 80 in [tcp.srcp, tcp.dstp]:
                     return
             elif ip.protocol == IP.Protocol.UDP:
-                UDP.unpack(data[:8])
+                udp = UDP.unpack(data[:8])
                 data = data[8:]
+                if udp.dst == 53:
+                    dns = DNS.unpack(data)
+                    print dns.query.qname

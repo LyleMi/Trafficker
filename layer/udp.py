@@ -34,12 +34,12 @@ class UDP(layer):
     @staticmethod
     def unpack(data):
         data = struct.unpack("!HHHH", data)
-        print data
         udp = UDP()
         udp.src = data[0]
         udp.dst = data[1]
         udp.length = data[2]
         udp.checksum = data[3]
+        return udp
 
 if __name__ == '__main__':
     udpConfig = {}
