@@ -33,7 +33,7 @@ class Pcap(object):
             if len(header) < 16:
                 break
             packetLen = struct.unpack('I', header[12:16])[0]
-            packet = Packet(header, fpcap.read(packetLen))
+            packet = Packet(header, fpcap.read(packetLen), packetNum)
             packetNum += 1
 
         fpcap.close()
