@@ -71,9 +71,7 @@ class TCP(layer):
             1: "F"}
         tcp = TCP()
         tcp.thl = (ord(packet[12]) >> 4) * 4
-        tcp.options = packet[20:tcp.thl]
-        tcp.payload = packet[tcp.thl:]
-        tcph = struct.unpack("!HHLLBBHHH", packet[:20])
+        tcph = struct.unpack("!HHLLBBHHH", packet.get(20))
         tcp.srcp = tcph[0]  # source port
         tcp.dstp = tcph[1]  # destination port
         tcp.seq = tcph[2]  # sequence number
@@ -85,6 +83,8 @@ class TCP(layer):
         tcp.window = tcph[6]  # window
         tcp.checksum = hex(tcph[7])  # checksum
         tcp.urg = tcph[8]  # urgent pointer
+        tcp.options = packet.get(tcp.thl)
+        tcp.payload = packet.getremain()
         return tcp
 
 if __name__ == '__main__':

@@ -39,5 +39,18 @@ def hexdump(src, length=16, show=True):
         return b'\n'.join(result)
 
 
+def getBits(data, offset, bits=1):
+    """
+    Get specified bits from integer
+
+    >>> bin(getBits(0b0011100,2))
+    '0b1'
+    >>> bin(getBits(0b0011100,0,4))
+    '0b1100'
+    """
+    mask = ((1 << bits) - 1) << offset
+    return (data & mask) >> offset
+
+
 def parseMac(s):
     return s.replace(':', '').decode('hex')

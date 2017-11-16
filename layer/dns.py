@@ -107,8 +107,8 @@ class DNSQuery(DNSBase):
     @staticmethod
     def unpack(data):
         query = DNSQuery()
-        query.qname = data[:-4]
-        query.qtype, query.qclass = struct.unpack("!HH", data[-4:])
+        query.qname = data.decodeName()
+        query.qtype, query.qclass = data.unpack("!HH")
         return query
 
 
@@ -117,8 +117,10 @@ class DNS(DNSBase):
     @staticmethod
     def unpack(data):
         dns = DNS()
-        dns.header = DNSHeader.unpack(data[:12])
-        dns.query = DNSQuery.unpack(data[12:])
+        dns.header = DNSHeader.unpack(data.get(12))
+        dns.queries = []
+        for i in range(dns.header.questions):
+            dns.queries.append(DNSQuery.unpack(data))
         return dns
 
 if __name__ == '__main__':

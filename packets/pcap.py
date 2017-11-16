@@ -14,18 +14,17 @@ class Pcap(object):
         super(Pcap, self).__init__()
         self.filepath = filepath
         fpcap = open(filepath, 'rb')
-        data = fpcap.read(24)
         packetNum = 0
-        
+
         # pcap文件的数据包解析
         header = {}
-        header['magic_number'] = data[0:4]
-        header['version_major'] = data[4:6]
-        header['version_minor'] = data[6:8]
-        header['thiszone'] = data[8:12]
-        header['sigfigs'] = data[12:16]
-        header['snaplen'] = data[16:20]
-        header['linktype'] = data[20:24]
+        header['magic_number'] = fpcap.read(4)
+        header['version_major'] = fpcap.read(2)
+        header['version_minor'] = fpcap.read(2)
+        header['thiszone'] = fpcap.read(4)
+        header['sigfigs'] = fpcap.read(4)
+        header['snaplen'] = fpcap.read(4)
+        header['linktype'] = fpcap.read(4)
         self.header = header
 
         while True:

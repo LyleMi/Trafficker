@@ -7,6 +7,8 @@ from layer.udp import UDP
 from layer.tcp import TCP
 from layer.dns import DNS
 
+from packets.buffer import Buffer
+
 
 class Packet(object):
 
@@ -20,18 +22,19 @@ class Packet(object):
         self.header['MicroTime'] = header[4:8]
         self.header['caplen'] = header[8:12]
         self.header['len'] = header[12:16]
-        mac = ETHER.unpack(data[:14])
-        data = data[14:]
+        data = Buffer(data)
+        mac = ETHER.unpack(data.get(14))
         if mac.type == ETHER.IPv4:
-            ip = IP.unpack(data)
-            data = data[20:]
+            ip = IP.unpack(data.get(20))
             if ip.protocol == IP.Protocol.TCP:
                 tcp = TCP.unpack(data)
                 if 80 in [tcp.srcp, tcp.dstp]:
                     return
+                if 25 in [tcp.srcp, tcp.dstp]:
+                    print tcp.payload
+                    return
             elif ip.protocol == IP.Protocol.UDP:
-                udp = UDP.unpack(data[:8])
-                data = data[8:]
+                udp = UDP.unpack(data.get(8))
                 if udp.dst == 53:
                     dns = DNS.unpack(data)
-                    print dns.query.qname
+                    print dns.queries[0].qname
