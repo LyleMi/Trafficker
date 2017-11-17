@@ -123,5 +123,10 @@ class DNS(DNSBase):
             dns.queries.append(DNSQuery.unpack(data))
         return dns
 
+    def __repr__(self):
+        return "<DNS %s>" % (
+            ";".join(map(lambda i: i.qname, self.queries))
+        )
+
 if __name__ == '__main__':
     pass

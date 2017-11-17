@@ -19,6 +19,9 @@ class layer(object):
     def __str__(self):
         return self.pack()
 
+    def __repr__(self):
+        return "<%s>" % self.__class__.__name__
+
     @staticmethod
     def send(layers, port=0, device="eth0"):
         packet = ''.join([p.pack() for p in layers])

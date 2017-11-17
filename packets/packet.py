@@ -6,6 +6,8 @@ from layer.ip import IP
 from layer.udp import UDP
 from layer.tcp import TCP
 from layer.dns import DNS
+from layer.smtp import SMTP
+from layer.vlan import VLAN
 
 from packets.buffer import Buffer
 
@@ -24,17 +26,33 @@ class Packet(object):
         self.header['len'] = header[12:16]
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
-        if mac.type == ETHER.IPv4:
+        self.layers = [mac]
+        
+        ntype = mac.type
+
+        if mac.type == ETHER.VLAN:
+            vlan = VLAN.unpack(data.get(4))
+            self.layers.append(vlan)
+            ntype = vlan.type
+
+        if ntype == ETHER.IPv4:
             ip = IP.unpack(data.get(20))
+            self.layers.append(ip)
             if ip.protocol == IP.Protocol.TCP:
                 tcp = TCP.unpack(data)
+                self.layers.append(tcp)
+                if "CTFZONE" in tcp.payload:
+                    print tcp.payload
                 if 80 in [tcp.srcp, tcp.dstp]:
                     return
                 if 25 in [tcp.srcp, tcp.dstp]:
-                    print tcp.payload
-                    return
+                    smtp = SMTP.unpack(tcp.payload)
+                    if smtp is None:
+                        return
+                    self.layers.append(smtp)
             elif ip.protocol == IP.Protocol.UDP:
                 udp = UDP.unpack(data.get(8))
+                self.layers.append(udp)
                 if udp.dst == 53:
                     dns = DNS.unpack(data)
-                    print dns.queries[0].qname
+                    self.layers.append(dns)

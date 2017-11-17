@@ -52,5 +52,11 @@ def getBits(data, offset, bits=1):
     return (data & mask) >> offset
 
 
-def parseMac(s):
+def parseMac(s, encode=False):
+    if encode:
+        s = s.encode("hex")
+        tmp = []
+        for i in range(len(s)/2):
+            tmp.append(s[i*2:(i+1)*2])
+        return ":".join(tmp)
     return s.replace(':', '').decode('hex')

@@ -32,7 +32,11 @@ class Pcap(object):
             if len(header) < 16:
                 break
             packetLen = struct.unpack('I', header[12:16])[0]
-            packet = Packet(header, fpcap.read(packetLen), packetNum)
+            try:
+                packet = Packet(header, fpcap.read(packetLen), packetNum)
+                print packetNum, packet.layers
+            except Exception as e:
+                print(e)
             packetNum += 1
 
         fpcap.close()

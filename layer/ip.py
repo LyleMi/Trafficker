@@ -143,6 +143,12 @@ class IP(layer):
     def sprotocol(self):
         return self.protocolDict.get(self.protocol, "unknown")
 
+    def __repr__(self):
+        return "<IP %s -> %s>" % (
+            socket.inet_ntoa(self.source),
+            socket.inet_ntoa(self.destination)
+        )
+
 if __name__ == '__main__':
 
     ipConfig = {}

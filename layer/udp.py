@@ -41,6 +41,12 @@ class UDP(layer):
         udp.checksum = data[3]
         return udp
 
+    def __repr__(self):
+        return "<UDP %s -> %s>" % (
+            self.src,
+            self.dst
+        )
+
 if __name__ == '__main__':
     udpConfig = {}
     udpConfig['srcp'] = 13987

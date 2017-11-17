@@ -13,6 +13,7 @@ class ETHER(layer):
     IPv4 = 0x0800
     IPv6 = 0x86dd
     ARP = 0x0806
+    VLAN = 0x8100
 
     def __init__(self, mac=None):
         if mac is None:
@@ -27,16 +28,6 @@ class ETHER(layer):
                                self.src,
                                self.type)
         return ethernet
-    
-    @property
-    def stype(self):
-        if self.type == ETHER.IPv4:
-            return "IPv4"
-        elif self.type == ETHER.ARP:
-            return "ARP"
-        elif self.type == ETHER.IPv6:
-            return "IPv6"
-        return "unknown"
 
     @staticmethod
     def unpack(packet):
@@ -46,6 +37,25 @@ class ETHER(layer):
         m.src = ethernet[1]
         m.type = ethernet[2]
         return m
+
+    @property
+    def stype(self):
+        if self.type == self.IPv4:
+            return "IPv4"
+        elif self.type == self.ARP:
+            return "ARP"
+        elif self.type == self.IPv6:
+            return "IPv6"
+        elif self.type == self.VLAN:
+            return "VLAN"
+        return "unknown %d" % (self.type)
+
+    def __repr__(self):
+        return "<MAC %s -> %s, %s>" % (
+            parseMac(self.dst, True),
+            parseMac(self.src, True),
+            self.stype
+        )
 
 if __name__ == '__main__':
     import os

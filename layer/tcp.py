@@ -38,24 +38,24 @@ class TCP(layer):
         flags = self.fin + (self.syn << 1) + (self.rst << 2) + \
             (self.psh << 3) + (self.ack << 4) + (self.urg << 5)
         tcpHeader = struct.pack('!HHLLBBHHH',
-                                 self.srcp,
-                                 self.dstp,
-                                 self.seqn,
-                                 self.ackn,
-                                 data_offset,
-                                 flags,
-                                 self.window,
-                                 self.checksum,
-                                 self.urgp)
+                                self.srcp,
+                                self.dstp,
+                                self.seqn,
+                                self.ackn,
+                                data_offset,
+                                flags,
+                                self.window,
+                                self.checksum,
+                                self.urgp)
         tcpChecksum = checksum(tcpHeader)
         tcpHeader = struct.pack("!HHLLBBH",
-                                 self.srcp,
-                                 self.dstp,
-                                 self.seqn,
-                                 self.ackn,
-                                 data_offset,
-                                 flags,
-                                 self.window)
+                                self.srcp,
+                                self.dstp,
+                                self.seqn,
+                                self.ackn,
+                                data_offset,
+                                flags,
+                                self.window)
         tcpHeader += struct.pack('H', tcpChecksum) + \
             struct.pack('!H', self.urgp)
         return tcpHeader + self.option + self.payload
@@ -63,12 +63,13 @@ class TCP(layer):
     @staticmethod
     def unpack(packet):
         cflags = {  # Control flags
-            32: "U",
-            16: "A",
-            8: "P",
-            4: "R",
-            2: "S",
-            1: "F"}
+            32: "urg",
+            16: "ack",
+            8: "psh",
+            4: "rst",
+            2: "syn",
+            1: "fin"
+        }
         tcp = TCP()
         tcp.thl = (ord(packet[12]) >> 4) * 4
         tcph = struct.unpack("!HHLLBBHHH", packet.get(20))
@@ -76,16 +77,23 @@ class TCP(layer):
         tcp.dstp = tcph[1]  # destination port
         tcp.seq = tcph[2]  # sequence number
         tcp.ack = hex(tcph[3])  # acknowledgment number
-        tcp.flags = ""
+        tcp.flags = []
         for f in cflags:
             if tcph[5] & f:
-                tcp.flags += cflags[f]
+                tcp.flags += [cflags[f]]
         tcp.window = tcph[6]  # window
         tcp.checksum = hex(tcph[7])  # checksum
         tcp.urg = tcph[8]  # urgent pointer
         tcp.options = packet.get(tcp.thl)
         tcp.payload = packet.getremain()
         return tcp
+
+    def __repr__(self):
+        return "<TCP %s -> %s, flags: >" % (
+            self.srcp,
+            self.dstp,
+            # ",".join(self.flags)
+        )
 
 if __name__ == '__main__':
     tcpConfig = {}
