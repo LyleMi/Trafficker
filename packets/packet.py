@@ -41,8 +41,6 @@ class Packet(object):
             if ip.protocol == IP.Protocol.TCP:
                 tcp = TCP.unpack(data)
                 self.layers.append(tcp)
-                if "CTFZONE" in tcp.payload:
-                    print tcp.payload
                 if 80 in [tcp.srcp, tcp.dstp]:
                     return
                 if 25 in [tcp.srcp, tcp.dstp]:

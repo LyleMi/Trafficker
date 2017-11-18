@@ -142,11 +142,18 @@ class IP(layer):
     @property
     def sprotocol(self):
         return self.protocolDict.get(self.protocol, "unknown")
+    
+    @property
+    def ssrc(self):
+        return socket.inet_ntoa(self.source),
+    
+    @property
+    def sdst(self):
+        return socket.inet_ntoa(self.destination)
 
     def __repr__(self):
         return "<IP %s -> %s>" % (
-            socket.inet_ntoa(self.source),
-            socket.inet_ntoa(self.destination)
+            self.ssrc, self.sdst
         )
 
 if __name__ == '__main__':

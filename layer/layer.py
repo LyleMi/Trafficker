@@ -20,7 +20,7 @@ class layer(object):
         return self.pack()
 
     def __repr__(self):
-        return "<%s>" % self.__class__.__name__
+        return "<%s>" % self.name
 
     @staticmethod
     def send(layers, port=0, device="eth0"):
@@ -35,3 +35,7 @@ class layer(object):
         rawSocket.bind((device, socket.htons(port)))
         rawSocket.send(packet)
         return rawSocket
+    
+    @property
+    def name(self):
+        return self.__class__.__name__
