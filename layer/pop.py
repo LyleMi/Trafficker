@@ -7,15 +7,12 @@ import struct
 from layer import layer
 
 
-class SMTPParseError(Exception):
-    pass
+class POP(layer):
 
-
-class SMTP(layer):
-
-    cmds = ["auth", "ehlo", "mail", "rcrt", "helo",
-            "quit", "rset", "data", "bdat", "user",
-            "pass", "list", "uidl", "capa"]
+    cmds = ["auth", "capa", "dele",
+            "user", "pass", "stat", "list",
+            "uidl", "retr", "quit", "top",
+            "+ok", "noop", "-err"]
     codes = ["221", "220", "250", "334", "354", "550"]
 
     def __init__(self):
@@ -27,27 +24,29 @@ class SMTP(layer):
 
     @classmethod
     def unpack(cls, packet):
-        s = SMTP()
+        pop = cls()
         if len(packet) < 1:
-            s.type = "null"
-            return s
+            pop.type = "null"
+            return pop
         if len(packet) > 100:
-            s.type = "bigdata"
-            s.data = packet
-            return s
+            pop.type = "bigdata"
+            return pop
+        if "_NextPart_" in packet:
+            pop.type = "data"
+            return pop
         p = packet.split("\r\n")
         fp = p[0].split(" ")
         if fp[0] in cls.codes:
-            s.type = "ret"
-            s.code = fp[0]
+            pop.type = "ret"
+            pop.code = fp[0]
             if len(p) > 1:
-                s.msg = fp[1:]
+                pop.msg = fp[1:]
         elif fp[0].lower() in cls.cmds:
-            s.type = "req"
-            s.cmd = fp[0]
+            pop.type = "req"
+            pop.cmd = fp[0]
             if len(p) > 1:
-                s.args = fp[1:]
-        return s
+                pop.args = fp[1:]
+        return pop
 
 if __name__ == '__main__':
     pass

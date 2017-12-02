@@ -71,12 +71,12 @@ class TCP(layer):
             1: "fin"
         }
         tcp = TCP()
-        tcp.thl = (ord(packet[12]) >> 4) * 4
-        tcph = struct.unpack("!HHLLBBHHH", packet.get(20))
+        tcph = packet.unpack("!HHLLBBHHH")
         tcp.srcp = tcph[0]  # source port
         tcp.dstp = tcph[1]  # destination port
         tcp.seq = tcph[2]  # sequence number
         tcp.ack = hex(tcph[3])  # acknowledgment number
+        tcp.thl = tcph[4] >> 2
         tcp.flags = []
         for f in cflags:
             if tcph[5] & f:
@@ -84,7 +84,7 @@ class TCP(layer):
         tcp.window = tcph[6]  # window
         tcp.checksum = hex(tcph[7])  # checksum
         tcp.urg = tcph[8]  # urgent pointer
-        tcp.options = packet.get(tcp.thl)
+        tcp.options = packet.get(tcp.thl - 20)
         tcp.payload = packet.getremain()
         return tcp
 

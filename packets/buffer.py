@@ -6,6 +6,7 @@ import struct
 
 from utils.utils import getBits
 
+
 class BufferError(Exception):
     pass
 
@@ -15,31 +16,6 @@ class Buffer(object):
     """
     A simple data buffer
     supports packing/unpacking in struct format 
-
-    >>> def p(s):
-    ...     if not isinstance(s,str):
-    ...         return s.decode()
-    ...     return s
-    >>> b = Buffer()
-    >>> b.pack("!BHI",1,2,3)
-    >>> b.offset
-    7
-    >>> b.append(b"0123456789")
-    >>> b.offset
-    17
-    >>> p(b.hex())
-    '0100020000000330313233343536373839'
-    >>> b.offset = 0
-    >>> b.unpack("!BHI")
-    (1, 2, 3)
-    >>> bytearray(b.get(5))
-    bytearray(b'01234')
-    >>> bytearray(b.get(5))
-    bytearray(b'56789')
-    >>> b.update(7,"2s",b"xx")
-    >>> b.offset = 7
-    >>> bytearray(b.get(5))
-    bytearray(b'xx234')
     """
 
     def __init__(self, data=b''):
@@ -108,8 +84,10 @@ class Buffer(object):
             data = self.get(struct.calcsize(fmt))
             return struct.unpack(fmt, data)
         except struct.error as e:
-            raise BufferError("Error unpacking struct '%s' <%s>" %
-                              (fmt, binascii.hexlify(data).decode()))
+            raise BufferError(
+                "Error unpacking struct '%s' <%s>" %
+                (fmt, binascii.hexlify(data).decode())
+            )
 
     def decodeName(self, last=-1):
         """
@@ -126,14 +104,18 @@ class Buffer(object):
                 pointer = getBits(self.unpack("!H")[0], 0, 14)
                 save = self.offset
                 if last == save:
-                    raise BufferError("Recursive pointer in DNSLabel [offset=%d,pointer=%d,length=%d]" %
-                                      (self.offset, pointer, len(self.data)))
+                    raise BufferError(
+                        "Recursive pointer [offset=%d,pointer=%d,length=%d]" %
+                        (self.offset, pointer, len(self.data))
+                    )
                 if pointer < self.offset:
                     self.offset = pointer
                 else:
                     # Pointer can't point forwards
-                    raise BufferError("Invalid pointer in DNSLabel [offset=%d,pointer=%d,length=%d]" %
-                                      (self.offset, pointer, len(self.data)))
+                    raise BufferError(
+                        "Invalid pointer [offset=%d,pointer=%d,length=%d]" %
+                        (self.offset, pointer, len(self.data))
+                    )
                 label.extend(self.decodeName(save).label)
                 self.offset = save
                 done = True
@@ -148,6 +130,9 @@ class Buffer(object):
                 else:
                     done = True
         return ".".join(label)
+
+    def __repr__(self):
+        return repr(self.data)
 
     def __len__(self):
         return len(self.data)

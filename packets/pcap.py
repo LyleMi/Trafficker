@@ -25,6 +25,7 @@ class Pcap(object):
         header['sigfigs'] = fpcap.read(4)
         header['snaplen'] = fpcap.read(4)
         header['linktype'] = fpcap.read(4)
+
         self.header = header
 
         while True:

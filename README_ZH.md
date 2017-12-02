@@ -2,7 +2,7 @@
 
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-bule.svg)](http://www.python.org/download/)
 
-一个简单的socket以及HTTP发包工具
+任意流量发包，pcap解析工具
 
 ## 安装
 

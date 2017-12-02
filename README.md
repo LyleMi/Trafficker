@@ -2,7 +2,7 @@
 
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 
-A tool used to send arbitrary packet or http request.
+A tool used to send arbitrary packet or http request, also support pcap search.
 
 ## Installation
 
