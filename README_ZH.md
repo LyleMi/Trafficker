@@ -10,20 +10,18 @@
 ```shell
 pip install -r requirements.txt
 git clone https://github.com/LyleMi/Trafficker.git
-sudo python app.py
 ```
 
 ## 特性
 
 ### 支持协议
 
-* ip
 * arp
+* dns
 * icmp
+* ip
+* pop
+* smtp
 * tcp
 * udp
-* http
-
-## 其他功能
-
-* pcap 包解析
+* vlan
