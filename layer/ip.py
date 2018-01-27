@@ -145,7 +145,7 @@ class IP(layer):
     
     @property
     def ssrc(self):
-        return socket.inet_ntoa(self.source),
+        return socket.inet_ntoa(self.source)
     
     @property
     def sdst(self):
