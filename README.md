@@ -26,3 +26,10 @@ git clone https://github.com/LyleMi/Trafficker.git
 * tcp
 * udp
 * vlan
+
+### Usage
+
+```python
+from packets.pcap import Pcap
+Pcap("./pcaps/test.pcap")
+```

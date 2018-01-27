@@ -7,6 +7,7 @@ from layer.udp import UDP
 from layer.tcp import TCP
 from layer.dns import DNS
 from layer.smtp import SMTP
+from layer.http import HTTP
 from layer.pop import POP
 from layer.vlan import VLAN
 
@@ -50,7 +51,8 @@ class Packet(object):
                 self.dstp = tcp.dstp
                 self.layers.append(tcp)
                 if 80 in [tcp.srcp, tcp.dstp]:
-                    return
+                    http = HTTP.unpack(tcp.payload)
+                    self.layers.append(http)
                 elif 25 in [tcp.srcp, tcp.dstp]:
                     smtp = SMTP.unpack(tcp.payload)
                     self.layers.append(smtp)
