@@ -16,16 +16,11 @@ from packets.buffer import Buffer
 
 class Packet(object):
 
-    """pcap packet"""
+    """traffic packet"""
 
-    def __init__(self, header, data, packetNum):
+    def __init__(self, data):
 
         super(Packet, self).__init__()
-        self.header = {}
-        self.header['GMTtime'] = header[:4]
-        self.header['MicroTime'] = header[4:8]
-        self.header['caplen'] = header[8:12]
-        self.header['len'] = header[12:16]
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
         self.layers = [mac]
