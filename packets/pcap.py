@@ -6,11 +6,15 @@ import struct
 from packets.packet import Packet
 
 
+def _defaultHandler(packetNum, layers):
+    print packetNum, layers
+
+
 class Pcap(object):
 
     """Pcap file reader"""
 
-    def __init__(self, filepath):
+    def __init__(self, filepath, handler=_defaultHandler):
         super(Pcap, self).__init__()
         self.filepath = filepath
         fpcap = open(filepath, 'rb')
@@ -42,7 +46,7 @@ class Pcap(object):
             '''
             try:
                 packet = Packet(fpcap.read(packetLen))
-                print packetNum, packet.layers
+                handler(packetNum, packet.layers)
             except Exception as e:
                 print(e)
             packetNum += 1
