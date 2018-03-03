@@ -4,7 +4,18 @@
 import binascii
 import struct
 
-from utils.utils import getBits
+
+def getBits(data, offset, bits=1):
+    """
+    Get specified bits from integer
+
+    >>> bin(getBits(0b0011100,2))
+    '0b1'
+    >>> bin(getBits(0b0011100,0,4))
+    '0b1100'
+    """
+    mask = ((1 << bits) - 1) << offset
+    return (data & mask) >> offset
 
 
 class BufferError(Exception):
@@ -139,6 +150,7 @@ class Buffer(object):
 
     def __getitem__(self, i):
         return self.data[i]
+
 
 if __name__ == '__main__':
     import doctest

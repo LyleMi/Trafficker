@@ -4,7 +4,6 @@
 import socket
 import struct
 
-from utils.utils import checksum, parseMac
 from layer import layer
 
 
@@ -18,8 +17,8 @@ class ETHER(layer):
     def __init__(self, mac=None):
         if mac is None:
             return
-        self.src = parseMac(mac["src"])
-        self.dst = parseMac(mac["dst"])
+        self.src = self.parseMac(mac["src"])
+        self.dst = self.parseMac(mac["dst"])
         self.type = mac["type"]
 
     def pack(self):
@@ -52,15 +51,13 @@ class ETHER(layer):
 
     def __repr__(self):
         return "<MAC %s -> %s, %s>" % (
-            parseMac(self.dst, True),
-            parseMac(self.src, True),
+            self.parseMac(self.dst, True),
+            self.parseMac(self.src, True),
             self.stype
         )
 
+
 if __name__ == '__main__':
-    import os
-    import sys
-    sys.path.append(os.path.abspath(".."))
     mac = ETHER({
         "dst": "ff:ff:ff:ff:ff:ff",
         "src": "00:00:00:00:00:00",

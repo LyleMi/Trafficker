@@ -37,7 +37,6 @@ import struct
 
 from random import randint
 
-from utils.utils import checksum
 from layer import layer
 
 
@@ -103,7 +102,7 @@ class IP(layer):
                                self.checksum,
                                self.source,
                                self.destination)
-        self.checksum = checksum(ipHeader + self.options)
+        self.checksum = self.calChecksum(ipHeader + self.options)
         ipHeader = struct.pack("!BBHHHBBH4s4s",
                                ver_ihl,
                                self.tos,
@@ -142,11 +141,11 @@ class IP(layer):
     @property
     def sprotocol(self):
         return self.protocolDict.get(self.protocol, "unknown")
-    
+
     @property
     def ssrc(self):
         return socket.inet_ntoa(self.source)
-    
+
     @property
     def sdst(self):
         return socket.inet_ntoa(self.destination)
@@ -155,6 +154,7 @@ class IP(layer):
         return "<IP %s -> %s>" % (
             self.ssrc, self.sdst
         )
+
 
 if __name__ == '__main__':
 

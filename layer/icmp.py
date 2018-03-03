@@ -4,7 +4,6 @@
 import socket
 import struct
 
-from utils.utils import checksum
 from layer import layer
 
 
@@ -20,18 +19,18 @@ class ICMP(layer):
 
     def pack(self):
         icmpHeader = struct.pack("!BBHHH",
-                                  self.type,
-                                  self.code,
-                                  self.checksum,
-                                  self.ident,
-                                  self.seq)
-        self.checksum = checksum(icmpHeader)
+                                 self.type,
+                                 self.code,
+                                 self.checksum,
+                                 self.ident,
+                                 self.seq)
+        self.checksum = self.calChecksum(icmpHeader)
         icmpHeader = struct.pack("!BBHHH",
-                                  self.type,
-                                  self.code,
-                                  self.checksum,
-                                  self.ident,
-                                  self.seq)
+                                 self.type,
+                                 self.code,
+                                 self.checksum,
+                                 self.ident,
+                                 self.seq)
         return icmpHeader + str(self.payload)
 
     def unpack(self, packet):

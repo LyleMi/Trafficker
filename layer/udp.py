@@ -4,7 +4,6 @@
 import socket
 import struct
 
-from utils.utils import checksum
 from layer import layer
 
 
@@ -26,7 +25,7 @@ class UDP(layer):
                                    self.dst, 0,
                                    socket.IPPROTO_UDP,
                                    self.length)
-        self.checksum = checksum(pseudoHeader)
+        self.checksum = self.calChecksum(pseudoHeader)
         packet = struct.pack('!HHHH', self.src, self.dst,
                              length, self.checksum)
         return packet + self.payload.encode('hex')

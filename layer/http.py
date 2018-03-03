@@ -20,4 +20,4 @@ class HTTP(layer):
         self.content = packet
 
 if __name__ == '__main__':
-    pass
+    print HTTP().name

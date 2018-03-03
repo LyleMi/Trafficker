@@ -4,7 +4,6 @@
 import socket
 import struct
 
-from utils.utils import checksum, parseMac
 from layer import layer
 
 ARPOP_REQUEST = 0x0001
@@ -19,9 +18,9 @@ class ARP(layer):
 
     def __init__(self, arp):
         self.arpop = arp["arpop"]
-        self.sendermac = parseMac(arp["sendermac"])
+        self.sendermac = self.parseMac(arp["sendermac"])
         self.senderip = socket.inet_aton(arp["senderip"])
-        self.targetmac = parseMac(arp["targetmac"])
+        self.targetmac = self.parseMac(arp["targetmac"])
         self.targetip = socket.inet_aton(arp["targetip"])
 
     def pack(self):
@@ -41,6 +40,7 @@ class ARP(layer):
     def unpack(self, packet):
         arp = struct.unpack('!HHBBH6s4s6s4s', packet)
         return arp
+
 
 if __name__ == '__main__':
     arpConfig = {}

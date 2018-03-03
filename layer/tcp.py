@@ -4,7 +4,6 @@
 import socket
 import struct
 
-from utils.utils import checksum
 from layer import layer
 
 
@@ -47,7 +46,7 @@ class TCP(layer):
                                 self.window,
                                 self.checksum,
                                 self.urgp)
-        tcpChecksum = checksum(tcpHeader)
+        tcpChecksum = self.calChecksum(tcpHeader)
         tcpHeader = struct.pack("!HHLLBBH",
                                 self.srcp,
                                 self.dstp,
@@ -95,6 +94,7 @@ class TCP(layer):
             # ",".join(self.flags)
         )
 
+
 if __name__ == '__main__':
     tcpConfig = {}
     tcpConfig['srcp'] = 13987
@@ -118,6 +118,9 @@ if __name__ == '__main__':
     tcpConfig['window'] = 8192
     tcpConfig['checksum'] = 0
     tcpConfig['urgp'] = 0
+    tcpConfig['seqnumber'] = 0
+    tcpConfig['acknumber'] = 0
+    tcpConfig['option'] = ''
     tcpConfig['payload'] = ''
 
     tcp = TCP(tcpConfig)
