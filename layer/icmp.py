@@ -47,5 +47,5 @@ if __name__ == '__main__':
     icmpConfig["payload"] = ""
     icmp = ICMP(icmpConfig)
     packet = icmp.pack()
-    print packet
-    print icmp.unpack(packet)
+    print(packet)
+    print(icmp.unpack(packet))

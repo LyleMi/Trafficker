@@ -7,14 +7,14 @@ from packets.packet import Packet
 
 
 def _defaultHandler(packetNum, layers):
-    print packetNum, layers
+    print(packetNum, layers)
 
 
 class Pcap(object):
 
     """Pcap file reader"""
 
-    def __init__(self, filepath, handler=_defaultHandler):
+    def __init__(self, filepath, handlers=[_defaultHandler]):
         super(Pcap, self).__init__()
         self.filepath = filepath
         fpcap = open(filepath, 'rb')
@@ -46,7 +46,8 @@ class Pcap(object):
             '''
             try:
                 packet = Packet(fpcap.read(packetLen))
-                handler(packetNum, packet.layers)
+                for handler in handlers:
+                    handler(packetNum, packet.layers)
             except Exception as e:
                 print(e)
             packetNum += 1

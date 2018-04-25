@@ -124,4 +124,4 @@ if __name__ == '__main__':
     tcpConfig['payload'] = ''
 
     tcp = TCP(tcpConfig)
-    print tcp.pack()
+    print(tcp.pack())

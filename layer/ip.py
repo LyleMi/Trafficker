@@ -179,5 +179,5 @@ if __name__ == '__main__':
     ipConfig['options'] = 'aa'
     ip = IP(ipConfig)
     packet = ip.pack()
-    print packet.encode('hex')
-    print ip.unpack(packet).pack().encode('hex')
+    print(packet.encode('hex'))
+    print(ip.unpack(packet).pack().encode('hex'))

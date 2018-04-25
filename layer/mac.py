@@ -64,5 +64,5 @@ if __name__ == '__main__':
         "type": 36864
     })
     packet = mac.pack()
-    print packet.encode('hex')
-    print mac.unpack(packet).pack().encode('hex')
+    print(packet.encode('hex'))
+    print(mac.unpack(packet).pack().encode('hex'))
