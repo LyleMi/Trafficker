@@ -73,25 +73,34 @@ class TCP(layer):
         tcph = packet.unpack("!HHLLBBHHH")
         tcp.srcp = tcph[0]  # source port
         tcp.dstp = tcph[1]  # destination port
-        tcp.seq = tcph[2]  # sequence number
-        tcp.ack = hex(tcph[3])  # acknowledgment number
+        tcp.seqn = tcph[2]  # sequence number
+        tcp.ackn = tcph[3]  # acknowledgment number
         tcp.thl = tcph[4] >> 2
         tcp.flags = []
+        tcp.offset = 0
+        tcp.urg = tcph[5] & 32
+        tcp.ack = tcph[5] & 16
+        tcp.psh = tcph[5] & 8
+        tcp.rst = tcph[5] & 4
+        tcp.syn = tcph[5] & 2
+        tcp.fin = tcph[5] & 1
         for f in cflags:
             if tcph[5] & f:
                 tcp.flags += [cflags[f]]
         tcp.window = tcph[6]  # window
         tcp.checksum = hex(tcph[7])  # checksum
-        tcp.urg = tcph[8]  # urgent pointer
+        tcp.urgp = tcph[8]  # urgent pointer
         tcp.options = packet.get(tcp.thl - 20)
         tcp.payload = packet.getremain()
         return tcp
 
     def __repr__(self):
-        return "<TCP %s -> %s, flags: >" % (
+        return "<TCP %s -> %s, flags: [%s], seq=%s, ack=%s>" % (
             self.srcp,
             self.dstp,
-            # ",".join(self.flags)
+            ", ".join(self.flags),
+            self.seqn,
+            self.ackn
         )
 
 
