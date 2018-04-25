@@ -6,8 +6,9 @@ import struct
 from packets.packet import Packet
 
 
-def _defaultHandler(packetNum, layers):
+def _defaultHandler(packetNum, layers, glob):
     print(packetNum, layers)
+    return glob
 
 
 class Pcap(object):
@@ -31,6 +32,8 @@ class Pcap(object):
         header['linktype'] = fpcap.read(4)
 
         self.header = header
+        # send to handler, save some glob status
+        self.glob = {}
 
         while True:
             header = fpcap.read(16)
@@ -47,7 +50,7 @@ class Pcap(object):
             try:
                 packet = Packet(fpcap.read(packetLen))
                 for handler in handlers:
-                    handler(packetNum, packet.layers)
+                    self.glob = handler(packetNum, packet.layers, self.glob)
             except Exception as e:
                 print(e)
             packetNum += 1

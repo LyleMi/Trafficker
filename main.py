@@ -8,4 +8,7 @@ from packets.pcap import Pcap
 from handlers.tcp import tcpHandler
 
 if __name__ == '__main__':
-    Pcap(sys.argv[1], [tcpHandler])
+    p = Pcap(sys.argv[1], [tcpHandler])
+    t = p.glob['tcpflow'][-1]
+    for tcp in t.tcps:
+        print(repr(tcp))
