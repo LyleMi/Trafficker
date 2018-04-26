@@ -41,7 +41,7 @@ class Packet(object):
             self.dstip = ip.sdst
             self.layers.append(ip)
             if ip.protocol == IP.Protocol.TCP:
-                tcp = TCP.unpack(data)
+                tcp = TCP.unpack(data, ip.tl - 40)
                 self.srcp = tcp.srcp
                 self.dstp = tcp.dstp
                 self.layers.append(tcp)

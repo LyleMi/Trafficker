@@ -6,6 +6,57 @@ import struct
 
 from layer import layer
 
+'''
+TCP Header Format
+
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          Source Port          |       Destination Port        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Sequence Number                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Acknowledgment Number                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Data |           |U|A|P|R|S|F|                               |
+| Offset| Reserved  |R|C|S|S|Y|I|            Window             |
+|       |           |G|K|H|T|N|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Checksum            |         Urgent Pointer        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Options                    |    Padding    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                             data                              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+CWR Congestion Window Reduced
+ECE ECN Echo
+URG Urgent
+ACK Acknowledgment
+PSH Push
+RST Reset the connection
+SYN Synchronize sequence numbers to initiate a connection
+FIN The sender of the segment is finished sending data to its peer
+
+
+The TCP option values
+
+1 byte kind, 1 byte length, n byte info
+
+Kind    Length      Name
+0       1           EOL
+1       1           NOP
+2       4           MSS
+3       3           WSOPT 
+4       2           SACK-Permitted
+5       Var.        SACK
+8       10          TSOPT
+28      4           UTO
+29      Var.        TCP-AO
+253     Var.        Experimental
+254 Var. Experimental
+'''
+
 
 class TCP(layer):
 
@@ -60,7 +111,7 @@ class TCP(layer):
         return tcpHeader + self.option + self.payload
 
     @staticmethod
-    def unpack(packet):
+    def unpack(packet, datalen=0):
         cflags = {  # Control flags
             32: "urg",
             16: "ack",
@@ -91,7 +142,8 @@ class TCP(layer):
         tcp.checksum = hex(tcph[7])  # checksum
         tcp.urgp = tcph[8]  # urgent pointer
         tcp.options = packet.get(tcp.thl - 20)
-        tcp.payload = packet.getremain()
+        tcp.payload = packet.get(datalen - (tcp.thl - 20))
+        tcp.padding = packet.getremain()
         return tcp
 
     def __repr__(self):

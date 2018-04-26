@@ -49,5 +49,8 @@ class SMTP(layer):
                 s.args = fp[1:]
         return s
 
+    def __repr__(self):
+        return "<SMTP %s>" % self.type
+
 if __name__ == '__main__':
     pass

@@ -52,3 +52,25 @@ class TCPFlow(object):
             if tcp.ack and tcp.seqn == last.seqn and tcp.dstp == last.dstp:
                 return True
         return False
+
+    def extract(self):
+        # TODO
+        # TCP ZeroWindow
+        # TCP Window Full
+        # TCP Window Update
+        # etc
+        datas = []
+        curp = self.tcps[0].srcp
+        data = ""
+        for t in self.tcps:
+            if t.srcp == curp:
+                data += t.payload
+            else:
+                if len(t.payload):
+                    if len(data):
+                        datas.append(data)
+                    data = t.payload
+                    curp = t.srcp
+        if len(data):
+            datas.append(data)
+        return datas
