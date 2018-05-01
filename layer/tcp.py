@@ -38,7 +38,6 @@ RST Reset the connection
 SYN Synchronize sequence numbers to initiate a connection
 FIN The sender of the segment is finished sending data to its peer
 
-
 The TCP option values
 
 1 byte kind, 1 byte length, n byte info
