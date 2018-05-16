@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-def httpHandler(packetNum, layers, glob):
-    if layers[-1].name != "http":
+def httpHandler(packetNum, packet, glob):
+    if packet.layers[-1].name != "http":
         return glob
     return glob

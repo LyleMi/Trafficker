@@ -10,7 +10,7 @@ A tool used to send arbitrary packet or parse pcap packet.
 
 ```shell
 git clone https://github.com/LyleMi/Trafficker.git
-pip install -r requirements.txt
+python setup.py install
 ```
 
 ## Feature

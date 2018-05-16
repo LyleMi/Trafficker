@@ -9,7 +9,7 @@
 
 ```shell
 git clone https://github.com/LyleMi/Trafficker.git
-pip install -r requirements.txt
+python setup.py install
 ```
 
 ## 特性

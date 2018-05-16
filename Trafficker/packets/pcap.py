@@ -40,17 +40,10 @@ class Pcap(object):
             if len(header) < 16:
                 break
             packetLen = struct.unpack('I', header[12:16])[0]
-            '''
-            header = {}
-            header['GMTtime'] = header[:4]
-            header['MicroTime'] = header[4:8]
-            header['caplen'] = header[8:12]
-            header['len'] = header[12:16]
-            '''
             try:
-                packet = Packet(fpcap.read(packetLen))
+                packet = Packet(fpcap.read(packetLen), header)
                 for handler in handlers:
-                    self.glob = handler(packetNum, packet.layers, self.glob)
+                    self.glob = handler(packetNum, packet, self.glob)
             except Exception as e:
                 print(e)
             packetNum += 1

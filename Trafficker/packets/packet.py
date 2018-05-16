@@ -18,9 +18,12 @@ class Packet(object):
 
     """traffic packet"""
 
-    def __init__(self, data):
+    def __init__(self, data, header):
 
         super(Packet, self).__init__()
+        header = Buffer(header)
+        self.header = {}
+        self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
         self.layers = [mac]
@@ -62,4 +65,3 @@ class Packet(object):
                 if 53 in [udp.dst, udp.src]:
                     dns = DNS.unpack(data)
                     self.layers.append(dns)
-

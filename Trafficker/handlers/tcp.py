@@ -4,9 +4,9 @@
 from Trafficker.handlers.tcpflow import TCPFlow
 
 
-def tcpHandler(packetNum, layers, glob):
+def tcpHandler(packetNum, packet, glob):
     tcp = None
-    for l in layers:
+    for l in packet.layers:
         if l.name == "TCP":
             tcp = l
     if tcp is None:
