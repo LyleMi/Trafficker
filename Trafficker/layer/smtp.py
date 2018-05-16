@@ -4,7 +4,7 @@
 import socket
 import struct
 
-from layer import layer
+from Trafficker.layer.layer import layer
 
 
 class SMTPParseError(Exception):

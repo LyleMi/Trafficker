@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from layer.mac import ETHER
-from layer.ip import IP
-from layer.udp import UDP
-from layer.tcp import TCP
-from layer.dns import DNS
-from layer.smtp import SMTP
-from layer.http import HTTP
-from layer.pop import POP
-from layer.vlan import VLAN
+from Trafficker.layer.mac import ETHER
+from Trafficker.layer.ip import IP
+from Trafficker.layer.udp import UDP
+from Trafficker.layer.tcp import TCP
+from Trafficker.layer.dns import DNS
+from Trafficker.layer.smtp import SMTP
+from Trafficker.layer.http import HTTP
+from Trafficker.layer.pop import POP
+from Trafficker.layer.vlan import VLAN
 
-from packets.buffer import Buffer
+from Trafficker.packets.buffer import Buffer
 
 
 class Packet(object):

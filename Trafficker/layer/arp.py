@@ -4,7 +4,7 @@
 import socket
 import struct
 
-from layer import layer
+from Trafficker.layer.layer import layer
 
 ARPOP_REQUEST = 0x0001
 ARPOP_REPLY = 0x0002

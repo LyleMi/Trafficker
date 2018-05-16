@@ -4,7 +4,7 @@
 import socket
 import struct
 
-from layer import layer
+from Trafficker.layer.layer import layer
 
 
 class DNSBase(layer):
@@ -133,6 +133,7 @@ class DNS(DNSBase):
     @property
     def domains(self):
         return list(set(map(lambda i: i.qname, self.queries)))
+
 
 if __name__ == '__main__':
     pass

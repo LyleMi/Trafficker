@@ -9,8 +9,8 @@ A tool used to send arbitrary packet or parse pcap packet.
 > only support Linux momentarily
 
 ```shell
-pip install -r requirements.txt
 git clone https://github.com/LyleMi/Trafficker.git
+pip install -r requirements.txt
 ```
 
 ## Feature
@@ -30,6 +30,6 @@ git clone https://github.com/LyleMi/Trafficker.git
 ### Usage
 
 ```python
-from packets.pcap import Pcap
+from Trafficker.packets.pcap import Pcap
 Pcap("./pcaps/test.pcap")
 ```

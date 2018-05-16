@@ -8,8 +8,8 @@
 
 
 ```shell
-pip install -r requirements.txt
 git clone https://github.com/LyleMi/Trafficker.git
+pip install -r requirements.txt
 ```
 
 ## 特性

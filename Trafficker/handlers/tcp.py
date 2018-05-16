@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from handlers.tcpflow import TCPFlow
+from Trafficker.handlers.tcpflow import TCPFlow
 
 
 def tcpHandler(packetNum, layers, glob):

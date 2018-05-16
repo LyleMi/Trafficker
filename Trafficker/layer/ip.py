@@ -37,7 +37,7 @@ import struct
 
 from random import randint
 
-from layer import layer
+from Trafficker.layer.layer import layer
 
 
 class IP(layer):

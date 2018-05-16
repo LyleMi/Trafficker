@@ -3,7 +3,7 @@
 
 import struct
 
-from packets.packet import Packet
+from Trafficker.packets.packet import Packet
 
 
 def _defaultHandler(packetNum, layers, glob):
