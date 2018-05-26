@@ -6,16 +6,46 @@ import struct
 from Trafficker.packets.packet import Packet
 
 
-def _defaultHandler(packetNum, layers, glob):
-    print(packetNum, layers)
+def _defaultHandler(packetNum, packet, glob):
+    """default packet handler
+    
+    Args:
+        packetNum (int): packet number
+        packet (obj): packet
+        glob (dict): global dict
+    
+    Returns:
+        dict: glob
+    """
+    print(packetNum, packet)
     return glob
+
+def _defaultFilter(packetNum, packet, glob):
+    '''Filter for Traffic
+    
+    Args:
+        packetNum (int): packet number
+        packet (obj): packet
+        glob (dict): global dict
+    
+    Returns:
+        bool: if True do not hanlde that packet
+    '''
+    return False
 
 
 class Pcap(object):
 
-    """Pcap file reader"""
+    """Pcap File Reader
+    """
 
-    def __init__(self, filepath, handlers=[_defaultHandler]):
+    def __init__(self, filepath, handlers=[_defaultHandler], filters=[_defaultFilter]):
+        """Pcap file reader
+        
+        Args:
+            filepath (str): Pcap file path
+            handlers (func, optional): packet handler
+        """
         super(Pcap, self).__init__()
         self.filepath = filepath
         fpcap = open(filepath, 'rb')
@@ -40,12 +70,16 @@ class Pcap(object):
             if len(header) < 16:
                 break
             packetLen = struct.unpack('I', header[12:16])[0]
-            try:
-                packet = Packet(fpcap.read(packetLen), header)
-                for handler in handlers:
-                    self.glob = handler(packetNum, packet, self.glob)
-            except Exception as e:
-                print(e)
+            packet = Packet(fpcap.read(packetLen), header)
+            shouldFilter = False
+            for f in filters:
+                if f(packetNum, layers, self.glob):
+                    shouldFilter = True
+                    break
+            if shouldFilter:
+                continue
+            for handler in handlers:
+                self.glob = handler(packetNum, packet, self.glob)
             packetNum += 1
 
         fpcap.close()
