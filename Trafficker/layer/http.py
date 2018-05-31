@@ -17,7 +17,9 @@ class HTTP(layer):
 
     @classmethod
     def unpack(cls, packet):
-        self.content = packet
+        h = HTTP()
+        h.content = packet
+        return h
 
 
 if __name__ == '__main__':

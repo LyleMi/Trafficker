@@ -73,7 +73,7 @@ class Pcap(object):
             packet = Packet(fpcap.read(packetLen), header)
             shouldFilter = False
             for f in filters:
-                if f(packetNum, layers, self.glob):
+                if f(packetNum, packet, self.glob):
                     shouldFilter = True
                     break
             if shouldFilter:
