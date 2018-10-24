@@ -12,6 +12,7 @@ from Trafficker.layer.smtp import SMTP
 from Trafficker.layer.http import HTTP
 from Trafficker.layer.pop import POP
 from Trafficker.layer.vlan import VLAN
+from Trafficker.layer.cldap import CLDAP
 
 from Trafficker.packets.buffer import Buffer
 
@@ -52,25 +53,33 @@ class Packet(object):
                 self.srcp = tcp.srcp
                 self.dstp = tcp.dstp
                 self.layers.append(tcp)
+                self.protocol = "TCP"
                 if 80 in [tcp.srcp, tcp.dstp]:
+                    self.protocol = "HTTP"
                     http = HTTP.unpack(tcp.payload)
                     self.layers.append(http)
                 elif 25 in [tcp.srcp, tcp.dstp]:
+                    self.protocol = "SMTP"
                     smtp = SMTP.unpack(tcp.payload)
                     self.layers.append(smtp)
                 elif 110 in [tcp.srcp, tcp.dstp]:
+                    self.protocol = "POP"
                     pop = POP.unpack(tcp.payload)
                     self.layers.append(pop)
-                self.protocol = "TCP"
             elif ip.protocol == IP.Protocol.UDP:
                 udp = UDP.unpack(data.get(8))
                 self.srcp = udp.src
                 self.dstp = udp.dst
                 self.layers.append(udp)
+                self.protocol = "UDP"
                 if 53 in [udp.dst, udp.src]:
+                    self.protocol = "DNS"
                     dns = DNS.unpack(data)
                     self.layers.append(dns)
-                self.protocol = "UDP"
+                if 389 in [udp.dst, udp.src]:
+                    self.protocol = "CLDAP"
+                    cldap = CLDAP.unpack(data)
+                    self.layers.append(cldap)
             elif ip.protocol == IP.Protocol.IGMP:
                 self.protocol = "IGMP"
             else:
