@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
+
 from Trafficker.layer.mac import ETHER
 from Trafficker.layer.ip import IP
 from Trafficker.layer.udp import UDP
@@ -26,9 +28,11 @@ class Packet(object):
         self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
+        self.mac = mac
         self.layers = [mac]
         self.srcip = ""
         self.dstip = ""
+        self.protocol = ""
         self.srcp = 0
         self.dstp = 0
         ntype = mac.type
@@ -57,6 +61,7 @@ class Packet(object):
                 elif 110 in [tcp.srcp, tcp.dstp]:
                     pop = POP.unpack(tcp.payload)
                     self.layers.append(pop)
+                self.protocol = "TCP"
             elif ip.protocol == IP.Protocol.UDP:
                 udp = UDP.unpack(data.get(8))
                 self.srcp = udp.src
@@ -65,3 +70,22 @@ class Packet(object):
                 if 53 in [udp.dst, udp.src]:
                     dns = DNS.unpack(data)
                     self.layers.append(dns)
+                self.protocol = "UDP"
+            elif ip.protocol == IP.Protocol.IGMP:
+                self.protocol = "IGMP"
+            else:
+                print("unknown protocol %s" % ip.protocol)
+
+    def __repr__(self):
+        timearray = time.localtime(self.header['GMTtime'])
+        timestr = time.strftime("%Y-%m-%d %H:%M:%S", timearray)
+        return "<[%s] %s %s(%s):%s -> %s(%s):%s>" % (
+            timestr,
+            self.protocol,
+            self.srcip,
+            self.mac.srcmac,
+            self.srcp,
+            self.dstip,
+            self.mac.dstmac,
+            self.dstp
+        )

@@ -49,6 +49,14 @@ class ETHER(layer):
             return "VLAN"
         return "unknown %d" % (self.type)
 
+    @property
+    def dstmac(self):
+        return self.parseMac(self.dst, True)
+
+    @property
+    def srcmac(self):
+        return self.parseMac(self.src, True)
+
     def __repr__(self):
         return "<MAC %s -> %s, %s>" % (
             self.parseMac(self.dst, True),
