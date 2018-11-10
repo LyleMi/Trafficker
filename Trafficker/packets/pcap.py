@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import struct
+import traceback
 
 from Trafficker.packets.packet import Packet
 
@@ -44,7 +45,11 @@ class Pcap(object):
             if len(header) < 16:
                 break
             packetLen = struct.unpack('I', header[12:16])[0]
-            packet = Packet(fpcap.read(packetLen), header)
+            try:
+                packet = Packet(fpcap.read(packetLen), header)
+            except Exception as e:
+                traceback.print_exc()
+                print(repr(e))
             yield packetNum, packet
             packetNum += 1
         fpcap.close()

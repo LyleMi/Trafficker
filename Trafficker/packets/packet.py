@@ -49,12 +49,12 @@ class Packet(object):
             self.srcip = ip.ssrc
             self.dstip = ip.sdst
             self.layers.append(ip)
+            self.protocol = ip.sprotocol
             if ip.protocol == IP.Protocol.TCP:
                 tcp = TCP.unpack(data, ip.tl - 40)
                 self.srcp = tcp.srcp
                 self.dstp = tcp.dstp
                 self.layers.append(tcp)
-                self.protocol = "TCP"
                 if 80 in [tcp.srcp, tcp.dstp]:
                     self.protocol = "HTTP"
                     http = HTTP.unpack(tcp.payload)
@@ -72,7 +72,6 @@ class Packet(object):
                 self.srcp = udp.src
                 self.dstp = udp.dst
                 self.layers.append(udp)
-                self.protocol = "UDP"
                 if 53 in [udp.dst, udp.src]:
                     self.protocol = "DNS"
                     dns = DNS.unpack(data)
@@ -81,10 +80,7 @@ class Packet(object):
                     self.protocol = "CLDAP"
                     cldap = CLDAP.unpack(data)
                     self.layers.append(cldap)
-            elif ip.protocol == IP.Protocol.IGMP:
-                self.protocol = "IGMP"
-            else:
-                print("unknown protocol %s" % ip.protocol)
+
 
     def __repr__(self):
         timearray = time.localtime(self.header['GMTtime'])
