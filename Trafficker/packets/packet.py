@@ -24,6 +24,7 @@ class Packet(object):
     def __init__(self, data, header):
 
         super(Packet, self).__init__()
+        self.raw = header + data
         header = Buffer(header)
         self.header = {}
         self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
