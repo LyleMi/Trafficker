@@ -9,7 +9,9 @@ from Trafficker.layer.layer import layer
 
 class ICMP(layer):
 
-    def __init__(self, icmp):
+    def __init__(self, icmp=None):
+        if icmp is None:
+            return
         self.type = icmp["type"]
         self.code = icmp["code"]
         self.checksum = icmp["checksum"]
@@ -21,7 +23,7 @@ class ICMP(layer):
         icmpHeader = struct.pack("!BBHHH",
                                  self.type,
                                  self.code,
-                                 self.checksum,
+                                 0,
                                  self.ident,
                                  self.seq)
         self.checksum = self.calChecksum(icmpHeader)
@@ -33,8 +35,25 @@ class ICMP(layer):
                                  self.seq)
         return icmpHeader + self.payload
 
-    def unpack(self, packet):
-        return struct.unpack("!BBHHH", packet)
+    def json(self):
+        return {
+            "type": self.type,
+            "code": self.code,
+            "ident": self.ident,
+            "seq": self.seq
+        }
+
+    @classmethod
+    def unpack(cls, packet):
+        icmp = ICMP()
+        packet, icmp.payload = packet[:8], packet[8:]
+        data = struct.unpack("!BBHHH", packet)
+        icmp.type = data[0]
+        icmp.code = data[1]
+        icmp.checksum = data[2]
+        icmp.ident = data[3]
+        icmp.seq = data[4]
+        return icmp
 
 
 if __name__ == '__main__':
@@ -48,4 +67,5 @@ if __name__ == '__main__':
     icmp = ICMP(icmpConfig)
     packet = icmp.pack()
     print(packet)
-    print(icmp.unpack(packet))
+    print(icmp)
+    print(ICMP.unpack(packet))

@@ -3,6 +3,7 @@
 
 import time
 
+from Trafficker.layer.arp import ARP
 from Trafficker.layer.mac import ETHER
 from Trafficker.layer.ip import IP
 from Trafficker.layer.udp import UDP
@@ -40,12 +41,12 @@ class Packet(object):
         self.dstp = 0
         ntype = mac.type
 
-        if mac.type == ETHER.VLAN:
+        if mac.type == ETHER.ethertypes["VLAN"]:
             vlan = VLAN.unpack(data.get(4))
             self.layers.append(vlan)
             ntype = vlan.type
 
-        if ntype == ETHER.IPv4:
+        if ntype == ETHER.ethertypes["IPv4"]:
             ip = IP.unpack(data.get(20))
             self.srcip = ip.ssrc
             self.dstip = ip.sdst
@@ -81,13 +82,29 @@ class Packet(object):
                     self.protocol = "CLDAP"
                     cldap = CLDAP.unpack(data)
                     self.layers.append(cldap)
-        elif ntype == ETHER.ARP:
+        elif ntype == ETHER.ethertypes["ARP"]:
             self.protocol = "ARP"
-        elif ntype == ETHER.IPv6:
-            self.protocol = "IPv6"
-        else:
+            arp = ARP.unpack(data.get(28))
+            self.layers.append(arp)
+            self.srcip = arp.sip
+            self.dstip = arp.dip
+        elif ntype not in ETHER.ethertypes.values():
             print('Unsupport type %s' % ntype)
+        else:
+            for etype in ETHER.ethertypes:
+                if ntype == ETHER.ethertypes[etype]:
+                    self.protocol = etype
+                    break
 
+    def json(self):
+        ret = {}
+        ret['raw'] = self.raw
+        ret['srcip'] = self.srcip
+        ret['dstip'] = self.dstip
+        ret['layers'] = []
+        for l in self.layers:
+            ret['layers'].push(l.json())
+        return ret
 
     def __repr__(self):
         if 'GMTtime' in self.header:

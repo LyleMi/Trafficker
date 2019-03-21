@@ -56,6 +56,7 @@ class IP(layer):
         89: "OSPF",
     }
 
+    # /etc/protocols
     class Protocol:
         ICMP = 1
         IGMP = 2

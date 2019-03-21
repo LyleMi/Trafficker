@@ -9,10 +9,36 @@ from Trafficker.layer.layer import layer
 
 class ETHER(layer):
 
-    IPv4 = 0x0800
-    IPv6 = 0x86dd
-    ARP = 0x0806
-    VLAN = 0x8100
+    # /etc/ethertypes
+    ethertypes = {
+        "IPv4": 0x0800,
+        "X25": 0x0805,
+        "ARP": 0x0806,
+        "FR_ARP": 0x0808,
+        "BPQ": 0x08ff,
+        "DEC": 0x6000,
+        "DNA_DL": 0x6001,
+        "DNA_RC": 0x6002,
+        "DNA_RT": 0x6003,
+        "LAT": 0x6004,
+        "DIAG": 0x6005,
+        "CUST": 0x6006,
+        "SCA": 0x6007,
+        "TEB": 0x6558,
+        "RAW_FR": 0x6559,
+        "AARP": 0x80F3,
+        "ATALK": 0x809B,
+        "VLAN": 0x8100,
+        "IPX": 0x8137,
+        "NetBEUI": 0x8191,
+        "IPv6": 0x86DD,
+        "PPP": 0x880B,
+        "ATMMPOA": 0x884C,
+        "PPP_DISC": 0x8863,
+        "PPP_SES": 0x8864,
+        "ATMFATE": 0x8884,
+        "LOOP": 0x9000,
+    }
 
     def __init__(self, mac=None):
         if mac is None:
@@ -39,15 +65,7 @@ class ETHER(layer):
 
     @property
     def stype(self):
-        if self.type == self.IPv4:
-            return "IPv4"
-        elif self.type == self.ARP:
-            return "ARP"
-        elif self.type == self.IPv6:
-            return "IPv6"
-        elif self.type == self.VLAN:
-            return "VLAN"
-        return "unknown %d" % (self.type)
+        return self.ethertypes.get(self.type, "unknown %d" % (self.type))
 
     @property
     def dstmac(self):

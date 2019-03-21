@@ -15,10 +15,13 @@ class layer(object):
         return self.packet
 
     def __str__(self):
-        return self.pack()
+        return str(self.pack())
 
     def __repr__(self):
         return "<%s>" % self.name
+
+    def json(self):
+        return {}
 
     @property
     def name(self):
