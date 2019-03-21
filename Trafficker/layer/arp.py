@@ -45,10 +45,10 @@ class ARP(layer):
 if __name__ == '__main__':
     arpConfig = {}
     arpConfig["arpop"] = ARPOP_REQUEST
-    arpConfig["sender_mac"] = 'ff:ff:ff:ff:ff:ff'
-    arpConfig["sender_ip"] = '127.0.0.1'
-    arpConfig["target_mac"] = 'ff:ff:ff:ff:ff:ff'
-    arpConfig["target_ip"] = '127.0.0.1'
+    arpConfig["sendermac"] = 'ff:ff:ff:ff:ff:ff'
+    arpConfig["senderip"] = '127.0.0.1'
+    arpConfig["targetmac"] = 'ff:ff:ff:ff:ff:ff'
+    arpConfig["targetip"] = '127.0.0.1'
     arp = ARP(arpConfig)
     packet = arp.pack()
     print(packet)

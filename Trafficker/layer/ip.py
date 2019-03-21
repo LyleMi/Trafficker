@@ -86,7 +86,7 @@ class IP(layer):
         self.source = socket.inet_aton(ip['src'])
         self.destination = socket.inet_aton(ip['dst'])
         if 'options' in ip:
-            self.options = ip['options'].decode("hex")
+            self.options = ip['options']
 
     def pack(self):
         ver_ihl = (self.version << 4) + self.ihl
@@ -116,7 +116,7 @@ class IP(layer):
                                self.destination)
         ipHeader += self.options
         if len(ipHeader) % 4 != 0:
-            ipHeader += '\x00' * (4-(len(ipHeader) % 4))
+            ipHeader += b'\x00' * (4-(len(ipHeader) % 4))
         return ipHeader
 
     @staticmethod
@@ -135,7 +135,7 @@ class IP(layer):
         ip.checksum = iph[7]
         ip.source = iph[8]
         ip.destination = iph[9]
-        ip.options = ""
+        ip.options = b""
         return ip
 
     @property
@@ -176,8 +176,8 @@ if __name__ == '__main__':
     ipConfig['checksum'] = 0  # will be filled by kernel
     ipConfig['src'] = '127.0.0.1'
     ipConfig['dst'] = '127.0.0.1'
-    ipConfig['options'] = 'aa'
+    ipConfig['options'] = b'aa'
     ip = IP(ipConfig)
     packet = ip.pack()
-    print(packet.encode('hex'))
-    print(ip.unpack(packet).pack().encode('hex'))
+    print(packet)
+    print(ip.unpack(packet).pack())

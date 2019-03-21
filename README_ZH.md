@@ -1,6 +1,6 @@
 # Trafficker
 
-[![Python 2.7](https://img.shields.io/badge/Python-2.7-bule.svg)](http://www.python.org/download/)
+[![Python 3.6](https://img.shields.io/badge/Python-2.7-bule.svg)](http://www.python.org/download/)
 
 任意流量发包，pcap解析工具
 

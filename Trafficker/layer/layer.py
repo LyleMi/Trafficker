@@ -43,9 +43,9 @@ class layer(object):
         s = 0
         n = len(data) % 2
         for i in range(0, len(data)-n, 2):
-            s += ord(data[i]) + (ord(data[i+1]) << 8)
+            s += data[i] + (data[i+1] << 8)
         if n:
-            s += ord(data[i+1])
+            s += data[i+1]
         while (s >> 16):
             s = (s & 0xFFFF) + (s >> 16)
         s = ~s & 0xffff
@@ -64,16 +64,16 @@ class layer(object):
                           (i, length*(digits + 1), hexa, text))
 
         if show:
-            print b'\n'.join(result)
+            print(b'\n'.join(result))
         else:
             return b'\n'.join(result)
 
     @staticmethod
     def parseMac(s, encode=False):
         if encode:
-            s = s.encode("hex")
+            s = s.hex()
             tmp = []
-            for i in range(len(s)/2):
+            for i in range(len(s)//2):
                 tmp.append(s[i*2:(i+1)*2])
             return ":".join(tmp)
-        return s.replace(':', '').decode('hex')
+        return bytes.fromhex(s.replace(':', ''))

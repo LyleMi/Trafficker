@@ -77,8 +77,8 @@ class TCP(layer):
         self.window = tcp['window']  # socket.htons(5840)
         self.checksum = tcp['checksum']
         self.urgp = tcp['urgp']
-        self.payload = tcp['payload'].decode("hex")
-        self.option = tcp['option'].decode("hex")
+        self.payload = tcp['payload']
+        self.option = tcp['option']
         self.src = ""
         self.destination = ""
 
@@ -180,8 +180,8 @@ if __name__ == '__main__':
     tcpConfig['urgp'] = 0
     tcpConfig['seqnumber'] = 0
     tcpConfig['acknumber'] = 0
-    tcpConfig['option'] = ''
-    tcpConfig['payload'] = ''
+    tcpConfig['option'] = b''
+    tcpConfig['payload'] = b''
 
     tcp = TCP(tcpConfig)
     print(tcp.pack())

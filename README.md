@@ -1,6 +1,6 @@
 # Trafficker
 
-[![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
+[![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)](http://www.python.org/download/)
 
 A tool used to send arbitrary packet or parse pcap packet.
 

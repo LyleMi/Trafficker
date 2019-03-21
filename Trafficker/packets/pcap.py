@@ -34,7 +34,7 @@ class Pcap(object):
         header['linktype'] = self.rawheader[20:24]
         self.header = header
 
-    def parse(self, handlers=[], filters=[]):
+    def parse(self):
         # send to handler, save some glob status
         fpcap = open(self.filepath, 'rb')
         fpcap.read(24)

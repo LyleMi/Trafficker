@@ -140,7 +140,7 @@ class Buffer(object):
                     label.append(l)
                 else:
                     done = True
-        return ".".join(label)
+        return ".".join(str(label))
 
     def __repr__(self):
         return repr(self.data)

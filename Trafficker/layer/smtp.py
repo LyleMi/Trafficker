@@ -35,7 +35,7 @@ class SMTP(layer):
             s.type = "bigdata"
             s.data = packet
             return s
-        p = packet.split("\r\n")
+        p = str(packet).split("\r\n")
         fp = p[0].split(" ")
         if fp[0] in cls.codes:
             s.type = "ret"

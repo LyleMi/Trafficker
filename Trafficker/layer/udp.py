@@ -28,7 +28,7 @@ class UDP(layer):
         self.checksum = self.calChecksum(pseudoHeader)
         packet = struct.pack('!HHHH', self.src, self.dst,
                              length, self.checksum)
-        return packet + self.payload.encode('hex')
+        return packet + self.payload
 
     @staticmethod
     def unpack(data):
@@ -50,6 +50,6 @@ if __name__ == '__main__':
     udpConfig = {}
     udpConfig['srcp'] = 13987
     udpConfig['dstp'] = 1234
-    udpConfig['payload'] = ''
+    udpConfig['payload'] = b''
     udp = UDP(udpConfig)
-    print udp.pack()
+    print(udp.pack())

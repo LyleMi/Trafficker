@@ -31,7 +31,7 @@ class ICMP(layer):
                                  self.checksum,
                                  self.ident,
                                  self.seq)
-        return icmpHeader + str(self.payload)
+        return icmpHeader + self.payload
 
     def unpack(self, packet):
         return struct.unpack("!BBHHH", packet)
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     icmpConfig["checksum"] = 0
     icmpConfig["ident"] = 0
     icmpConfig["seq"] = 0
-    icmpConfig["payload"] = ""
+    icmpConfig["payload"] = b""
     icmp = ICMP(icmpConfig)
     packet = icmp.pack()
     print(packet)
