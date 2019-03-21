@@ -21,13 +21,14 @@ class Packet(object):
 
     """traffic packet"""
 
-    def __init__(self, data, header):
-
+    def __init__(self, data, header=None):
         super(Packet, self).__init__()
-        self.raw = header + data
-        header = Buffer(header)
+        self.raw = data
         self.header = {}
-        self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
+        if header is not None:
+            self.raw = header + self.raw
+            header = Buffer(header)
+            self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
         self.mac = mac
@@ -80,11 +81,20 @@ class Packet(object):
                     self.protocol = "CLDAP"
                     cldap = CLDAP.unpack(data)
                     self.layers.append(cldap)
+        elif ntype == ETHER.ARP:
+            self.protocol = "ARP"
+        elif ntype == ETHER.IPv6:
+            self.protocol = "IPv6"
+        else:
+            print('Unsupport type %s' % ntype)
 
 
     def __repr__(self):
-        timearray = time.localtime(self.header['GMTtime'])
-        timestr = time.strftime("%Y-%m-%d %H:%M:%S", timearray)
+        if 'GMTtime' in self.header:
+            timearray = time.localtime(self.header['GMTtime'])
+            timestr = time.strftime("%Y-%m-%d %H:%M:%S", timearray)
+        else:
+            timestr = ''
         return "<[%s] %s %s(%s):%s -> %s(%s):%s>" % (
             timestr,
             self.protocol,
