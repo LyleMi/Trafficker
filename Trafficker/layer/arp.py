@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -65,17 +62,24 @@ class ARP(layer):
     @property
     def dmac(self):
         return self.parseMac(self.srcmac, True)
+    
+    @property
+    def atype(self):
+        return 'REQUEST' if self.arpop == ARPOP_REQUEST else 'REPLY'
 
     def json(self):
         return {
-            "src ip": self.sip,
-            "src mac": self.smac,
-            "dst ip": self.dip,
-            "dst mac": self.dmac,
+            'name': self.name,
+            'type': self.atype,
+            'src ip': self.sip,
+            'src mac': self.smac,
+            'dst ip': self.dip,
+            'dst mac': self.dmac,
         }
 
     def __repr__(self):
-        return "<ARP %s(%s) -> %s(%s)>" % (
+        return "<ARP %s %s(%s) -> %s(%s)>" % (
+            self.atype,
             self.sip,
             self.smac,
             self.dip,

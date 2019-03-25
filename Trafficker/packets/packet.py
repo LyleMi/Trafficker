@@ -78,10 +78,12 @@ class Packet(object):
                     self.protocol = "DNS"
                     dns = DNS.unpack(data)
                     self.layers.append(dns)
-                if 389 in [udp.dst, udp.src]:
+                elif 389 in [udp.dst, udp.src]:
                     self.protocol = "CLDAP"
                     cldap = CLDAP.unpack(data)
                     self.layers.append(cldap)
+                else:
+                    udp.payload = data.getremain()
         elif ntype == ETHER.ethertypes["ARP"]:
             self.protocol = "ARP"
             arp = ARP.unpack(data.get(28))
@@ -98,12 +100,12 @@ class Packet(object):
 
     def json(self):
         ret = {}
-        ret['raw'] = self.raw
+        ret['raw'] = self.raw.hex()
         ret['srcip'] = self.srcip
         ret['dstip'] = self.dstip
-        ret['layers'] = []
+        ret['layers'] = {}
         for l in self.layers:
-            ret['layers'].push(l.json())
+            ret['layers'].append(l.json())
         return ret
 
     def __repr__(self):

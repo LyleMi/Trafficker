@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # IGMPv2 https://www.ietf.org/rfc/rfc2236.txt
 # IGMPv3 https://www.ietf.org/rfc/rfc3376.txt
 import socket
@@ -16,10 +14,11 @@ class IGMP(layer):
 
     def json(self):
         return {
-            "type": self.type,
-            "maxresptime": self.maxresptime,
-            "checksum": self.checksum,
-            "groupaddr": socket.inet_ntoa(self.groupaddr),
+            'name': self.name,
+            'type': self.type,
+            'maxresptime': self.maxresptime,
+            'checksum': self.checksum,
+            'groupaddr': socket.inet_ntoa(self.groupaddr),
         }
 
     def pack(self):

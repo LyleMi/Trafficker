@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -29,15 +26,15 @@ class VLAN(layer):
     @property
     def stype(self):
         if self.type == self.IPv4:
-            return "IPv4"
+            return 'IPv4'
         elif self.type == self.ARP:
-            return "ARP"
+            return 'ARP'
         elif self.type == self.IPv6:
-            return "IPv6"
-        return "unknown %d" % (self.type)
+            return 'IPv6'
+        return 'unknown %d' % (self.type)
 
     def __repr__(self):
-        return "<VLAN %s>" % (self.stype)
+        return '<VLAN %s>' % (self.stype)
 
 if __name__ == '__main__':
     pass

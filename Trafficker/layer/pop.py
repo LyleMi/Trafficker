@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -9,15 +6,15 @@ from Trafficker.layer.layer import layer
 
 class POP(layer):
 
-    cmds = ["auth", "capa", "dele",
-            "user", "pass", "stat", "list",
-            "uidl", "retr", "quit", "top",
-            "+ok", "noop", "-err"]
-    codes = ["221", "220", "250", "334", "354", "550"]
+    cmds = ['auth', 'capa', 'dele',
+            'user', 'pass', 'stat', 'list',
+            'uidl', 'retr', 'quit', 'top',
+            '+ok', 'noop', '-err']
+    codes = ['221', '220', '250', '334', '354', '550']
 
     def __init__(self):
         self.errorno = 0
-        self.type = ""
+        self.type = ''
 
     def pack(self):
         pass
@@ -26,23 +23,23 @@ class POP(layer):
     def unpack(cls, packet):
         pop = cls()
         if len(packet) < 1:
-            pop.type = "null"
+            pop.type = 'null'
             return pop
         if len(packet) > 100:
-            pop.type = "bigdata"
+            pop.type = 'bigdata'
             return pop
-        if "_NextPart_" in packet:
-            pop.type = "data"
+        if '_NextPart_' in packet:
+            pop.type = 'data'
             return pop
-        p = packet.split("\r\n")
-        fp = p[0].split(" ")
+        p = packet.split('\r\n')
+        fp = p[0].split(' ')
         if fp[0] in cls.codes:
-            pop.type = "ret"
+            pop.type = 'ret'
             pop.code = fp[0]
             if len(p) > 1:
                 pop.msg = fp[1:]
         elif fp[0].lower() in cls.cmds:
-            pop.type = "req"
+            pop.type = 'req'
             pop.cmd = fp[0]
             if len(p) > 1:
                 pop.args = fp[1:]

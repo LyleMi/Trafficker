@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -97,7 +94,7 @@ class TCP(layer):
                                 self.checksum,
                                 self.urgp)
         tcpChecksum = self.calChecksum(tcpHeader)
-        tcpHeader = struct.pack("!HHLLBBH",
+        tcpHeader = struct.pack('!HHLLBBH',
                                 self.srcp,
                                 self.dstp,
                                 self.seqn,
@@ -112,15 +109,15 @@ class TCP(layer):
     @staticmethod
     def unpack(packet, datalen=0):
         cflags = {  # Control flags
-            32: "urg",
-            16: "ack",
-            8: "psh",
-            4: "rst",
-            2: "syn",
-            1: "fin"
+            32: 'urg',
+            16: 'ack',
+            8: 'psh',
+            4: 'rst',
+            2: 'syn',
+            1: 'fin'
         }
         tcp = TCP()
-        tcph = packet.unpack("!HHLLBBHHH")
+        tcph = packet.unpack('!HHLLBBHHH')
         tcp.srcp = tcph[0]  # source port
         tcp.dstp = tcph[1]  # destination port
         tcp.seqn = tcph[2]  # sequence number
@@ -145,8 +142,26 @@ class TCP(layer):
         tcp.padding = packet.getremain()
         return tcp
 
+    def json(self):
+        return {
+            'name': self.name,
+            'src port': self.srcp,
+            'dst port': self.dstp,
+            'seq': self.seqn,
+            'ack': self.ackn,
+            'thl': self.thl,
+            'flags': self.flags,
+            'offset': self.offset,
+            'window': self.window,
+            'checksum': self.checksum,
+            'urgp': self.urgp,
+            'options': self.options,
+            'payload': self.payload,
+            'padding': self.padding,
+        }
+
     def __repr__(self):
-        return "<TCP %s -> %s, flags: [%s], seq=%s, ack=%s>" % (
+        return '<TCP %s -> %s, flags: [%s], seq=%s, ack=%s>' % (
             self.srcp,
             self.dstp,
             ", ".join(self.flags),

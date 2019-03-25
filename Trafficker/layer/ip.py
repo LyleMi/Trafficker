@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 """
 IP Packet format
 
@@ -43,17 +40,17 @@ from Trafficker.layer.layer import layer
 class IP(layer):
 
     protocolDict = {
-        1: "ICMP",
-        2: "IGMP",
-        4: "encapsulation",
-        6: "TCP",
-        17: "UDP",
-        45: "IDRP",
-        46: "RSVP",
-        47: "GRE",
-        54: "NHRP",
-        88: "IGRP",
-        89: "OSPF",
+        1: 'ICMP',
+        2: 'IGMP',
+        4: 'encapsulation',
+        6: 'TCP',
+        17: 'UDP',
+        45: 'IDRP',
+        46: 'RSVP',
+        47: 'GRE',
+        54: 'NHRP',
+        88: 'IGRP',
+        89: 'OSPF',
     }
 
     # /etc/protocols
@@ -120,11 +117,11 @@ class IP(layer):
             ipHeader += b'\x00' * (4-(len(ipHeader) % 4))
         return ipHeader
 
-    @staticmethod
-    def unpack(packet):
+    @classmethod
+    def unpack(cls, packet):
         ip = IP()
         ip.ihl = 20
-        iph = struct.unpack("!BBHHHBBH4s4s", packet[:ip.ihl])
+        iph = struct.unpack('!BBHHHBBH4s4s', packet[:ip.ihl])
         ip.version = (iph[0] - ip.ihl) >> 4
         ip.tos = iph[1]
         ip.tl = iph[2]
@@ -136,12 +133,28 @@ class IP(layer):
         ip.checksum = iph[7]
         ip.source = iph[8]
         ip.destination = iph[9]
-        ip.options = b""
+        ip.options = b''
         return ip
+
+    def json(self):
+        return {
+          'name': self.name,
+          'version': self.version,
+          'ihl': self.ihl,
+          'tos': self.tos,
+          'tl': self.tl,
+          'id': self.id,
+          'flags': self.sflags,
+          'offset': self.offset,
+          'protocol': self.sprotocol,
+          'checksum': self.ttl,
+          'src': self.ssrc,
+          'sdst': self.sdst,
+        }
 
     @property
     def sprotocol(self):
-        return self.protocolDict.get(self.protocol, "unknown")
+        return self.protocolDict.get(self.protocol, 'unknown')
 
     @property
     def ssrc(self):
@@ -150,9 +163,17 @@ class IP(layer):
     @property
     def sdst(self):
         return socket.inet_ntoa(self.destination)
+    
+    @property
+    def sflags(self):
+        if self.flags == 2:
+            return 'MF'
+        elif self.flags == 4:
+            return 'DF'
+        return ''
 
     def __repr__(self):
-        return "<IP %s -> %s>" % (
+        return '<IP %s -> %s>' % (
             self.ssrc, self.sdst
         )
 
@@ -160,10 +181,10 @@ class IP(layer):
 if __name__ == '__main__':
 
     ipConfig = {}
-    ipConfig["version"] = 4  # version 4 or 6
-    ipConfig["ihl"] = 20  # header length
-    ipConfig["tos"] = 0  # type of service
-    ipConfig["tolen"] = 572
+    ipConfig['version'] = 4  # version 4 or 6
+    ipConfig['ihl'] = 20  # header length
+    ipConfig['tos'] = 0  # type of service
+    ipConfig['tolen'] = 572
     ipConfig['payload'] = ''
     ipConfig['id'] = randint(0, 65535)
     ipConfig['flags'] = 2  # Don't fragment

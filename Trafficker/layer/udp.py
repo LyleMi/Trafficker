@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -30,18 +27,29 @@ class UDP(layer):
                              length, self.checksum)
         return packet + self.payload
 
-    @staticmethod
-    def unpack(data):
-        data = struct.unpack("!HHHH", data)
+    def json(self):
+        return {
+            'name': self.name,
+            'src port': self.src,
+            'dst port': self.dst,
+            'length': self.length,
+            'checksum': self.checksum,
+            'payload': self.payload
+        }
+
+    @classmethod
+    def unpack(cls, data):
+        data = struct.unpack('!HHHH', data)
         udp = UDP()
         udp.src = data[0]
         udp.dst = data[1]
         udp.length = data[2]
         udp.checksum = data[3]
+        udp.payload = b''
         return udp
 
     def __repr__(self):
-        return "<UDP %s -> %s>" % (
+        return '<UDP %s -> %s>' % (
             self.src,
             self.dst
         )

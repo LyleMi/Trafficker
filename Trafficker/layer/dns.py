@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 import struct
 
@@ -126,8 +123,8 @@ class DNS(DNSBase):
         return dns
 
     def __repr__(self):
-        return "<DNS %s>" % (
-            ";".join(map(lambda i: i.qname, self.queries))
+        return '<DNS %s>' % (
+            ';'.join(map(lambda i: i.qname, self.queries))
         )
 
     @property
