@@ -17,7 +17,7 @@ class SMTP(layer):
 
     def __init__(self):
         self.errorno = 0
-        self.type = '
+        self.type = ''
 
     def pack(self):
         pass

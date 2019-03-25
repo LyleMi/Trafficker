@@ -103,7 +103,8 @@ class Packet(object):
         ret['raw'] = self.raw.hex()
         ret['srcip'] = self.srcip
         ret['dstip'] = self.dstip
-        ret['layers'] = {}
+        ret['protocol'] = self.protocol
+        ret['layers'] = []
         for l in self.layers:
             ret['layers'].append(l.json())
         return ret
