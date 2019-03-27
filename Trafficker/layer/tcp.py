@@ -156,7 +156,7 @@ class TCP(layer):
             'checksum': self.checksum,
             'urgp': self.urgp,
             'options': self.options,
-            'payload': self.payload,
+            'payload': self.payload.hex(),
             'padding': self.padding,
         }
 

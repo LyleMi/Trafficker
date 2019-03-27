@@ -15,16 +15,18 @@ class SMTP(layer):
             'pass', 'list', 'uidl', 'capa']
     codes = ['221', '220', '250', '334', '354', '550']
 
-    def __init__(self):
+    def __init__(self, rawdata=b''):
         self.errorno = 0
         self.type = ''
+        self.rawdata = rawdata
 
     def pack(self):
-        pass
+        return self.rawdata
 
     @classmethod
     def unpack(cls, packet):
         s = SMTP()
+        s.rawdata = packet
         if len(packet) < 1:
             s.type = 'null'
             return s

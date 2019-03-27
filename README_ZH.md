@@ -6,7 +6,6 @@
 
 ## 安装
 
-
 ```shell
 git clone https://github.com/LyleMi/Trafficker.git
 python setup.py install
@@ -19,9 +18,28 @@ python setup.py install
 * arp
 * dns
 * icmp
+* igmp
 * ip
 * pop
 * smtp
 * tcp
 * udp
 * vlan
+
+### 使用
+
+```python
+from Trafficker.packets.pcap import Pcap
+p = Pcap("./pcaps/test.pcap")
+for packetNumber, p in p.parse():
+    print(packetNumber, p, p.json())
+```
+
+或
+
+```python
+from Trafficker.packets.pcap import Pcap
+from Trafficker.handlers.tcp import tcpHandler
+p = Pcap("./pcaps/test.pcap")
+pcap.parseWithCallback([tcpHandler])
+```

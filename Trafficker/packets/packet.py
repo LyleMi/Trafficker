@@ -4,16 +4,18 @@
 import time
 
 from Trafficker.layer.arp import ARP
-from Trafficker.layer.mac import ETHER
-from Trafficker.layer.ip import IP
-from Trafficker.layer.udp import UDP
-from Trafficker.layer.tcp import TCP
+from Trafficker.layer.cldap import CLDAP
 from Trafficker.layer.dns import DNS
-from Trafficker.layer.smtp import SMTP
 from Trafficker.layer.http import HTTP
+from Trafficker.layer.icmp import ICMP
+from Trafficker.layer.igmp import IGMP
+from Trafficker.layer.ip import IP
+from Trafficker.layer.mac import ETHER
+from Trafficker.layer.tcp import TCP
+from Trafficker.layer.udp import UDP
+from Trafficker.layer.smtp import SMTP
 from Trafficker.layer.pop import POP
 from Trafficker.layer.vlan import VLAN
-from Trafficker.layer.cldap import CLDAP
 
 from Trafficker.packets.buffer import Buffer
 
@@ -84,6 +86,12 @@ class Packet(object):
                     self.layers.append(cldap)
                 else:
                     udp.payload = data.getremain()
+            elif ip.protocol == IP.Protocol.ICMP:
+                icmp = ICMP.unpack(data.getremain())
+                self.layers.append(icmp)
+            elif ip.protocol == IP.Protocol.IGMP:
+                igmp = IGMP.unpack(data.getremain())
+                self.layers.append(igmp)
         elif ntype == ETHER.ethertypes["ARP"]:
             self.protocol = "ARP"
             arp = ARP.unpack(data.get(28))

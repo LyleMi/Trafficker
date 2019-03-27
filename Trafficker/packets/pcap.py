@@ -63,16 +63,7 @@ class Pcap(object):
         """
         # send to handler, save some glob status
         glob = {}
-        fpcap = open(self.filepath, 'rb')
-        fpcap.read(24)
-        # pcap文件的数据包解析
-        packetNum = 0
-        while True:
-            header = fpcap.read(16)
-            if len(header) < 16:
-                break
-            packetLen = struct.unpack('I', header[12:16])[0]
-            packet = Packet(fpcap.read(packetLen), header)
+        for packetNum, packet in self.parse():
             shouldFilter = False
             for f in filters:
                 if f(packetNum, packet, glob):
@@ -82,5 +73,4 @@ class Pcap(object):
                 continue
             for handler in handlers:
                 glob = handler(packetNum, packet, glob)
-            packetNum += 1
-        fpcap.close()
+        self.glob = glob

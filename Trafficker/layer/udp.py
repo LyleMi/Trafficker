@@ -34,7 +34,7 @@ class UDP(layer):
             'dst port': self.dst,
             'length': self.length,
             'checksum': self.checksum,
-            'payload': self.payload
+            'payload': self.payload.hex()
         }
 
     @classmethod

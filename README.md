@@ -20,6 +20,7 @@ python setup.py install
 * arp
 * dns
 * icmp
+* igmp
 * ip
 * pop
 * smtp
@@ -31,5 +32,16 @@ python setup.py install
 
 ```python
 from Trafficker.packets.pcap import Pcap
-Pcap("./pcaps/test.pcap")
+p = Pcap("./pcaps/test.pcap")
+for packetNumber, p in p.parse():
+    print(packetNumber, p, p.json())
+```
+
+or
+
+```python
+from Trafficker.packets.pcap import Pcap
+from Trafficker.handlers.tcp import tcpHandler
+p = Pcap("./pcaps/test.pcap")
+pcap.parseWithCallback([tcpHandler])
 ```

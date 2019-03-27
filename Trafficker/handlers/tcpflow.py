@@ -47,7 +47,7 @@ class TCPFlow(object):
             return False
 
         if len(self.tcps) >= 4 and self.tcps[-2].fin and self.tcps[-4].fin:
-            print(self.tcps[-2], self.tcps[-4])
+            # print(reprself.tcps[-2], self.tcps[-4])
             self.finish = True
 
         if set([tcp.srcp, tcp.dstp]) != self.ports:
@@ -80,7 +80,7 @@ class TCPFlow(object):
         # etc
         datas = []
         curp = self.tcps[0].srcp
-        data = ""
+        data = b""
         for t in self.tcps:
             if t.srcp == curp:
                 data += t.payload
