@@ -154,7 +154,7 @@ class IP(layer):
 
     @property
     def sprotocol(self):
-        return self.protocolDict.get(self.protocol, 'unknown')
+        return self.protocolDict.get(self.protocol, 'IPv4')
 
     @property
     def ssrc(self):

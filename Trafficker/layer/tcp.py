@@ -155,9 +155,9 @@ class TCP(layer):
             'window': self.window,
             'checksum': self.checksum,
             'urgp': self.urgp,
-            'options': self.options,
+            'options': self.options.hex(),
             'payload': self.payload.hex(),
-            'padding': self.padding,
+            'padding': self.padding.hex(),
         }
 
     def __repr__(self):

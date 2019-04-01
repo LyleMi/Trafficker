@@ -10,6 +10,7 @@ from Trafficker.layer.http import HTTP
 from Trafficker.layer.icmp import ICMP
 from Trafficker.layer.igmp import IGMP
 from Trafficker.layer.ip import IP
+from Trafficker.layer.ipv6 import IPv6
 from Trafficker.layer.mac import ETHER
 from Trafficker.layer.tcp import TCP
 from Trafficker.layer.udp import UDP
@@ -61,7 +62,8 @@ class Packet(object):
                 self.layers.append(tcp)
                 if 80 in [tcp.srcp, tcp.dstp]:
                     self.protocol = "HTTP"
-                    http = HTTP.unpack(tcp.payload)
+                    # http = HTTP.unpack(tcp.payload)
+                    http = HTTP()
                     self.layers.append(http)
                 elif 25 in [tcp.srcp, tcp.dstp]:
                     self.protocol = "SMTP"
@@ -98,6 +100,12 @@ class Packet(object):
             self.layers.append(arp)
             self.srcip = arp.sip
             self.dstip = arp.dip
+        elif ntype == ETHER.ethertypes["IPv6"]:
+            self.protocol = "IPv6"
+            ipv6 = IPv6.unpack(data.get(40))
+            self.layers.append(ipv6)
+            self.srcip = ipv6.sip
+            self.dstip = ipv6.dip
         elif ntype not in ETHER.ethertypes.values():
             print('Unsupport type %s' % ntype)
         else:
