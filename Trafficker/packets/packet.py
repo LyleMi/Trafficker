@@ -17,6 +17,7 @@ from Trafficker.layer.udp import UDP
 from Trafficker.layer.smtp import SMTP
 from Trafficker.layer.pop import POP
 from Trafficker.layer.vlan import VLAN
+from Trafficker.layer.ntp import NTP
 
 from Trafficker.packets.buffer import Buffer
 
@@ -33,8 +34,10 @@ class Packet(object):
             self.raw = header + self.raw
             header = Buffer(header)
             self.header['GMTtime'], self.header['MicroTime'], self.header['caplen'], self.header['len'] = header.unpack("IIII")
+        print(self.header)
         data = Buffer(data)
         mac = ETHER.unpack(data.get(14))
+        self.len = len(data)
         self.mac = mac
         self.layers = [mac]
         self.srcip = ""
@@ -86,6 +89,10 @@ class Packet(object):
                     self.protocol = "CLDAP"
                     cldap = CLDAP.unpack(data)
                     self.layers.append(cldap)
+                elif 123 in [udp.dst, udp.src]:
+                    self.protocol = "NTP"
+                    ntp = NTP.unpack(data)
+                    self.layers.append(ntp)
                 else:
                     udp.payload = data.getremain()
             elif ip.protocol == IP.Protocol.ICMP:

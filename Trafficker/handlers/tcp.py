@@ -12,9 +12,9 @@ def tcpHandler(packetNum, packet, glob):
     if tcp is None:
         return glob
     # print(repr(tcp))
+    if 'tcpflow' not in glob:
+        glob['tcpflow'] = []
     if tcp.syn and not tcp.ack:
-        if 'tcpflow' not in glob:
-            glob['tcpflow'] = []
         glob['tcpflow'].append(TCPFlow(tcp))
     else:
         for t in glob['tcpflow']:

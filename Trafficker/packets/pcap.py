@@ -49,7 +49,7 @@ class Pcap(object):
                 packet = Packet(fpcap.read(packetLen), header)
             except Exception as e:
                 traceback.print_exc()
-                print(repr(e))
+                print(packetNum, repr(e))
             yield packetNum, packet
             packetNum += 1
         fpcap.close()

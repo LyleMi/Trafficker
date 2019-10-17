@@ -10,6 +10,7 @@ def freqHandler(packetNum, packet, glob):
         packet.srcp,
         packet.dstip,
         packet.dstp,
-        packet.header['GMTtime']
+        packet.header['GMTtime'],
+        packet.len
     ])
     return glob
